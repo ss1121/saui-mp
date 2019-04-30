@@ -1,0 +1,48 @@
+/*
+  item 下划线
+*/
+.item-bb {
+  border-bottom: 1rpx solid #e5e5e5;
+  padding: 30rpx 0;
+}
+.item-bb:last-child {
+  border-bottom: none;
+}
+.list-bb >.item {
+  padding: 0 30rpx;
+}
+.list-bb >.item:last-child .item-border {
+  border: none;
+}
+.list-bb .item-border {
+  border-bottom: 1rpx solid #e5e5e5;
+  padding: 30rpx 0;
+}
+.list-mt-30-r {
+  margin-top: -30rpx;
+}
+.list-mt-30-r >.item-li {
+  margin-top: 30rpx;
+}
+/*
+  中间带边线  .line-li-10 (10指的是间距)
+*/
+.list-pic-column.pic-2 >.item-li {
+  width: 47.9%;
+}
+.list-pic-column .item-header {
+  background: #f5f5f5;
+  position: relative;
+}
+.list-pic-column .item-header-pic {
+  width: 100%;
+  height: 330rpx;
+}
+.list-pic-column .item-header-pic image {
+  width: 100%;
+  height: auto;
+}
+.list-pic-column .item-body {
+  width: 100%;
+  padding: 16rpx 0 38rpx 0;
+}

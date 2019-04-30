@@ -1,0 +1,1 @@
+require("../../runtime.js"),(wx.webpackJsonp=wx.webpackJsonp||[]).push([[229],{98:function(t,e,a){"use strict";var n=a(23);Page({data:{logs:[]},onLoad:function(){this.setData({logs:(wx.getStorageSync("logs")||[]).map(function(t){return n.formatTime(new Date(t))})})}})}},[[98,0,1]]]);

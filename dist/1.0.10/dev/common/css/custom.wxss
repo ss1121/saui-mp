@@ -1,0 +1,82 @@
+/*
+  custom.styl
+    不知道放在哪个样式表的，
+    或需要@extends 简单的
+  -------------------------------------
+  -------------------------------------lgh
+*/
+slider {
+  margin: 0;
+}
+.ss-focus:focus,
+.ss-focus:active {
+  background: #eee;
+}
+/*
+  next-p100 主要是生成结构时，会产出ui-item 或ui-list等标签去包住具体的结构
+    但是不是所有的都需要去添加 -。-！！！
+*/
+.next-p100 >ui-item {
+  height: 100%;
+}
+.next-p100-first >ui-item:first-child {
+  height: 100%;
+}
+.flex-1 {
+  flex: 1;
+}
+.ss-center {
+  text-align: center;
+}
+.pages-wrap-default {
+  height: 100vh;
+  padding: 30rpx;
+}
+.boxer {
+  background: #f4f5f6;
+  color: #666;
+  font-size: 14px;
+  height: 100vh;
+}
+.title-primary-grey {
+  color: #999;
+  font-size: 14px;
+}
+.title-lg-active {
+  color: #333;
+  font-size: 16px;
+}
+.bg-title {
+  border-bottom: 2rpx solid #e5e5e5;
+  background: #f4f5f6;
+  color: #999;
+  line-height: 70rpx;
+  padding: 0 30rpx;
+}
+.bg-display {
+  border-radius: 4rpx;
+  box-sizing: border-box;
+  padding: 30rpx;
+  height: 160rpx;
+}
+.bg-title-f3f3f3 {
+  background: #f3f3f3;
+  height: 70rpx;
+  padding: 0 20rpx;
+}
+.bg-title-f3f3f3 >.htitles {
+  height: 100%;
+}
+.bg-title-body-f3f3f3 {
+  background: #f3f3f3;
+  height: 70rpx;
+  padding: 0 20rpx;
+}
+.item-titlex {
+  color: #333;
+  font-size: 16px;
+}
+.item-descx {
+  color: #999;
+  font-size: 14px;
+}

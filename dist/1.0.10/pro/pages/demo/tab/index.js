@@ -1,0 +1,1 @@
+require("../../../runtime.js"),(wx.webpackJsonp=wx.webpackJsonp||[]).push([[226],{193:function(t,n,c){"use strict";getApp();c(0)({data:{motto:{data:[{title:"aaa",content:"aaa-content"},{title:"bbb",content:"bbb-content"},{title:"ccc",content:"ccc-content"}]}}})}},[[193,0,1]]]);

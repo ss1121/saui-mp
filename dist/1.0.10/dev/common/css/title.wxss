@@ -1,0 +1,52 @@
+.fs-normal {
+  font-style: normal;
+}
+.fw-normal {
+  font-weight: normal;
+}
+.fw-bold,
+.article-title-b {
+  font-weight: bold;
+}
+.article-title-b {
+  color: #333;
+  display: block;
+  font-size: 18px;
+}
+.article-title {
+  color: #333;
+  display: block;
+  font-size: $size-title-default;
+}
+.article-content {
+  line-height: 20px;
+}
+.article-content image {
+  margin: 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+.list-title,
+.list-title-1 {
+  color: #333;
+  display: block;
+  font-size: 16px;
+  font-weight: normal;
+}
+.list-title-1 {
+  -webkit-line-clamp: 1;
+}
+.list-title-minor {
+  color: #333;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+}
+.list-desc,
+.list-desc-1 {
+  color: #999;
+  font-size: 14px;
+}
+.list-desc-1 {
+  -webkit-line-clamp: 1;
+}

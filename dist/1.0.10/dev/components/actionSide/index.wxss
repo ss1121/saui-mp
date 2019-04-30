@@ -1,0 +1,97 @@
+.common,
+.actionSide,
+.actionSide-left,
+.actionSide-bot,
+.actionSide-top {
+  background-color: #fafafa;
+  width: 98vw;
+  min-height: 98vh;
+  padding: 1vw;
+}
+.common.moveit,
+.actionSide.moveit,
+.actionSide-left.moveit,
+.actionSide-bot.moveit,
+.actionSide-top.moveit {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+.common.bar.moveit,
+.actionSide.bar.moveit,
+.actionSide-left.bar.moveit,
+.actionSide-bot.bar.moveit,
+.actionSide-top.bar.moveit {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+.actionMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+}
+.actionMask.show {
+  display: block;
+}
+.actionSide {
+  position: absolute;
+  transition: all 0.2s ease;
+}
+.actionSide.bar {
+  width: 60vw;
+}
+.actionSide.moveit {
+  transform: translate3d(-100vw, 0, 0);
+}
+.actionSide-left {
+  position: absolute;
+  left: -100vw;
+  top: 0;
+  transition: all 0.2s ease;
+}
+.actionSide-left.bar {
+  width: 60vw;
+}
+.actionSide-left.moveit {
+  transform: translate3d(100vw, 0, 0);
+}
+.actionSide-bot {
+  position: absolute;
+  left: 0;
+  bottom: -100vh;
+  transition: all 0.2s ease;
+}
+.actionSide-bot.bar {
+  height: 60vh;
+}
+.actionSide-bot.bar.moveit {
+  transform: translate3d(0, -60vh, 0);
+}
+.actionSide-bot.moveit {
+  transform: translate3d(0, -100vh, 0);
+}
+.actionSide-top {
+  position: absolute;
+  left: 0;
+  top: -100vh;
+  transition: all 0.2s ease;
+}
+.actionSide-top.moveit {
+  transform: translate3d(0, 100vh, 0);
+}
+.actionSide-top.bar {
+  top: -40vh;
+  min-height: 40vh;
+  height: 40vh;
+}
+.actionSide-top.bar.moveit {
+  transform: translate3d(0, 40vh, 0);
+}
+.closeIt {
+  position: absolute;
+  font-size: 48rpx;
+  top: 10rpx;
+  right: 10rpx;
+  color: #c1cdcd;
+}

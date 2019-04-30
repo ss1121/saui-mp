@@ -1,0 +1,64 @@
+.icon-dot,
+.icon-dot-small,
+.icon-dot-more {
+  background: #f00;
+  background: #f00;
+  color: #fff;
+  display: block;
+  font-size: 10px;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 20rpx;
+}
+.icon-dot-small {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 16rpx;
+}
+.icon-dot-more {
+  border-radius: 20rpx;
+  padding: 0 4px;
+}
+.icon-arrows-r:after {
+  content: '\e618';
+  color: #ccc;
+}
+.icon-arrows-t:before {
+  content: '\e617';
+}
+.icon-arrows-b:before {
+  content: '\e616';
+}
+.icon-silence:before {
+  content: '\e74d';
+}
+.icon-1:before {
+  content: '\e6aa';
+}
+.icon-2:before {
+  content: '\e6a6';
+}
+.icon-3:before {
+  content: '\e69d';
+}
+.icon-4:before {
+  content: '\e6a7';
+}
+.icon-menu-1:before {
+  content: '\e61f';
+}
+.icon-menu-2:before {
+  content: '\e655';
+}
+.icon-menu-3:before {
+  content: '\e60c';
+}
+.icon-menu-4:before {
+  content: '\e613';
+}
+.icon-eye:before {
+  content: '\e65d';
+}
+.icon-close-eye:before {
+  content: '\e65e';
+}

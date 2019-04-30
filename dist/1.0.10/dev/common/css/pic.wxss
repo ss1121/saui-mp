@@ -1,0 +1,34 @@
+image {
+  display: block;
+}
+.list-img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 6rpx;
+}
+.list-img-lg {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 6rpx;
+}
+.list-img-sm {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 6rpx;
+}
+.pic-40-r {
+  width: 40rpx;
+  height: 40rpx;
+}
+.pic-80-r {
+  width: 80rpx;
+  height: 80rpx;
+}
+.pic-120-r {
+  width: 120rpx;
+  height: 120rpx;
+}
+.pic-150-r {
+  width: 150rpx;
+  height: 150rpx;
+}

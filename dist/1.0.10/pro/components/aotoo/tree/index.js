@@ -1,0 +1,1 @@
+require("../../../runtime.js"),(wx.webpackJsonp=wx.webpackJsonp||[]).push([[21],{121:function(e,o,s){"use strict";var t=getApp(),p=s(0);p.lib;Component({options:{multipleSlots:!0,addGlobalClass:!0},behaviors:[p.treeBehavior(t,"tree")]})}},[[121,0,1]]]);

@@ -1,0 +1,24 @@
+.tag-default {
+  background: #227ce1;
+  border-color: #227ce1;
+}
+.tag-minor {
+  background: #ff5552;
+  border-color: #ff5552;
+}
+.tag-special {
+  background: #5dcba6;
+  border-color: #5dcba6;
+}
+.tag-fff-default {
+  border-color: rgba(34,124,225,0.3);
+  color: #227ce1;
+}
+.tag-fff-minor {
+  border-color: rgba(255,85,82,0.3);
+  color: #ff5552;
+}
+.tag-fff-special {
+  border-color: rgba(93,203,166,0.3);
+  color: #5dcba6;
+}
