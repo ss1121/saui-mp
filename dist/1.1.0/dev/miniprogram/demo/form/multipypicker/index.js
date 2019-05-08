@@ -553,19 +553,19 @@ var formData = {
       type: 'picker',
       title: '双选选择器',
       values: [[{ title: '猫科', id: '100', select: true }, { title: '狗科', id: '101' }], [{ title: '老虎', id: '102' }, { title: '狮子', id: '103' }, { title: '豹子', id: '104', select: true }, { title: '野狗', id: '105' }]],
-      itemClass: 'mt-8-r'
+      itemClass: 'icon-arrows-r-absolute'
     }, {
       id: 'test_pickers',
       type: 'picker',
       title: '三选选择器',
       values: [[{ title: '猫科', id: '100', select: true }, { title: '狗科', id: '101' }], [{ title: '老虎', id: '102' }, { title: '狮子', id: '103' }, { title: '豹子', id: '104', select: true }, { title: '野狗', id: '105' }], [{ title: '猎豹', id: '106' }, { title: '猞猁', id: '107' }, { title: '英短', id: '108' }]],
-      itemClass: 'mt-8-r'
+      itemClass: 'icon-arrows-r-absolute'
     }, {
       id: 'test_pickers',
       type: 'picker',
       title: '四选选择器',
       values: [[{ title: '猫科', id: '100', select: true }, { title: '狗科', id: '101' }], [{ title: '老虎', id: '102' }, { title: '狮子', id: '103' }, { title: '豹子', id: '104', select: true }, { title: '野狗', id: '105' }], [{ title: '猎豹', id: '106' }, { title: '猞猁', id: '107' }, { title: '英短', id: '108' }], [{ title: '猎豹', id: '106' }, { title: '猞猁', id: '107' }, { title: '英短', id: '108' }]],
-      itemClass: 'mt-8-r'
+      itemClass: 'icon-arrows-r-absolute'
     }]
   }, {
     title: '多选择器-即时设置值',
@@ -576,7 +576,7 @@ var formData = {
       title: '三选选择器',
       bindcolumnchange: true,
       values: [[{ title: '猫科', id: '100', select: true }, { title: '狗科', id: '101' }], [{ title: '老虎', id: '102' }, { title: '狮子', id: '103' }, { title: '豹子', id: '104', select: true }, { title: '野狗', id: '105' }], [{ title: '猎豹', id: '106' }, { title: '猞猁', id: '107' }, { title: '英短', id: '108' }]],
-      itemClass: 'mt-8-r'
+      itemClass: 'icon-arrows-r-absolute'
     }]
   }, {
     title: '动态表单',
@@ -586,7 +586,7 @@ var formData = {
       type: 'text',
       title: '标题',
       placeholder: 'picker的选项将被插入这里',
-      itemClass: 'mt-8-r'
+      itemClass: 'icon-arrows-r-absolute'
     }, {
       id: 'test_pickers8',
       type: 'picker',

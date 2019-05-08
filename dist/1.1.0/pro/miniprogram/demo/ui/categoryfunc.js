@@ -1,1 +1,1 @@
-require("../../runtime.js"),(wx.webpackJsonp=wx.webpackJsonp||[]).push([[39],{65:function(e,s,n){"use strict"}},[[65,0]]]);
+require("../../runtime.js"),(wx.webpackJsonp=wx.webpackJsonp||[]).push([[39],{56:function(e,s,n){"use strict"}},[[56,0]]]);

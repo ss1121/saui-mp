@@ -1078,11 +1078,17 @@ slider {
   height: 100vh;
   padding: 30rpx;
 }
+.block {
+  display: block;
+}
 .boxer {
   background: #f4f5f6;
   color: #666;
   font-size: 14px;
   height: 100vh;
+}
+.boxer.boxer-hei-auto {
+  height: auto;
 }
 .title-primary-grey {
   color: #999;
