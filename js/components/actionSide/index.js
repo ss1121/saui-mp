@@ -8,37 +8,33 @@ const Core = require('../aotoo/core')
 const lib = Core.lib
 
 function cls(param) {
-  return (param && (param.class || param.itemClass)) || ''
+  return (param && (param.itemClass || param.class)) || ''
 }
 
 function sty(param) {
-  return (param && (param.style || param.itemStyle)) || ''
+  return (param && (param.itemStyle || param.style)) || ''
 }
 
 function content(param, myclass) {
-  let beforAim = false
-  if (lib.isObject(param)) {
-    delete param.class
-    delete param.itemClass
-    delete param.style
-    delete param.itemStyle
-    if (!myclass) {
-      beforAim = true
-      if (param.dot) {
-        // param.dot = [].concat(param.dot).concat({title: 'co', class: 'closeIt'})
-        param.dot = [].concat(param.dot).concat({icon: {class: 'icon-guanbida closeIt', aim: 'closeIt'}})
-      } else {
-        // param.dot = [{title: 'co', class: 'closeIt'}]
-        param.dot = [{icon: {class: 'icon-guanbida closeIt', aim: 'closeIt'}}]
-      }
-    }
-  } else {
-    if (!myclass) {
-      beforAim = true
-      // param = { dot: [{title: 'co', class: 'closeIt'}] }
-      param = { dot: [{icon: {class: 'icon-guanbida closeIt', aim: 'closeIt'}}] }
-    }
-  }
+  // if (lib.isObject(param)) {
+  //   delete param.class
+  //   delete param.itemClass
+  //   delete param.style
+  //   delete param.itemStyle
+  //   // if (!myclass) {
+  //   //   param.dot = param.dot ? [].concat(param.dot).concat({
+  //   //     class: 'icono-crossCircle closeIt',
+  //   //     aim: 'hide'
+  //   //   }) : [{
+  //   //     class: 'icono-crossCircle closeIt',
+  //   //     aim: 'hide'
+  //   //   }]
+  //   // }
+  // } else {
+  //   // if (!myclass) {
+  //   //   param = {title: param, dot: [{class: 'icono-crossCircle closeIt', aim: 'hide'}] }
+  //   // }
+  // }
 
   return param
 }
@@ -62,21 +58,22 @@ Component({
     attached: function() { //节点树完成，可以用setData渲染节点，但无法操作节点
       let properties = this.properties
       let item       = properties.item
-      item.itemClass = 'actionSide'
-      item.__actionMask = 'actionMask'
-      this.setData({ $item: item })
+      if (lib.isObject(item)) {
+        item.itemClass = 'actionSide'
+        item.__actionMask = 'actionMask'
+        if (item.dot) {
+          item.dot = [].concat(item.dot).concat({itemClass: 'icono-crossCircle closeIt', aim: 'hide'})
+        } else {
+          item.dot = [{itemClass: 'icono-crossCircle closeIt', aim: 'hide'}]
+        }
+        this.setData({ $item: lib.resetItem(item) })
+      }
     },
     ready: function() {
       const that = this
-      this.hooks.on('beforeAim', function (param) {
-        const {event} = param
-        const dataset = event.currentTarget.dataset
-        const aim = dataset.aim
-        if (aim && aim == 'closeIt') {
-          that.hide()
-          return 0
-        }
-      })
+      setTimeout(() => {
+        this.originalDataSource = JSON.stringify(this.data.$item)
+      }, 300);
     }
   },
   methods: {
@@ -92,8 +89,8 @@ Component({
       const {param, cb} = paramCb(p, c)
       const myContent = content.call(this, param) || {}
       this.update({
+        ...myContent,
         'itemClass': 'actionSide moveit',
-        ...myContent
       }, cb)
     },
     hide: function (param) {
@@ -113,10 +110,10 @@ Component({
       let myStyle = sty(param)
       let myContent = content.call(this, param, myclass) || {}
       this.update({
+        ...myContent,
         itemClass: `actionSide ${myclass} moveit`,
         itemStyle: myStyle,
         __actionMask: myclass ? 'actionMask show' : 'actionMask',
-        ...myContent
       }, cb)
     },
     left: function (p, c) {
@@ -124,12 +121,11 @@ Component({
       let myclass = lib.isString(param) ? param : cls(param)
       let myStyle = sty(param)
       let myContent = content.call(this, param, myclass) || {}
-      console.log(myclass)
       this.update({
+        ...myContent,
         itemClass: `actionSide-left ${myclass} moveit`,
         itemStyle: myStyle,
         __actionMask: myclass ? 'actionMask show' : 'actionMask',
-        ...myContent
       }, cb)
     },
     bot: function (p, c) {
@@ -138,10 +134,10 @@ Component({
       let myStyle = sty(param)
       let myContent = content.call(this, param, myclass) || {}
       this.update({
+        ...myContent,
         itemClass: `actionSide-bot ${myclass} moveit`,
         itemStyle: myStyle,
         __actionMask: myclass ? 'actionMask show' : 'actionMask',
-        ...myContent
       }, cb)
     },
     top: function (p, c) {
@@ -150,10 +146,10 @@ Component({
       let myStyle = sty(param)
       let myContent = content.call(this, param, myclass) || {}
       this.update({
+        ...myContent,
         itemClass: `actionSide-top ${myclass} moveit`,
         itemStyle: myStyle,
         __actionMask: myclass ? 'actionMask show' : 'actionMask',
-        ...myContent
       }, cb)
     },
   }

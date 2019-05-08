@@ -1,0 +1,17 @@
+.tab-container {
+  background-color: #f00;
+}
+.tab-container .menu-box {
+  display: flex;
+  flex-direction: row;
+}
+.tab-container .menu-box .menu-item {
+  flex: 1;
+  background-color: #00f;
+  text-align: center;
+  height: 40px;
+  line-height: 36px;
+}
+.tab-container .menu-box .menu-item.active {
+  background-color: #ff0;
+}

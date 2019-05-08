@@ -1173,11 +1173,6 @@ slider {
   display: block;
   margin-top: 50rpx;
 }
-.input-item .profile-item-title {
-  font-size: 30rpx;
-  color: #999;
-  margin-bottom: 20rpx;
-}
 .input-item .profile-item-desc {
   font-size: 30rpx;
 }

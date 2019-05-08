@@ -23,7 +23,6 @@ var formData = {
   $$id: 'formInst',
   data: [{
     title: '文本类表单元素',
-    itemClass: 'bg-title',
     input: [{ type: 'text', id: 'username', title: '用户名', placeholder: '请输入用户名' }, { type: 'text', id: 'email', title: '邮  箱', error: '错误提示信息', placeholder: '接收信息的安全邮箱' }, { type: 'text', id: 'mobile', title: '手机号', error: '手机错误提示信息', desc: '一段描述性的代码', placeholder: '请输入手机号码' }]
   }, {
     title: '动态表单',

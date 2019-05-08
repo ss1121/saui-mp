@@ -1,0 +1,35 @@
+/**index.wxss**/
+.block {
+  display: block;
+}
+.boxer {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 15rpx;
+}
+.boxer .ul {
+  padding: 0 10px;
+}
+.boxer .item-normal {
+  width: 100%;
+  font-size: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid #d3d3d3;
+}
+.boxer .item-normal:last-child {
+  border-bottom: none;
+}
+.boxer .item-normal .htitles {
+  width: 100%;
+}
+.boxer .item-normal .htitles .item-icon {
+  font-size: 14px;
+}
+.boxer .item-normal .htitles .item-icon:after {
+  content: '\e618';
+}

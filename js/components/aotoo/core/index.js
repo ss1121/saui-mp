@@ -17,7 +17,8 @@ import {
 } from "./ui";
 
 import { 
-  post 
+  post,
+  upload
 } from "./utils";
 
 function pageDataElement(data) {
@@ -140,6 +141,8 @@ function core(params) {
         }
       })
 
+      this.hooks.emit('onReady')
+
       if (typeof oldReady == 'function') {
         setTimeout(() => {
           oldReady.apply(this, arguments)
@@ -208,6 +211,7 @@ function setItem(item) {
 core.lib = lib
 core.alert = alert
 core.post = post
+core.upload = upload
 core.setItem = setItem
 core.commonBehavior = commonBehavior
 core.commonMethodBehavior = commonMethodBehavior

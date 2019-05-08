@@ -1,12 +1,13 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/demo/index",
     "pages/demo/tab/index",
     "pages/empty/index",
     "pages/logs/logs"
   ],
-  "subpackages": [{
+  "subpackages": [
+    {
       "root": "demo/",
       "name": "mydemo",
       "pages": [
@@ -44,10 +45,11 @@
     "ui-form": "/components/form/index",
     "ui-collapse": "/components/collapse/index"
   },
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "demo",
-    "navigationBarTextStyle":"black"
-  }
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
 }
