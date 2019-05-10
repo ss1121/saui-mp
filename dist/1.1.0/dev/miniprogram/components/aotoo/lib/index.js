@@ -29,6 +29,14 @@ exports.isEmpty = isEmpty;
 exports.formatQuery = formatQuery;
 exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
+exports.uuid = uuid;
+
+var _md = __webpack_require__(/*! md5 */ 9);
+
+var _md2 = _interopRequireDefault(_md);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function isString(title) {
   return typeof title == 'string';
 }
@@ -112,6 +120,20 @@ function resetSuidCount() {
   if (suidCount > 9999) suidCount = -1;
 }
 
+function uuid(prefix, len) {
+  var mydate = new Date();
+  var randomNum = mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
+  var uuid = (prefix || 'uuid') + (0, _md2.default)(randomNum);
+  if (len && typeof len == 'number' && len > 6) {
+    var remainder = len - 4;
+    var pre = uuid.substr(0, 4);
+    var aft = uuid.substr(uuid.length - remainder);
+    return pre + aft;
+  } else {
+    return uuid;
+  }
+}
+
 /***/ }),
 /* 1 */
 /*!******************************************!*\
@@ -170,6 +192,12 @@ Object.defineProperty(exports, 'suid', {
   enumerable: true,
   get: function get() {
     return _util.suid;
+  }
+});
+Object.defineProperty(exports, 'uuid', {
+  enumerable: true,
+  get: function get() {
+    return _util.uuid;
   }
 });
 Object.defineProperty(exports, 'resetSuidCount', {

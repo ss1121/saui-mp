@@ -46,14 +46,23 @@ slider
   color: $color-default
   font-size: $size-primary
   height: 100vh
+  width: 100%
+  overflow: hidden
+  &.boxer-hei-auto
+    height: auto
   &.boxer-hei-auto
     height: auto
 
 //小程序用到@extens 注意： a:无法引用其它样式表的，b：要不然得放在这个样式表：如下
 
+.title-sm-grey
+  color: $color-grey
+  font-size: 24rpx
+
 .title-primary-grey
   color: $color-grey
   font-size: $size-primary
+
 .title-lg-active
   color: $color-active
   font-size: $size-lg

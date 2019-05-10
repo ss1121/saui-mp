@@ -48,6 +48,13 @@ const data = [
     ]
   },
   {
+    title: 'Navigation 导航组件',
+    id: 'navigation',
+    list: [
+      { title: 'Tabs', attrx: 'tabs', littleTitle: '标签页'}
+    ]
+  },
+  {
     title: 'Yc',
     id: 'yc',
     list: [
@@ -104,13 +111,14 @@ Pager({
         }
       ],
       titleClass: 'ss-center plr-default',
-      itemClass: 'flex-column-start-center mtb-20-r'
+      itemClass: 'flex-column-start-center padding-default'
     }),
     menuData: Pager.tree({
-      $$id: 'sstree',
-      type: {
-        is: "scroll"
-      },
+      // $$id: 'sstree',
+      // type: {
+      //   is: "scroll"
+      // },
+      // 'scroll-y': true, 
       data: adapterMenu(data)
     }),
   },

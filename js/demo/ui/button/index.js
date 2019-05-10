@@ -5,30 +5,36 @@ const Pager = require('components/aotoo/core')
 
 const data = [
   {
-    title: 'larger',
+    title: '大按钮',
     id: 'larger',
     list: [
-      { title: 'Button', type: 'primary', size: 'larger', parentId: 'larger' },
-      { title: 'disable', type: 'primary', size: 'larger', disabled: true, parentId: 'larger' },
-      { title: 'Button', type: 'fff-primary', size: 'larger', parentId: 'larger' },
+      { title: '按钮', type: 'primary', size: 'larger', parentId: 'larger' },
+      { title: '禁用', type: 'primary', size: 'larger', disabled: true, parentId: 'larger' },
+      { title: '按钮', type: 'default', size: 'larger', parentId: 'larger' },
+      { title: '按钮', type: 'default', size: 'larger', disabled: true, parentId: 'larger' },
+      { title: '按钮', type: 'fff-primary', size: 'larger', parentId: 'larger' },
+      { title: '按钮', type: 'fff-primary', size: 'larger', disabled: true, parentId: 'larger' },
+      { title: '增加类型', type: 'icon-normal', size: 'larger', parentId: 'larger' },
+      { title: '增加类型', type: 'icon-normal', size: 'larger', disabled: true, parentId: 'larger' },
     ]
   },
   {
-    title: 'default',
+    title: '默认按钮',
     id: 'default',
     list: [
-      { title: 'Button', type: 'primary', parentId: 'default' },
+      { title: '按钮', type: 'primary', parentId: 'default' },
+      { title: '按钮', type: 'default', parentId: 'default' },
+      { title: '按钮', type: 'fff-primary', bgFull: true, parentId: 'default' },
       { title: '业务', type: 'work', parentId: 'default' },
-      { title: 'Button', type: 'fff-primary', bgFull: true, parentId: 'default' },
     ]
   },
   {
-    title: 'small',
+    title: '小按钮',
     id: 'small',
     list: [
-      { title: 'Button', type: 'primary', size: 'small', parentId: 'small' },
-      { title: 'Button', type: 'fff-primary', size: 'small', bgFull: true, parentId: 'small' },
-      { title: 'disable', type: 'fff-primary', size: 'small', disabled: true, parentId: 'small' },
+      { title: '按钮', type: 'primary', size: 'small', parentId: 'small' },
+      { title: '按钮', type: 'fff-primary', size: 'small', bgFull: true, parentId: 'small' },
+      { title: '按钮', type: 'default', size: 'small', bgFull: true, parentId: 'small' },
     ]
   },
 ]
@@ -65,8 +71,12 @@ const buttonData = {
       itemClass: 'title-lg-active'
     },
     {
-      title: '按钮，目前只有一种色值，三种展示效果，三种大小，后期可通过传参的方法，现实各自的需求',
+      title: '按钮',
       itemClass: 'title-primary-grey'
+    },
+    {
+      title: '一种色值，三种展示效果，三种大小。注意：目前小程序border-color的透明度是无效的',
+      itemClass: 'title-sm-grey'
     }
   ],
   '@tree': {
