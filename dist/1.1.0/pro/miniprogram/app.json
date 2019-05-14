@@ -1,13 +1,12 @@
 {
-  "pages": [
+  "pages":[
     "pages/index/index",
     "pages/demo/index",
     "pages/demo/tab/index",
     "pages/empty/index",
     "pages/logs/logs"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "demo/",
       "name": "mydemo",
       "pages": [
@@ -36,6 +35,11 @@
         "ui/list/wxchat/index",
         "ui/list/tbpic/index",
         "ui/list/lrpic/index",
+        "ui/tabs/index",
+        "ui/tabs/normal/index",
+        "ui/tabs/scroll/index",
+        "ui/tabs/fnormal/index",
+        "ui/tabs/fscroll/index",
         "uploads/index"
       ]
     }
@@ -47,13 +51,13 @@
     "action-side": "/components/actionSide/index",
     "ui-tab": "/components/tab/index",
     "ui-form": "/components/form/index",
-    "ui-collapse": "/components/collapse/index"
+    "ui-collapse": "/components/collapse/index",
+    "ui-uploads": "/components/uploads/index"
   },
-  "window": {
-    "backgroundTextStyle": "light",
+  "window":{
+    "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "demo",
-    "navigationBarTextStyle": "black"
-  },
-  "sitemapLocation": "sitemap.json"
+    "navigationBarTextStyle":"black"
+  }
 }

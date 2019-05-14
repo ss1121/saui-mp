@@ -20,45 +20,21 @@ const tabData = {
       content: '我是内容部分。C'
     },
     {
-      title: '选项三',
+      title: '选项四',
       content: '我是内容部分。C'
     },
     {
-      title: '选项三',
+      title: '选项五',
       content: '我是内容部分。C'
     },
     {
-      title: '选项三',
+      title: '选项六',
       content: '我是内容部分。C'
     },
     {
-      title: '选项三',
+      title: '选项七',
       content: '我是内容部分。C'
-    },
-    {
-      title: '选项三',
-      content: '我是内容部分。C'
-    },
-    {
-      title: '选项三',
-      content: '我是内容部分。C'
-    },
-    {
-      title: '选项三',
-      content: '我是内容部分。C'
-    },
-    {
-      title: '选项三',
-      content: '我是内容部分。C'
-    },
-    {
-      title: '选项三',
-      content: '我是内容部分。C'
-    },
-    {
-      title: '选项三',
-      content: '我是内容部分。C'
-    },
+    }
   ],
   listClass: 'tabs-default-scroll hei-p100 bg-fff'
 }
