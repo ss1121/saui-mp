@@ -1,7 +1,8 @@
 ; require("../../../runtime.js");
 /**auto import common&runtime js**/
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[15],[
-/* 0 */
+/* 0 */,
+/* 1 */
 /*!*****************************************!*\
   !*** ./js/components/aotoo/lib/util.js ***!
   \*****************************************/
@@ -31,7 +32,7 @@ exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
 
-var _md = __webpack_require__(/*! md5 */ 9);
+var _md = __webpack_require__(/*! md5 */ 4);
 
 var _md2 = _interopRequireDefault(_md);
 
@@ -135,10 +136,8 @@ function uuid(prefix, len) {
 }
 
 /***/ }),
-/* 1 */,
 /* 2 */,
-/* 3 */,
-/* 4 */
+/* 3 */
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/charenc/charenc.js ***!
   \********************************************************************/
@@ -182,176 +181,7 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */
-/*!******************************************!*\
-  !*** ./js/components/aotoo/lib/hooks.js ***!
-  \******************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-exports.hooks = hooks;
-
-var _util = __webpack_require__(/*! ./util */ 0);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _hooks = function () {
-  function _hooks(key) {
-    _classCallCheck(this, _hooks);
-
-    this.actions = {};
-    this.storeData = {};
-  }
-
-  _createClass(_hooks, [{
-    key: 'destory',
-    value: function destory() {
-      this.actions = null;
-      this.storeData = null;
-    }
-  }, {
-    key: 'setItem',
-    value: function setItem(key, val) {
-      this.storeData[key] = val;
-    }
-  }, {
-    key: 'getItem',
-    value: function getItem(key) {
-      return this.storeData[key];
-    }
-  }, {
-    key: 'append',
-    value: function append(key, val) {
-      if (this.storeData[key]) {
-        var sData = this.storeData[key];
-        if ((0, _util.isArray)(sData)) {
-          sData = sData.concat(val);
-        } else if ((0, _util.isObject)(sData)) {
-          if ((0, _util.isObject)(val)) {
-            sData = Object.assign(sData, val);
-          } else {
-            sData[(0, _util.suid)('random_')] = val;
-          }
-        } else {
-          this.setItem(key, val);
-        }
-      } else {
-        this.setItem(key, val);
-      }
-    }
-  }, {
-    key: 'delete',
-    value: function _delete(key) {
-      this.storeData[key] = null;
-    }
-  }, {
-    key: 'on',
-    value: function on(key, cb) {
-      var myActions = this.actions;
-      var hooksActionUniqId = (0, _util.suid)('hooks_action_');
-      if (cb) {
-        cb['hooksActionUniqId'] = hooksActionUniqId;
-      }
-      if ((0, _util.isString)(key)) {
-        if (myActions[key]) {
-          myActions[key] = [].concat(myActions[key]).concat(cb);
-        } else {
-          myActions[key] = [cb];
-        }
-      }
-    }
-  }, {
-    key: 'off',
-    value: function off(key, fun) {
-      if ((0, _util.isString)(key)) {
-        if (fun) {
-          var hooksActionUniqId = fun.hooksActionUniqId;
-          if (hooksActionUniqId) {
-            var theFuns = this.actions[key];
-            var selectFunIndex = void 0;
-            if (theFuns) {
-              theFuns.forEach(function ($f, ii) {
-                if ($f['hooksActionUniqId'] == hooksActionUniqId) {
-                  selectFunIndex = ii;
-                }
-              });
-              if (selectFunIndex) {
-                theFuns.splice(selectFunIndex, 1);
-              }
-            }
-          }
-        } else {
-          delete this.actions[key];
-        }
-      }
-    }
-  }, {
-    key: 'emit',
-    value: function emit(key, param) {
-      var _this = this;
-
-      var ctx = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-      if ((0, _util.isString)(key)) {
-        if (this.actions[key]) {
-          var vals = [];
-          var funs = this.actions[key];
-          funs.forEach(function (fun) {
-            if ((0, _util.isFunction)(fun)) {
-              var res = fun.call(ctx, param);
-              if (res) vals.push(res);else {
-                vals.push(undefined);
-              }
-              if (fun.onlyonetime) {
-                _this.off(key, fun);
-              }
-              // vals.push(fun.call(ctx, param))
-            }
-          });
-          if (vals.length) {
-            return vals;
-          }
-        }
-      }
-    }
-  }, {
-    key: 'one',
-    value: function one(key, cb) {
-      if (key && typeof cb == 'function') {
-        cb.onlyonetime = true;
-      }
-      this.on(key, cb);
-    }
-  }]);
-
-  return _hooks;
-}();
-
-var myhooks = {};
-function hooks(idf) {
-  if ((0, _util.isString)(idf)) {
-    if (!myhooks[idf]) {
-      myhooks[idf] = new _hooks();
-    }
-    return myhooks[idf];
-  }
-}
-
-/***/ }),
-/* 8 */,
-/* 9 */
+/* 4 */
 /*!************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/md5/md5.js ***!
   \************************************************************/
@@ -360,10 +190,10 @@ function hooks(idf) {
 /***/ (function(module, exports, __webpack_require__) {
 
 (function(){
-  var crypt = __webpack_require__(/*! crypt */ 10),
-      utf8 = __webpack_require__(/*! charenc */ 4).utf8,
-      isBuffer = __webpack_require__(/*! is-buffer */ 11),
-      bin = __webpack_require__(/*! charenc */ 4).bin,
+  var crypt = __webpack_require__(/*! crypt */ 7),
+      utf8 = __webpack_require__(/*! charenc */ 3).utf8,
+      isBuffer = __webpack_require__(/*! is-buffer */ 8),
+      bin = __webpack_require__(/*! charenc */ 3).bin,
 
   // The core
   md5 = function (message, options) {
@@ -522,7 +352,9 @@ function hooks(idf) {
 
 
 /***/ }),
-/* 10 */
+/* 5 */,
+/* 6 */,
+/* 7 */
 /*!****************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/crypt/crypt.js ***!
   \****************************************************************/
@@ -629,7 +461,7 @@ function hooks(idf) {
 
 
 /***/ }),
-/* 11 */
+/* 8 */
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/is-buffer/index.js ***!
   \********************************************************************/
@@ -660,5 +492,172 @@ function isSlowBuffer (obj) {
 }
 
 
+/***/ }),
+/* 9 */,
+/* 10 */
+/*!******************************************!*\
+  !*** ./js/components/aotoo/lib/hooks.js ***!
+  \******************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.hooks = hooks;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _hooks = function () {
+  function _hooks(key) {
+    _classCallCheck(this, _hooks);
+
+    this.actions = {};
+    this.storeData = {};
+  }
+
+  _createClass(_hooks, [{
+    key: 'destory',
+    value: function destory() {
+      this.actions = null;
+      this.storeData = null;
+    }
+  }, {
+    key: 'setItem',
+    value: function setItem(key, val) {
+      this.storeData[key] = val;
+    }
+  }, {
+    key: 'getItem',
+    value: function getItem(key) {
+      return this.storeData[key];
+    }
+  }, {
+    key: 'append',
+    value: function append(key, val) {
+      if (this.storeData[key]) {
+        var sData = this.storeData[key];
+        if ((0, _util.isArray)(sData)) {
+          sData = sData.concat(val);
+        } else if ((0, _util.isObject)(sData)) {
+          if ((0, _util.isObject)(val)) {
+            sData = Object.assign(sData, val);
+          } else {
+            sData[(0, _util.suid)('random_')] = val;
+          }
+        } else {
+          this.setItem(key, val);
+        }
+      } else {
+        this.setItem(key, val);
+      }
+    }
+  }, {
+    key: 'delete',
+    value: function _delete(key) {
+      this.storeData[key] = null;
+    }
+  }, {
+    key: 'on',
+    value: function on(key, cb) {
+      var myActions = this.actions;
+      var hooksActionUniqId = (0, _util.suid)('hooks_action_');
+      if (cb) {
+        cb['hooksActionUniqId'] = hooksActionUniqId;
+      }
+      if ((0, _util.isString)(key)) {
+        if (myActions[key]) {
+          myActions[key] = [].concat(myActions[key]).concat(cb);
+        } else {
+          myActions[key] = [cb];
+        }
+      }
+    }
+  }, {
+    key: 'off',
+    value: function off(key, fun) {
+      if ((0, _util.isString)(key)) {
+        if (fun) {
+          var hooksActionUniqId = fun.hooksActionUniqId;
+          if (hooksActionUniqId) {
+            var theFuns = this.actions[key];
+            var selectFunIndex = void 0;
+            if (theFuns) {
+              theFuns.forEach(function ($f, ii) {
+                if ($f['hooksActionUniqId'] == hooksActionUniqId) {
+                  selectFunIndex = ii;
+                }
+              });
+              if (selectFunIndex) {
+                theFuns.splice(selectFunIndex, 1);
+              }
+            }
+          }
+        } else {
+          delete this.actions[key];
+        }
+      }
+    }
+  }, {
+    key: 'emit',
+    value: function emit(key, param) {
+      var _this = this;
+
+      var ctx = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+      if ((0, _util.isString)(key)) {
+        if (this.actions[key]) {
+          var vals = [];
+          var funs = this.actions[key];
+          funs.forEach(function (fun) {
+            if ((0, _util.isFunction)(fun)) {
+              var res = fun.call(ctx, param);
+              if (res) vals.push(res);else {
+                vals.push(undefined);
+              }
+              if (fun.onlyonetime) {
+                _this.off(key, fun);
+              }
+              // vals.push(fun.call(ctx, param))
+            }
+          });
+          if (vals.length) {
+            return vals;
+          }
+        }
+      }
+    }
+  }, {
+    key: 'one',
+    value: function one(key, cb) {
+      if (key && typeof cb == 'function') {
+        cb.onlyonetime = true;
+      }
+      this.on(key, cb);
+    }
+  }]);
+
+  return _hooks;
+}();
+
+var myhooks = {};
+function hooks(idf) {
+  if ((0, _util.isString)(idf)) {
+    if (!myhooks[idf]) {
+      myhooks[idf] = new _hooks();
+    }
+    return myhooks[idf];
+  }
+}
+
 /***/ })
-],[[7,0]]]);
+],[[10,0]]]);

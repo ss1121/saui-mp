@@ -1,6 +1,6 @@
 ; require("../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[224],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[236],{
 
 /***/ 28:
 /*!**************************!*\

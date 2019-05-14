@@ -1,8 +1,8 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[216],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[228],{
 
-/***/ 23:
+/***/ 24:
 /*!**********************************!*\
   !*** ./js/pages/demo/adapter.js ***!
   \**********************************/
@@ -470,4 +470,4 @@ exports.default = {
 
 /***/ })
 
-},[[23,0]]]);
+},[[24,0]]]);

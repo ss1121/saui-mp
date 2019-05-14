@@ -2,7 +2,7 @@
 /**auto import common&runtime js**/
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[40],{
 
-/***/ 19:
+/***/ 21:
 /*!************************************!*\
   !*** ./js/demo/ui/list/adapter.js ***!
   \************************************/
@@ -401,4 +401,4 @@ module.exports = {
 
 /***/ })
 
-},[[19,0]]]);
+},[[21,0]]]);

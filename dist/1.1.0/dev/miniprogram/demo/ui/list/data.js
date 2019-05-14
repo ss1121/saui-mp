@@ -2,7 +2,7 @@
 /**auto import common&runtime js**/
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[41],{
 
-/***/ 20:
+/***/ 22:
 /*!*********************************!*\
   !*** ./js/demo/ui/list/data.js ***!
   \*********************************/
@@ -273,4 +273,4 @@ exports.default = {
 
 /***/ })
 
-},[[20,0]]]);
+},[[22,0]]]);

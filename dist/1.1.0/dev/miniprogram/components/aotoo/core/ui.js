@@ -2,7 +2,7 @@
 /**auto import common&runtime js**/
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[10],{
 
-/***/ 16:
+/***/ 18:
 /*!****************************************!*\
   !*** ./js/components/aotoo/core/ui.js ***!
   \****************************************/
@@ -26,4 +26,4 @@ function alert(text) {
 
 /***/ })
 
-},[[16,0]]]);
+},[[18,0]]]);

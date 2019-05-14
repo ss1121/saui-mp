@@ -1,8 +1,8 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[218],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[230],{
 
-/***/ 23:
+/***/ 24:
 /*!**********************************!*\
   !*** ./js/pages/demo/adapter.js ***!
   \**********************************/
@@ -470,7 +470,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /*!*******************************!*\
   !*** ./js/pages/demo/data.js ***!
   \*******************************/
@@ -754,11 +754,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.diytour2Data = exports.diytourData = exports.tabData = exports.listDiytour = exports.actionSide3 = exports.actionSide2 = exports.actionSide1 = exports.buttonForAs = exports.treeData = exports.listData = exports.sortData = exports.picsData = exports.onepicData = exports.titlesData = exports.longpressData = exports.iconData = exports.aimData = exports.stringData = undefined;
 
-var _data = __webpack_require__(/*! ./data */ 24);
+var _data = __webpack_require__(/*! ./data */ 25);
 
 var _data2 = _interopRequireDefault(_data);
 
-var _adapter = __webpack_require__(/*! ./adapter */ 23);
+var _adapter = __webpack_require__(/*! ./adapter */ 24);
 
 var _adapter2 = _interopRequireDefault(_adapter);
 

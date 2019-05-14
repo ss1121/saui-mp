@@ -2,6 +2,140 @@
 /**auto import common&runtime js**/
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[11],[
 /* 0 */
+/*!******************************************!*\
+  !*** ./js/components/aotoo/lib/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+Object.defineProperty(exports, 'isString', {
+  enumerable: true,
+  get: function get() {
+    return _util.isString;
+  }
+});
+Object.defineProperty(exports, 'isObject', {
+  enumerable: true,
+  get: function get() {
+    return _util.isObject;
+  }
+});
+Object.defineProperty(exports, 'isArray', {
+  enumerable: true,
+  get: function get() {
+    return _util.isArray;
+  }
+});
+Object.defineProperty(exports, 'isNumber', {
+  enumerable: true,
+  get: function get() {
+    return _util.isNumber;
+  }
+});
+Object.defineProperty(exports, 'isFunction', {
+  enumerable: true,
+  get: function get() {
+    return _util.isFunction;
+  }
+});
+Object.defineProperty(exports, 'formatQuery', {
+  enumerable: true,
+  get: function get() {
+    return _util.formatQuery;
+  }
+});
+Object.defineProperty(exports, 'suid', {
+  enumerable: true,
+  get: function get() {
+    return _util.suid;
+  }
+});
+Object.defineProperty(exports, 'uuid', {
+  enumerable: true,
+  get: function get() {
+    return _util.uuid;
+  }
+});
+Object.defineProperty(exports, 'resetSuidCount', {
+  enumerable: true,
+  get: function get() {
+    return _util.resetSuidCount;
+  }
+});
+Object.defineProperty(exports, 'clone', {
+  enumerable: true,
+  get: function get() {
+    return _util.clone;
+  }
+});
+Object.defineProperty(exports, 'isEmpty', {
+  enumerable: true,
+  get: function get() {
+    return _util.isEmpty;
+  }
+});
+
+var _tree = __webpack_require__(/*! ./tree */ 9);
+
+Object.defineProperty(exports, 'tree', {
+  enumerable: true,
+  get: function get() {
+    return _tree.tree;
+  }
+});
+Object.defineProperty(exports, 'listToTree', {
+  enumerable: true,
+  get: function get() {
+    return _tree.listToTree;
+  }
+});
+
+var _hooks = __webpack_require__(/*! ./hooks */ 10);
+
+Object.defineProperty(exports, 'hooks', {
+  enumerable: true,
+  get: function get() {
+    return _hooks.hooks;
+  }
+});
+
+var _foritem = __webpack_require__(/*! ./foritem */ 5);
+
+Object.defineProperty(exports, 'resetItem', {
+  enumerable: true,
+  get: function get() {
+    return _foritem.resetItem;
+  }
+});
+
+var _forlist = __webpack_require__(/*! ./forlist */ 11);
+
+Object.defineProperty(exports, 'reSetItemAttr', {
+  enumerable: true,
+  get: function get() {
+    return _forlist.reSetItemAttr;
+  }
+});
+Object.defineProperty(exports, 'reSetList', {
+  enumerable: true,
+  get: function get() {
+    return _forlist.reSetList;
+  }
+});
+var md5 = exports.md5 = __webpack_require__(/*! md5 */ 4);
+
+/***/ }),
+/* 1 */
 /*!*****************************************!*\
   !*** ./js/components/aotoo/lib/util.js ***!
   \*****************************************/
@@ -31,7 +165,7 @@ exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
 
-var _md = __webpack_require__(/*! md5 */ 9);
+var _md = __webpack_require__(/*! md5 */ 4);
 
 var _md2 = _interopRequireDefault(_md);
 
@@ -135,262 +269,8 @@ function uuid(prefix, len) {
 }
 
 /***/ }),
-/* 1 */
-/*!******************************************!*\
-  !*** ./js/components/aotoo/lib/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _util = __webpack_require__(/*! ./util */ 0);
-
-Object.defineProperty(exports, 'isString', {
-  enumerable: true,
-  get: function get() {
-    return _util.isString;
-  }
-});
-Object.defineProperty(exports, 'isObject', {
-  enumerable: true,
-  get: function get() {
-    return _util.isObject;
-  }
-});
-Object.defineProperty(exports, 'isArray', {
-  enumerable: true,
-  get: function get() {
-    return _util.isArray;
-  }
-});
-Object.defineProperty(exports, 'isNumber', {
-  enumerable: true,
-  get: function get() {
-    return _util.isNumber;
-  }
-});
-Object.defineProperty(exports, 'isFunction', {
-  enumerable: true,
-  get: function get() {
-    return _util.isFunction;
-  }
-});
-Object.defineProperty(exports, 'formatQuery', {
-  enumerable: true,
-  get: function get() {
-    return _util.formatQuery;
-  }
-});
-Object.defineProperty(exports, 'suid', {
-  enumerable: true,
-  get: function get() {
-    return _util.suid;
-  }
-});
-Object.defineProperty(exports, 'uuid', {
-  enumerable: true,
-  get: function get() {
-    return _util.uuid;
-  }
-});
-Object.defineProperty(exports, 'resetSuidCount', {
-  enumerable: true,
-  get: function get() {
-    return _util.resetSuidCount;
-  }
-});
-Object.defineProperty(exports, 'clone', {
-  enumerable: true,
-  get: function get() {
-    return _util.clone;
-  }
-});
-Object.defineProperty(exports, 'isEmpty', {
-  enumerable: true,
-  get: function get() {
-    return _util.isEmpty;
-  }
-});
-
-var _tree = __webpack_require__(/*! ./tree */ 6);
-
-Object.defineProperty(exports, 'tree', {
-  enumerable: true,
-  get: function get() {
-    return _tree.tree;
-  }
-});
-Object.defineProperty(exports, 'listToTree', {
-  enumerable: true,
-  get: function get() {
-    return _tree.listToTree;
-  }
-});
-
-var _hooks = __webpack_require__(/*! ./hooks */ 7);
-
-Object.defineProperty(exports, 'hooks', {
-  enumerable: true,
-  get: function get() {
-    return _hooks.hooks;
-  }
-});
-
-var _foritem = __webpack_require__(/*! ./foritem */ 3);
-
-Object.defineProperty(exports, 'resetItem', {
-  enumerable: true,
-  get: function get() {
-    return _foritem.resetItem;
-  }
-});
-
-var _forlist = __webpack_require__(/*! ./forlist */ 8);
-
-Object.defineProperty(exports, 'reSetItemAttr', {
-  enumerable: true,
-  get: function get() {
-    return _forlist.reSetItemAttr;
-  }
-});
-Object.defineProperty(exports, 'reSetList', {
-  enumerable: true,
-  get: function get() {
-    return _forlist.reSetList;
-  }
-});
-var md5 = exports.md5 = __webpack_require__(/*! md5 */ 9);
-
-/***/ }),
 /* 2 */,
 /* 3 */
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/foritem.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.resetItem = resetItem;
-
-var _util = __webpack_require__(/*! ./util */ 0);
-
-var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
-
-var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
-
-function setItemSortIdf(item, context) {
-  if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item;
-  if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object') {
-    if (!Array.isArray(item)) {
-      var extAttrs = {};
-      var incAttrs = [];
-      item['__sort'] = [];
-
-      if (context) {
-        // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.uniqId;
-      }
-
-      Object.keys(item).forEach(function (key) {
-        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-          incAttrs.push(key);
-        } else {
-          extAttrs[key] = item[key];
-        }
-      });
-
-      if (incAttrs.length) {
-        item['__sort'] = incAttrs;
-        incAttrs.map(function (attr) {
-          var oData = item[attr];
-          if ((typeof oData === 'undefined' ? 'undefined' : _typeof(oData)) == 'object') {
-            if (Array.isArray(oData)) {
-              item[attr] = setSortTemplateName(oData, context);
-            } else {
-              item[attr] = setItemSortIdf(oData, context);
-            }
-          }
-        });
-      }
-      return item;
-    }
-  }
-}
-
-function setSortTemplateName(data, context) {
-  if (Array.isArray(data) && data.length) {
-    return data.map(function (item) {
-      return setItemSortIdf(item, context);
-    });
-  }
-}
-
-function resetItem(data, context) {
-  var extAttrs = {};
-  var incAttrs = [];
-  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
-    return data;
-  }
-
-  Object.keys(data).forEach(function (key) {
-    if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-      incAttrs.push(key);
-    } else {
-      if (key == 'aim') {
-        data.catchtap = data[key];
-      }
-      extAttrs[key] = data[key];
-    }
-  });
-
-  data['__sort'] = incAttrs;
-
-  var _loop = function _loop() {
-    var sonItem = data[attr];
-    if (attr == 'itemMethod') {
-      if (context && (0, _util.isObject)(sonItem)) {
-        Object.keys(sonItem).forEach(function (fn) {
-          context[fn] = sonItem[fn];
-        });
-        delete data.itemMethod;
-      }
-    } else {
-      if (Array.isArray(sonItem)) {
-        data[attr] = setSortTemplateName(sonItem, context);
-      } else {
-        data[attr] = setItemSortIdf(sonItem, context);
-      }
-    }
-  };
-
-  for (var attr in data) {
-    _loop();
-  }
-  if (!data.parent) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
-
-  // context.props = extAttrs
-  return data;
-}
-
-/***/ }),
-/* 4 */
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/charenc/charenc.js ***!
   \********************************************************************/
@@ -434,405 +314,7 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 5 */,
-/* 6 */
-/*!*****************************************!*\
-  !*** ./js/components/aotoo/lib/tree.js ***!
-  \*****************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.tree = tree;
-exports.listToTree = listToTree;
-
-var _util = __webpack_require__(/*! ./util */ 0);
-
-var filter = function filter(data, callback) {
-  if ((0, _util.isArray)(data)) {
-    return data.filter(callback);
-  }
-};
-var idrecode = [];
-var treeProps = {};
-function valideClassName(clsname, level) {
-  var reCls = / *level([\d]* *)?/ig;
-  var myLevelCls = 'level' + level;
-  if (clsname) {
-    if (reCls.test(clsname)) {
-      clsname = clsname.replace(reCls, '');
-    }
-    clsname += ' ' + myLevelCls;
-    return clsname;
-  }
-}
-
-var treeDeep = 1;
-function subTree(item, dataAry, deep, index) {
-  deep = treeDeep = deep || 1;
-  var fromTree = void 0;
-  if (this && this.fromTree) {
-    fromTree = this.fromTree;
-  }
-  var nsons = [];
-  var sons = filter(dataAry, function (o) {
-    return o.parent == item.idf;
-  });
-  sons.forEach(function (son, ii) {
-    var _clsName = son.itemClass || son.class;
-    _clsName = valideClassName(_clsName, deep);
-    son.itemClass = _clsName;
-    if (son.idf && idrecode.indexOf(son.idf) == -1) {
-      idrecode.push(son.idf);
-      nsons = nsons.concat([subTree.call({ fromTree: fromTree }, son, dataAry, ++deep, ii)]);
-      --deep;
-    } else {
-      nsons = nsons.concat(son);
-    }
-  });
-  if (nsons.length) {
-    // item.li = nsons
-    // item['__sort'] = (item['__sort']||[]).concat('li')
-    var treeid = item.attr && item.attr['data-treeid'] || index;
-    // const $id = item.$$id || item.id || `level${deep}-${treeid}`
-    var $id = item.$$id || item.id || '' + treeid;
-    item['@list'] = {
-      $$id: $id,
-      data: nsons,
-      listClass: item.liClass || 'ul',
-      itemClass: treeProps.itemClass || '',
-      itemStyle: treeProps.itemStyle || '',
-      show: item.hasOwnProperty('show') ? item.show : true,
-      fromTree: fromTree
-    };
-    item['__sort'] = (item['__sort'] || []).concat('@list');
-  }
-  return item;
-}
-
-function owerTree(item) {
-  var ary = [];
-  item.forEach(function (o) {
-    if (Array.isArray(o)) return owerTree(item);
-    ary.push(o);
-  });
-  if (ary.length) {
-    return { li: ary };
-  }
-}
-
-// TreeStructor
-// 此处tree的算法与aotoo的tree算法有差异
-function tree(dataAry, props, fromTree) {
-  var menus = [];
-  idrecode = [];
-  treeProps = {
-    itemClass: props.itemClass || props.class,
-    itemStyle: props.itemStyle || props.style
-  };
-  dataAry.forEach(function (item, ii) {
-    treeDeep = 1;
-    if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
-      if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
-        var clsName = item.itemClass || item.class;
-        clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';
-        item.itemClass = clsName;
-        var nItem = subTree.call({ fromTree: fromTree }, item, dataAry, ii);
-        nItem.__deep = treeDeep;
-        menus.push(nItem);
-      }
-      if (!item.idf && !item.parent) {
-        menus.push(item);
-      }
-    }
-    if (Array.isArray(item)) {
-      var _tmp = owerTree(item);
-      if (_tmp) {
-        menus.push(_tmp);
-      }
-    }
-  });
-  return menus;
-}
-
-function listToTree(_list, fromTree) {
-  var list = (0, _util.clone)(_list);
-  if ((0, _util.isObject)(list) && list.data) {
-    list.data = tree(list.data, list, fromTree);
-  }
-  return list;
-}
-
-/***/ }),
-/* 7 */
-/*!******************************************!*\
-  !*** ./js/components/aotoo/lib/hooks.js ***!
-  \******************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-exports.hooks = hooks;
-
-var _util = __webpack_require__(/*! ./util */ 0);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _hooks = function () {
-  function _hooks(key) {
-    _classCallCheck(this, _hooks);
-
-    this.actions = {};
-    this.storeData = {};
-  }
-
-  _createClass(_hooks, [{
-    key: 'destory',
-    value: function destory() {
-      this.actions = null;
-      this.storeData = null;
-    }
-  }, {
-    key: 'setItem',
-    value: function setItem(key, val) {
-      this.storeData[key] = val;
-    }
-  }, {
-    key: 'getItem',
-    value: function getItem(key) {
-      return this.storeData[key];
-    }
-  }, {
-    key: 'append',
-    value: function append(key, val) {
-      if (this.storeData[key]) {
-        var sData = this.storeData[key];
-        if ((0, _util.isArray)(sData)) {
-          sData = sData.concat(val);
-        } else if ((0, _util.isObject)(sData)) {
-          if ((0, _util.isObject)(val)) {
-            sData = Object.assign(sData, val);
-          } else {
-            sData[(0, _util.suid)('random_')] = val;
-          }
-        } else {
-          this.setItem(key, val);
-        }
-      } else {
-        this.setItem(key, val);
-      }
-    }
-  }, {
-    key: 'delete',
-    value: function _delete(key) {
-      this.storeData[key] = null;
-    }
-  }, {
-    key: 'on',
-    value: function on(key, cb) {
-      var myActions = this.actions;
-      var hooksActionUniqId = (0, _util.suid)('hooks_action_');
-      if (cb) {
-        cb['hooksActionUniqId'] = hooksActionUniqId;
-      }
-      if ((0, _util.isString)(key)) {
-        if (myActions[key]) {
-          myActions[key] = [].concat(myActions[key]).concat(cb);
-        } else {
-          myActions[key] = [cb];
-        }
-      }
-    }
-  }, {
-    key: 'off',
-    value: function off(key, fun) {
-      if ((0, _util.isString)(key)) {
-        if (fun) {
-          var hooksActionUniqId = fun.hooksActionUniqId;
-          if (hooksActionUniqId) {
-            var theFuns = this.actions[key];
-            var selectFunIndex = void 0;
-            if (theFuns) {
-              theFuns.forEach(function ($f, ii) {
-                if ($f['hooksActionUniqId'] == hooksActionUniqId) {
-                  selectFunIndex = ii;
-                }
-              });
-              if (selectFunIndex) {
-                theFuns.splice(selectFunIndex, 1);
-              }
-            }
-          }
-        } else {
-          delete this.actions[key];
-        }
-      }
-    }
-  }, {
-    key: 'emit',
-    value: function emit(key, param) {
-      var _this = this;
-
-      var ctx = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-      if ((0, _util.isString)(key)) {
-        if (this.actions[key]) {
-          var vals = [];
-          var funs = this.actions[key];
-          funs.forEach(function (fun) {
-            if ((0, _util.isFunction)(fun)) {
-              var res = fun.call(ctx, param);
-              if (res) vals.push(res);else {
-                vals.push(undefined);
-              }
-              if (fun.onlyonetime) {
-                _this.off(key, fun);
-              }
-              // vals.push(fun.call(ctx, param))
-            }
-          });
-          if (vals.length) {
-            return vals;
-          }
-        }
-      }
-    }
-  }, {
-    key: 'one',
-    value: function one(key, cb) {
-      if (key && typeof cb == 'function') {
-        cb.onlyonetime = true;
-      }
-      this.on(key, cb);
-    }
-  }]);
-
-  return _hooks;
-}();
-
-var myhooks = {};
-function hooks(idf) {
-  if ((0, _util.isString)(idf)) {
-    if (!myhooks[idf]) {
-      myhooks[idf] = new _hooks();
-    }
-    return myhooks[idf];
-  }
-}
-
-/***/ }),
-/* 8 */
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/forlist.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.reSetItemAttr = reSetItemAttr;
-exports.reSetList = reSetList;
-
-var _util = __webpack_require__(/*! ./util */ 0);
-
-var _foritem = __webpack_require__(/*! ./foritem */ 3);
-
-function reSetItemAttr(item, list) {
-  if (typeof item == 'boolean') return item;
-  if (typeof item == 'string' || typeof item == 'number') {
-    item = { title: item };
-  }
-
-  var clsIndex = (0, _util.suid)('index-'); // 将data-index置入每条数据的class中，这样不用去动结构
-  var $ii = clsIndex;
-
-  if (list.itemMethod) {
-    var itm = list.itemMethod;
-    if ((typeof itm === 'undefined' ? 'undefined' : _typeof(itm)) == 'object') {
-      Object.keys(itm).forEach(function (evt) {
-        item[evt] = itm[evt];
-      });
-    }
-  }
-
-  var itmc = list.itemClass || list.class || '';
-  var myClass = item['itemClass'] || item['class'] || item['className'] || '';
-  item['itemClass'] = myClass ? itmc + ' ' + myClass : itmc;
-  item['itemClass'] = item.idf ? 'item itemroot ' + item['itemClass'] : 'item ' + item['itemClass'];
-
-  if (list.itemStyle || list.style) {
-    var itsy = list.itemStyle || list.style;
-    if (item['style'] || item['itemStyle']) {
-      var myStyle = item['style'] || item['itemStyle'];
-      item['style'] = myStyle;
-    } else {
-      item['style'] = itsy;
-    }
-  }
-
-  // if (this.$$is=='tree' && isObject(item)) {
-  if ((0, _util.isObject)(item)) {
-    if (item['attr']) {
-      if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = $ii;
-    } else {
-      if (item['$$typeof']) {
-        item = { title: item, attr: { 'data-treeid': $ii } };
-      } else {
-        item['attr'] = { 'data-treeid': $ii };
-      }
-    }
-  }
-
-  var newItem = item['$$id'] ? item : (0, _foritem.resetItem)(item, this);
-  return newItem;
-}
-
-function reSetArray(data, list) {
-  var _this = this;
-
-  if ((0, _util.isArray)(data)) {
-    list.data = data.map(function (item) {
-      return reSetItemAttr.call(_this, item, list);
-    });
-  }
-  return list;
-}
-
-function reSetList(list) {
-  if ((0, _util.isObject)(list)) {
-    list['show'] = list.hasOwnProperty('show') ? list.show : true;
-    return reSetArray.call(this, list.data, list);
-  }
-}
-
-/***/ }),
-/* 9 */
+/* 4 */
 /*!************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/md5/md5.js ***!
   \************************************************************/
@@ -841,10 +323,10 @@ function reSetList(list) {
 /***/ (function(module, exports, __webpack_require__) {
 
 (function(){
-  var crypt = __webpack_require__(/*! crypt */ 10),
-      utf8 = __webpack_require__(/*! charenc */ 4).utf8,
-      isBuffer = __webpack_require__(/*! is-buffer */ 11),
-      bin = __webpack_require__(/*! charenc */ 4).bin,
+  var crypt = __webpack_require__(/*! crypt */ 7),
+      utf8 = __webpack_require__(/*! charenc */ 3).utf8,
+      isBuffer = __webpack_require__(/*! is-buffer */ 8),
+      bin = __webpack_require__(/*! charenc */ 3).bin,
 
   // The core
   md5 = function (message, options) {
@@ -1003,7 +485,128 @@ function reSetList(list) {
 
 
 /***/ }),
-/* 10 */
+/* 5 */
+/*!********************************************!*\
+  !*** ./js/components/aotoo/lib/foritem.js ***!
+  \********************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.resetItem = resetItem;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
+
+var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
+
+function setItemSortIdf(item, context) {
+  if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item;
+  if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object') {
+    if (!Array.isArray(item)) {
+      var extAttrs = {};
+      var incAttrs = [];
+      item['__sort'] = [];
+
+      if (context) {
+        // item.fromComponent = context.data.fromComponent||context.data.uniqId
+        item.fromComponent = context.data.uniqId;
+      }
+
+      Object.keys(item).forEach(function (key) {
+        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
+          incAttrs.push(key);
+        } else {
+          extAttrs[key] = item[key];
+        }
+      });
+
+      if (incAttrs.length) {
+        item['__sort'] = incAttrs;
+        incAttrs.map(function (attr) {
+          var oData = item[attr];
+          if ((typeof oData === 'undefined' ? 'undefined' : _typeof(oData)) == 'object') {
+            if (Array.isArray(oData)) {
+              item[attr] = setSortTemplateName(oData, context);
+            } else {
+              item[attr] = setItemSortIdf(oData, context);
+            }
+          }
+        });
+      }
+      return item;
+    }
+  }
+}
+
+function setSortTemplateName(data, context) {
+  if (Array.isArray(data) && data.length) {
+    return data.map(function (item) {
+      return setItemSortIdf(item, context);
+    });
+  }
+}
+
+function resetItem(data, context) {
+  var extAttrs = {};
+  var incAttrs = [];
+  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
+    return data;
+  }
+
+  Object.keys(data).forEach(function (key) {
+    if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
+      incAttrs.push(key);
+    } else {
+      if (key == 'aim') {
+        data.catchtap = data[key];
+      }
+      extAttrs[key] = data[key];
+    }
+  });
+
+  data['__sort'] = incAttrs;
+
+  var _loop = function _loop() {
+    var sonItem = data[attr];
+    if (attr == 'itemMethod') {
+      if (context && (0, _util.isObject)(sonItem)) {
+        Object.keys(sonItem).forEach(function (fn) {
+          context[fn] = sonItem[fn];
+        });
+        delete data.itemMethod;
+      }
+    } else {
+      if (Array.isArray(sonItem)) {
+        data[attr] = setSortTemplateName(sonItem, context);
+      } else {
+        data[attr] = setItemSortIdf(sonItem, context);
+      }
+    }
+  };
+
+  for (var attr in data) {
+    _loop();
+  }
+  if (!data.parent) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
+
+  // context.props = extAttrs
+  return data;
+}
+
+/***/ }),
+/* 6 */,
+/* 7 */
 /*!****************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/crypt/crypt.js ***!
   \****************************************************************/
@@ -1110,7 +713,7 @@ function reSetList(list) {
 
 
 /***/ }),
-/* 11 */
+/* 8 */
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/is-buffer/index.js ***!
   \********************************************************************/
@@ -1142,15 +745,10 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
-/*!*******************************************!*\
-  !*** ./js/components/aotoo/core/utils.js ***!
-  \*******************************************/
+/* 9 */
+/*!*****************************************!*\
+  !*** ./js/components/aotoo/lib/tree.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1161,141 +759,390 @@ function isSlowBuffer (obj) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.post = post;
-exports.upload = upload;
 
-var _path = __webpack_require__(/*! path */ 21);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _path2 = _interopRequireDefault(_path);
+exports.tree = tree;
+exports.listToTree = listToTree;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _util = __webpack_require__(/*! ./util */ 1);
 
-var lib = __webpack_require__(/*! ../lib */ 1);
-
-function post(url, data) {
-  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  return new Promise(function (resolve, reject) {
-    var postParam = {
-      url: url, // 仅为示例，并非真实的接口地址
-      method: 'POST',
-      data: data || {},
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function success(res) {
-        resolve(res);
-      },
-
-      error: function error(e) {
-        reject('网络出错');
-      }
-    };
-    postParam = Object.assign(postParam, param);
-    postParam.fail = postParam.error;
-    if (postParam.url) wx.request(postParam);
-  });
-}
-
-function getImgRealPath(obj) {
-  if (lib.isString(obj)) return obj;
-  if (lib.isObject(obj)) {
-    return obj.img && obj.img.src ? obj.img.src : obj.src ? obj.src : obj.img;
+var filter = function filter(data, callback) {
+  if ((0, _util.isArray)(data)) {
+    return data.filter(callback);
+  }
+};
+var idrecode = [];
+var treeProps = {};
+function valideClassName(clsname, level) {
+  var reCls = / *level([\d]* *)?/ig;
+  var myLevelCls = 'level' + level;
+  if (clsname) {
+    if (reCls.test(clsname)) {
+      clsname = clsname.replace(reCls, '');
+    }
+    clsname += ' ' + myLevelCls;
+    return clsname;
   }
 }
 
-function _up(params) {
-  return new Promise(function (resolve, reject) {
-    var oldSuccess = params.success;
-    var oldError = params.error;
-    params.success = function (res) {
-      if (typeof oldSuccess == 'function') {
-        oldSuccess(res);
-      }
-      resolve(res);
-    };
-
-    params.error = function (err) {
-      if (typeof oldError == 'function') {
-        oldError(err);
-      }
-      reject(err);
-    };
-
-    params.fail = params.error;
-
-    if (Array.isArray(params.filePath)) {
-      var every = params.filePath.map(function (one) {
-        one = getImgRealPath(one);
-        return new Promise(function (rs, rj) {
-          var nParams = {};
-          Object.keys(params).forEach(function (key) {
-            if (key == 'filePath') {
-              nParams[key] = one;
-            } else {
-              if (key == 'formData') {
-                var basename = _path2.default.basename(one);
-                var extname = _path2.default.extname(basename);
-                if (basename.length > 10) {
-                  nParams[key] = Object.assign(params[key], { name: lib.uuid('upimg_', 12) + extname }); // 重命名上传文件名
-                } else {
-                  nParams[key] = params[key];
-                }
-              } else {
-                nParams[key] = params[key];
-              }
-            }
-          });
-          nParams.success = function (res) {
-            rs(res);
-          };
-          nParams.error = function (err) {
-            rj(err);
-          };
-          wx.uploadFile(nParams);
-        });
-      });
-      Promise.all(every).then(function (res) {
-        return resolve(res);
-      });
+var treeDeep = 1;
+function subTree(item, dataAry, deep, index) {
+  deep = treeDeep = deep || 1;
+  var fromTree = void 0;
+  if (this && this.fromTree) {
+    fromTree = this.fromTree;
+  }
+  var nsons = [];
+  var sons = filter(dataAry, function (o) {
+    return o.parent == item.idf;
+  });
+  sons.forEach(function (son, ii) {
+    var _clsName = son.itemClass || son.class;
+    _clsName = valideClassName(_clsName, deep);
+    son.itemClass = _clsName;
+    if (son.idf && idrecode.indexOf(son.idf) == -1) {
+      idrecode.push(son.idf);
+      nsons = nsons.concat([subTree.call({ fromTree: fromTree }, son, dataAry, ++deep, ii)]);
+      --deep;
     } else {
-      params.filePath = getImgRealPath(params.filePath);
-      wx.uploadFile(params);
+      nsons = nsons.concat(son);
     }
   });
+  if (nsons.length) {
+    // item.li = nsons
+    // item['__sort'] = (item['__sort']||[]).concat('li')
+    var treeid = item.attr && item.attr['data-treeid'] || index;
+    // const $id = item.$$id || item.id || `level${deep}-${treeid}`
+    var $id = item.$$id || item.id || '' + treeid;
+    item['@list'] = {
+      $$id: $id,
+      data: nsons,
+      listClass: item.liClass || 'ul',
+      itemClass: treeProps.itemClass || '',
+      itemStyle: treeProps.itemStyle || '',
+      show: item.hasOwnProperty('show') ? item.show : true,
+      fromTree: fromTree
+    };
+    item['__sort'] = (item['__sort'] || []).concat('@list');
+  }
+  return item;
 }
 
-function upload(url, data) {
-  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+function owerTree(item) {
+  var ary = [];
+  item.forEach(function (o) {
+    if (Array.isArray(o)) return owerTree(item);
+    ary.push(o);
+  });
+  if (ary.length) {
+    return { li: ary };
+  }
+}
 
-  if (lib.isObject(url)) param = url;
-  var postParam = {
-    url: url, // 仅为示例，并非真实的接口地址
-    type: 'img',
-    name: 'file',
-    filePath: '',
-    header: {
-      'content-type': 'application/json' // 默认值
-    },
-    data: data || {}
-    // success(res) {},
-    // error: function (e) {}
+// TreeStructor
+// 此处tree的算法与aotoo的tree算法有差异
+function tree(dataAry, props, fromTree) {
+  var menus = [];
+  idrecode = [];
+  treeProps = {
+    itemClass: props.itemClass || props.class,
+    itemStyle: props.itemStyle || props.style
   };
-  postParam = Object.assign(postParam, param);
-  postParam.formData = postParam.data;
-  delete postParam.data;
-  if (postParam.url && postParam.filePath) {
-    return _up(postParam);
-  } else {
-    return Promise.reject('url\u548CfilePath\u53C2\u6570\u4E3A\u5FC5\u586B\u9879\uFF0Curl\u8BF7\u586B\u5199\u670D\u52A1\u5668\u5730\u5740, filePath\u8BF7\u586B\u5199\u4E0A\u4F20\u56FE\u7247\u5730\u5740');
+  dataAry.forEach(function (item, ii) {
+    treeDeep = 1;
+    if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
+      if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
+        var clsName = item.itemClass || item.class;
+        clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';
+        item.itemClass = clsName;
+        var nItem = subTree.call({ fromTree: fromTree }, item, dataAry, ii);
+        nItem.__deep = treeDeep;
+        menus.push(nItem);
+      }
+      if (!item.idf && !item.parent) {
+        menus.push(item);
+      }
+    }
+    if (Array.isArray(item)) {
+      var _tmp = owerTree(item);
+      if (_tmp) {
+        menus.push(_tmp);
+      }
+    }
+  });
+  return menus;
+}
+
+function listToTree(_list, fromTree) {
+  var list = (0, _util.clone)(_list);
+  if ((0, _util.isObject)(list) && list.data) {
+    list.data = tree(list.data, list, fromTree);
+  }
+  return list;
+}
+
+/***/ }),
+/* 10 */
+/*!******************************************!*\
+  !*** ./js/components/aotoo/lib/hooks.js ***!
+  \******************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.hooks = hooks;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _hooks = function () {
+  function _hooks(key) {
+    _classCallCheck(this, _hooks);
+
+    this.actions = {};
+    this.storeData = {};
+  }
+
+  _createClass(_hooks, [{
+    key: 'destory',
+    value: function destory() {
+      this.actions = null;
+      this.storeData = null;
+    }
+  }, {
+    key: 'setItem',
+    value: function setItem(key, val) {
+      this.storeData[key] = val;
+    }
+  }, {
+    key: 'getItem',
+    value: function getItem(key) {
+      return this.storeData[key];
+    }
+  }, {
+    key: 'append',
+    value: function append(key, val) {
+      if (this.storeData[key]) {
+        var sData = this.storeData[key];
+        if ((0, _util.isArray)(sData)) {
+          sData = sData.concat(val);
+        } else if ((0, _util.isObject)(sData)) {
+          if ((0, _util.isObject)(val)) {
+            sData = Object.assign(sData, val);
+          } else {
+            sData[(0, _util.suid)('random_')] = val;
+          }
+        } else {
+          this.setItem(key, val);
+        }
+      } else {
+        this.setItem(key, val);
+      }
+    }
+  }, {
+    key: 'delete',
+    value: function _delete(key) {
+      this.storeData[key] = null;
+    }
+  }, {
+    key: 'on',
+    value: function on(key, cb) {
+      var myActions = this.actions;
+      var hooksActionUniqId = (0, _util.suid)('hooks_action_');
+      if (cb) {
+        cb['hooksActionUniqId'] = hooksActionUniqId;
+      }
+      if ((0, _util.isString)(key)) {
+        if (myActions[key]) {
+          myActions[key] = [].concat(myActions[key]).concat(cb);
+        } else {
+          myActions[key] = [cb];
+        }
+      }
+    }
+  }, {
+    key: 'off',
+    value: function off(key, fun) {
+      if ((0, _util.isString)(key)) {
+        if (fun) {
+          var hooksActionUniqId = fun.hooksActionUniqId;
+          if (hooksActionUniqId) {
+            var theFuns = this.actions[key];
+            var selectFunIndex = void 0;
+            if (theFuns) {
+              theFuns.forEach(function ($f, ii) {
+                if ($f['hooksActionUniqId'] == hooksActionUniqId) {
+                  selectFunIndex = ii;
+                }
+              });
+              if (selectFunIndex) {
+                theFuns.splice(selectFunIndex, 1);
+              }
+            }
+          }
+        } else {
+          delete this.actions[key];
+        }
+      }
+    }
+  }, {
+    key: 'emit',
+    value: function emit(key, param) {
+      var _this = this;
+
+      var ctx = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+      if ((0, _util.isString)(key)) {
+        if (this.actions[key]) {
+          var vals = [];
+          var funs = this.actions[key];
+          funs.forEach(function (fun) {
+            if ((0, _util.isFunction)(fun)) {
+              var res = fun.call(ctx, param);
+              if (res) vals.push(res);else {
+                vals.push(undefined);
+              }
+              if (fun.onlyonetime) {
+                _this.off(key, fun);
+              }
+              // vals.push(fun.call(ctx, param))
+            }
+          });
+          if (vals.length) {
+            return vals;
+          }
+        }
+      }
+    }
+  }, {
+    key: 'one',
+    value: function one(key, cb) {
+      if (key && typeof cb == 'function') {
+        cb.onlyonetime = true;
+      }
+      this.on(key, cb);
+    }
+  }]);
+
+  return _hooks;
+}();
+
+var myhooks = {};
+function hooks(idf) {
+  if ((0, _util.isString)(idf)) {
+    if (!myhooks[idf]) {
+      myhooks[idf] = new _hooks();
+    }
+    return myhooks[idf];
   }
 }
 
 /***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
+/* 11 */
+/*!********************************************!*\
+  !*** ./js/components/aotoo/lib/forlist.js ***!
+  \********************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.reSetItemAttr = reSetItemAttr;
+exports.reSetList = reSetList;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var _foritem = __webpack_require__(/*! ./foritem */ 5);
+
+function reSetItemAttr(item, list) {
+  if (typeof item == 'boolean') return item;
+  if (typeof item == 'string' || typeof item == 'number') {
+    item = { title: item };
+  }
+
+  var clsIndex = (0, _util.suid)('index-'); // 将data-index置入每条数据的class中，这样不用去动结构
+  var $ii = clsIndex;
+
+  if (list.itemMethod) {
+    var itm = list.itemMethod;
+    if ((typeof itm === 'undefined' ? 'undefined' : _typeof(itm)) == 'object') {
+      Object.keys(itm).forEach(function (evt) {
+        item[evt] = itm[evt];
+      });
+    }
+  }
+
+  var itmc = list.itemClass || list.class || '';
+  var myClass = item['itemClass'] || item['class'] || item['className'] || '';
+  item['itemClass'] = myClass ? itmc + ' ' + myClass : itmc;
+  item['itemClass'] = item.idf ? 'item itemroot ' + item['itemClass'] : 'item ' + item['itemClass'];
+
+  if (list.itemStyle || list.style) {
+    var itsy = list.itemStyle || list.style;
+    if (item['style'] || item['itemStyle']) {
+      var myStyle = item['style'] || item['itemStyle'];
+      item['style'] = myStyle;
+    } else {
+      item['style'] = itsy;
+    }
+  }
+
+  // if (this.$$is=='tree' && isObject(item)) {
+  if ((0, _util.isObject)(item)) {
+    if (item['attr']) {
+      if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = $ii;
+    } else {
+      if (item['$$typeof']) {
+        item = { title: item, attr: { 'data-treeid': $ii } };
+      } else {
+        item['attr'] = { 'data-treeid': $ii };
+      }
+    }
+  }
+
+  var newItem = item['$$id'] ? item : (0, _foritem.resetItem)(item, this);
+  return newItem;
+}
+
+function reSetArray(data, list) {
+  var _this = this;
+
+  if ((0, _util.isArray)(data)) {
+    list.data = data.map(function (item) {
+      return reSetItemAttr.call(_this, item, list);
+    });
+  }
+  return list;
+}
+
+function reSetList(list) {
+  if ((0, _util.isObject)(list)) {
+    list['show'] = list.hasOwnProperty('show') ? list.show : true;
+    return reSetArray.call(this, list.data, list);
+  }
+}
+
+/***/ }),
+/* 12 */
 /*!**************************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/path-browserify/index.js ***!
   \**************************************************************************/
@@ -1528,15 +1375,10 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ 27)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ 13)))
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */
+/* 13 */
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/process/browser.js ***!
   \********************************************************************/
@@ -1730,5 +1572,155 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 
+/***/ }),
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
+/*!*******************************************!*\
+  !*** ./js/components/aotoo/core/utils.js ***!
+  \*******************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.post = post;
+exports.upload = upload;
+
+var _path = __webpack_require__(/*! path */ 12);
+
+var _path2 = _interopRequireDefault(_path);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var lib = __webpack_require__(/*! ../lib */ 0);
+
+function post(url, data) {
+  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  return new Promise(function (resolve, reject) {
+    var postParam = {
+      url: url, // 仅为示例，并非真实的接口地址
+      method: 'POST',
+      data: data || {},
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function success(res) {
+        resolve(res);
+      },
+
+      error: function error(e) {
+        reject('网络出错');
+      }
+    };
+    postParam = Object.assign(postParam, param);
+    postParam.fail = postParam.error;
+    if (postParam.url) wx.request(postParam);
+  });
+}
+
+function getImgRealPath(obj) {
+  if (lib.isString(obj)) return obj;
+  if (lib.isObject(obj)) {
+    return obj.img && obj.img.src ? obj.img.src : obj.src ? obj.src : obj.img;
+  }
+}
+
+function _up(params) {
+  return new Promise(function (resolve, reject) {
+    var oldSuccess = params.success;
+    var oldError = params.error;
+    params.success = function (res) {
+      if (typeof oldSuccess == 'function') {
+        oldSuccess(res);
+      }
+      resolve(res);
+    };
+
+    params.error = function (err) {
+      if (typeof oldError == 'function') {
+        oldError(err);
+      }
+      reject(err);
+    };
+
+    params.fail = params.error;
+
+    if (Array.isArray(params.filePath)) {
+      var every = params.filePath.map(function (one) {
+        one = getImgRealPath(one);
+        return new Promise(function (rs, rj) {
+          var nParams = {};
+          Object.keys(params).forEach(function (key) {
+            if (key == 'filePath') {
+              nParams[key] = one;
+            } else {
+              if (key == 'formData') {
+                var basename = _path2.default.basename(one);
+                var extname = _path2.default.extname(basename);
+                if (basename.length > 10) {
+                  nParams[key] = Object.assign(params[key], { name: lib.uuid('upimg_', 12) + extname }); // 重命名上传文件名
+                } else {
+                  nParams[key] = params[key];
+                }
+              } else {
+                nParams[key] = params[key];
+              }
+            }
+          });
+          nParams.success = function (res) {
+            rs(res);
+          };
+          nParams.error = function (err) {
+            rj(err);
+          };
+          wx.uploadFile(nParams);
+        });
+      });
+      Promise.all(every).then(function (res) {
+        return resolve(res);
+      });
+    } else {
+      params.filePath = getImgRealPath(params.filePath);
+      wx.uploadFile(params);
+    }
+  });
+}
+
+function upload(url, data) {
+  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (lib.isObject(url)) param = url;
+  var postParam = {
+    url: url, // 仅为示例，并非真实的接口地址
+    type: 'img',
+    name: 'file',
+    filePath: '',
+    header: {
+      'content-type': 'application/json' // 默认值
+    },
+    data: data || {}
+    // success(res) {},
+    // error: function (e) {}
+  };
+  postParam = Object.assign(postParam, param);
+  postParam.formData = postParam.data;
+  delete postParam.data;
+  if (postParam.url && postParam.filePath) {
+    return _up(postParam);
+  } else {
+    return Promise.reject('url\u548CfilePath\u53C2\u6570\u4E3A\u5FC5\u586B\u9879\uFF0Curl\u8BF7\u586B\u5199\u670D\u52A1\u5668\u5730\u5740, filePath\u8BF7\u586B\u5199\u4E0A\u4F20\u56FE\u7247\u5730\u5740');
+  }
+}
+
 /***/ })
-],[[17,0]]]);
+],[[19,0]]]);

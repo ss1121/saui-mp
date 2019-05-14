@@ -1,7 +1,8 @@
 ; require("../../../runtime.js");
 /**auto import common&runtime js**/
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[13],[
-/* 0 */
+/* 0 */,
+/* 1 */
 /*!*****************************************!*\
   !*** ./js/components/aotoo/lib/util.js ***!
   \*****************************************/
@@ -31,7 +32,7 @@ exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
 
-var _md = __webpack_require__(/*! md5 */ 9);
+var _md = __webpack_require__(/*! md5 */ 4);
 
 var _md2 = _interopRequireDefault(_md);
 
@@ -135,129 +136,8 @@ function uuid(prefix, len) {
 }
 
 /***/ }),
-/* 1 */,
 /* 2 */,
 /* 3 */
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/foritem.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.resetItem = resetItem;
-
-var _util = __webpack_require__(/*! ./util */ 0);
-
-var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
-
-var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
-
-function setItemSortIdf(item, context) {
-  if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item;
-  if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object') {
-    if (!Array.isArray(item)) {
-      var extAttrs = {};
-      var incAttrs = [];
-      item['__sort'] = [];
-
-      if (context) {
-        // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.uniqId;
-      }
-
-      Object.keys(item).forEach(function (key) {
-        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-          incAttrs.push(key);
-        } else {
-          extAttrs[key] = item[key];
-        }
-      });
-
-      if (incAttrs.length) {
-        item['__sort'] = incAttrs;
-        incAttrs.map(function (attr) {
-          var oData = item[attr];
-          if ((typeof oData === 'undefined' ? 'undefined' : _typeof(oData)) == 'object') {
-            if (Array.isArray(oData)) {
-              item[attr] = setSortTemplateName(oData, context);
-            } else {
-              item[attr] = setItemSortIdf(oData, context);
-            }
-          }
-        });
-      }
-      return item;
-    }
-  }
-}
-
-function setSortTemplateName(data, context) {
-  if (Array.isArray(data) && data.length) {
-    return data.map(function (item) {
-      return setItemSortIdf(item, context);
-    });
-  }
-}
-
-function resetItem(data, context) {
-  var extAttrs = {};
-  var incAttrs = [];
-  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
-    return data;
-  }
-
-  Object.keys(data).forEach(function (key) {
-    if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-      incAttrs.push(key);
-    } else {
-      if (key == 'aim') {
-        data.catchtap = data[key];
-      }
-      extAttrs[key] = data[key];
-    }
-  });
-
-  data['__sort'] = incAttrs;
-
-  var _loop = function _loop() {
-    var sonItem = data[attr];
-    if (attr == 'itemMethod') {
-      if (context && (0, _util.isObject)(sonItem)) {
-        Object.keys(sonItem).forEach(function (fn) {
-          context[fn] = sonItem[fn];
-        });
-        delete data.itemMethod;
-      }
-    } else {
-      if (Array.isArray(sonItem)) {
-        data[attr] = setSortTemplateName(sonItem, context);
-      } else {
-        data[attr] = setItemSortIdf(sonItem, context);
-      }
-    }
-  };
-
-  for (var attr in data) {
-    _loop();
-  }
-  if (!data.parent) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
-
-  // context.props = extAttrs
-  return data;
-}
-
-/***/ }),
-/* 4 */
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/charenc/charenc.js ***!
   \********************************************************************/
@@ -301,11 +181,7 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/* 4 */
 /*!************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/md5/md5.js ***!
   \************************************************************/
@@ -314,10 +190,10 @@ module.exports = charenc;
 /***/ (function(module, exports, __webpack_require__) {
 
 (function(){
-  var crypt = __webpack_require__(/*! crypt */ 10),
-      utf8 = __webpack_require__(/*! charenc */ 4).utf8,
-      isBuffer = __webpack_require__(/*! is-buffer */ 11),
-      bin = __webpack_require__(/*! charenc */ 4).bin,
+  var crypt = __webpack_require__(/*! crypt */ 7),
+      utf8 = __webpack_require__(/*! charenc */ 3).utf8,
+      isBuffer = __webpack_require__(/*! is-buffer */ 8),
+      bin = __webpack_require__(/*! charenc */ 3).bin,
 
   // The core
   md5 = function (message, options) {
@@ -476,7 +352,128 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 10 */
+/* 5 */
+/*!********************************************!*\
+  !*** ./js/components/aotoo/lib/foritem.js ***!
+  \********************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.resetItem = resetItem;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
+
+var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
+
+function setItemSortIdf(item, context) {
+  if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item;
+  if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object') {
+    if (!Array.isArray(item)) {
+      var extAttrs = {};
+      var incAttrs = [];
+      item['__sort'] = [];
+
+      if (context) {
+        // item.fromComponent = context.data.fromComponent||context.data.uniqId
+        item.fromComponent = context.data.uniqId;
+      }
+
+      Object.keys(item).forEach(function (key) {
+        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
+          incAttrs.push(key);
+        } else {
+          extAttrs[key] = item[key];
+        }
+      });
+
+      if (incAttrs.length) {
+        item['__sort'] = incAttrs;
+        incAttrs.map(function (attr) {
+          var oData = item[attr];
+          if ((typeof oData === 'undefined' ? 'undefined' : _typeof(oData)) == 'object') {
+            if (Array.isArray(oData)) {
+              item[attr] = setSortTemplateName(oData, context);
+            } else {
+              item[attr] = setItemSortIdf(oData, context);
+            }
+          }
+        });
+      }
+      return item;
+    }
+  }
+}
+
+function setSortTemplateName(data, context) {
+  if (Array.isArray(data) && data.length) {
+    return data.map(function (item) {
+      return setItemSortIdf(item, context);
+    });
+  }
+}
+
+function resetItem(data, context) {
+  var extAttrs = {};
+  var incAttrs = [];
+  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
+    return data;
+  }
+
+  Object.keys(data).forEach(function (key) {
+    if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
+      incAttrs.push(key);
+    } else {
+      if (key == 'aim') {
+        data.catchtap = data[key];
+      }
+      extAttrs[key] = data[key];
+    }
+  });
+
+  data['__sort'] = incAttrs;
+
+  var _loop = function _loop() {
+    var sonItem = data[attr];
+    if (attr == 'itemMethod') {
+      if (context && (0, _util.isObject)(sonItem)) {
+        Object.keys(sonItem).forEach(function (fn) {
+          context[fn] = sonItem[fn];
+        });
+        delete data.itemMethod;
+      }
+    } else {
+      if (Array.isArray(sonItem)) {
+        data[attr] = setSortTemplateName(sonItem, context);
+      } else {
+        data[attr] = setItemSortIdf(sonItem, context);
+      }
+    }
+  };
+
+  for (var attr in data) {
+    _loop();
+  }
+  if (!data.parent) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
+
+  // context.props = extAttrs
+  return data;
+}
+
+/***/ }),
+/* 6 */,
+/* 7 */
 /*!****************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/crypt/crypt.js ***!
   \****************************************************************/
@@ -583,7 +580,7 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 11 */
+/* 8 */
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/is-buffer/index.js ***!
   \********************************************************************/
@@ -615,4 +612,4 @@ function isSlowBuffer (obj) {
 
 
 /***/ })
-],[[3,0]]]);
+],[[5,0]]]);

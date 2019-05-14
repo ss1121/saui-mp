@@ -2,7 +2,7 @@
 /**auto import common&runtime js**/
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[1],{
 
-/***/ 21:
+/***/ 12:
 /*!**************************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/path-browserify/index.js ***!
   \**************************************************************************/
@@ -235,156 +235,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ 27)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ 13)))
 
 /***/ }),
 
-/***/ 22:
-/*!****************************!*\
-  !*** ./configs/default.js ***!
-  \****************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/*
- * Aotoo-hub
- * 多项目大前端脚手架
- * 作者：天天修改
- * home-url: http://www.agzgz.com
- * github: https: //github.com/webkixi
- */
-
-var path = __webpack_require__(/*! path */ 21);
-module.exports = function (asset) {
-  var name = asset.name,
-      startup = asset.startup,
-      isDev = asset.isDev,
-      SRC = asset.SRC,
-      DIST = asset.DIST,
-      HOST = asset.HOST,
-      PORT = asset.PORT,
-      PROXYPORT = asset.PROXYPORT,
-      options = asset.options;
-
-  return {
-    imgcodeurl: 'http://api.test.7atour.com/tp-web-api/captcha.svl'
-  };
-};
-
-/***/ }),
-
-/***/ 25:
-/*!**************************!*\
-  !*** ./js/envconfigs.js ***!
-  \**************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global, __dirname) {
-
-var path = __webpack_require__(/*! path */ 21);
-var asset = { "name": "SaUi", "ROOT": "/Users/sslin/lgh/xiaochengxu", "version": "1.1.0", "TYPE": "mp", "startup": true, "isDev": true, "SRC": "/Users/sslin/lgh/xiaochengxu/src/SaUi", "DIST": "/Users/sslin/lgh/xiaochengxu/src/SaUi/dist/1.1.0/dev", "HOST": "localhost", "PORT": 8300, "PROXYPORT": 8317, "options": { "cloud": true, "appid": "wx6dfd3ea360d61f4d" }, "argv": { "_": ["dev"] }, "isXcx": true };
-var scene = 'default';
-module.exports = function (opts) {
-  var targetConfig = __webpack_require__(/*! ../configs/default */ 22)(asset);
-  if (scene && scene != 'default') {
-    var sceneConfig = __webpack_require__(/*! ../configs/default */ 22)(asset);
-    targetConfig = Object.assign({}, targetConfig, sceneConfig);
-  }
-  targetConfig.env = asset;
-  if (typeof wx == 'undefined') {
-    global.Configs = global.CONFIG = targetConfig;
-  } else {
-    wx.CONFIG = targetConfig;
-  }
-  var oldRoot = asset.ROOT;
-  var oldSrc = asset.SRC;
-  var oldSSrc = path.join(oldSrc, 'server');
-  var oldDist = asset.DIST;
-  var oldContentPath = asset.contentBase;
-  var nRoot = '';
-  var nSrc = '';
-  var nDist = '';
-  var nContentPath = '';
-
-  var runself = function () {
-    var tmpsrc = oldSrc.replace(oldRoot, '');
-    var tmpssrc = oldSSrc.replace(oldRoot, '');
-    var tmpdist = oldDist.replace(oldRoot, '');
-    tmpsrc = path.join('/', tmpsrc);
-    tmpssrc = path.join('/', tmpssrc);
-    tmpdist = path.join('/', tmpdist);
-    var tmpAry = tmpssrc.split('/');
-    tmpAry.forEach(function (item, ii) {
-      if (ii > 0) {
-        if (!nRoot) {
-          nRoot = __dirname;
-        }
-        nRoot = path.join(nRoot, '../');
-      }
-    });
-    nSrc = path.join(nRoot, tmpsrc);
-    nDist = path.join(nRoot, tmpdist);
-    nContentPath = nDist;
-  }();
-  asset.ROOT = nRoot;
-  asset.SRC = nSrc;
-  asset.DIST = nDist;
-  asset.options.scenes = targetConfig;
-  asset.options.scenes.isXcx = true;
-  var mapper = {};
-  asset.options.scenes.mapper = mapper;
-  if (typeof wx == 'undefined') {
-    global.CONFIG.ROOT = nRoot;
-    global.Configs.mapper = global.CONFIG.mapper = mapper;
-  } else {
-    wx.CONFIG.ROOT = nRoot;
-  }
-  return asset;
-};
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/global.js */ 26), "/"))
-
-/***/ }),
-
-/***/ 26:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the wx reference is available
-	if (typeof wx === "object") g = wx;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 27:
+/***/ 13:
 /*!********************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/process/browser.js ***!
   \********************************************************************/
@@ -580,6 +435,151 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ 23:
+/*!****************************!*\
+  !*** ./configs/default.js ***!
+  \****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+ * Aotoo-hub
+ * 多项目大前端脚手架
+ * 作者：天天修改
+ * home-url: http://www.agzgz.com
+ * github: https: //github.com/webkixi
+ */
+
+var path = __webpack_require__(/*! path */ 12);
+module.exports = function (asset) {
+  var name = asset.name,
+      startup = asset.startup,
+      isDev = asset.isDev,
+      SRC = asset.SRC,
+      DIST = asset.DIST,
+      HOST = asset.HOST,
+      PORT = asset.PORT,
+      PROXYPORT = asset.PROXYPORT,
+      options = asset.options;
+
+  return {
+    imgcodeurl: 'http://api.test.7atour.com/tp-web-api/captcha.svl'
+  };
+};
+
+/***/ }),
+
+/***/ 26:
+/*!**************************!*\
+  !*** ./js/envconfigs.js ***!
+  \**************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global, __dirname) {
+
+var path = __webpack_require__(/*! path */ 12);
+var asset = { "name": "SaUi", "ROOT": "/Users/sslin/lgh/xiaochengxu", "version": "1.1.0", "TYPE": "mp", "startup": true, "isDev": true, "SRC": "/Users/sslin/lgh/xiaochengxu/src/SaUi", "DIST": "/Users/sslin/lgh/xiaochengxu/src/SaUi/dist/1.1.0/dev", "HOST": "localhost", "PORT": 8300, "PROXYPORT": 8317, "options": { "cloud": true, "appid": "wx6dfd3ea360d61f4d" }, "argv": { "_": ["dev"] }, "isXcx": true };
+var scene = 'default';
+module.exports = function (opts) {
+  var targetConfig = __webpack_require__(/*! ../configs/default */ 23)(asset);
+  if (scene && scene != 'default') {
+    var sceneConfig = __webpack_require__(/*! ../configs/default */ 23)(asset);
+    targetConfig = Object.assign({}, targetConfig, sceneConfig);
+  }
+  targetConfig.env = asset;
+  if (typeof wx == 'undefined') {
+    global.Configs = global.CONFIG = targetConfig;
+  } else {
+    wx.CONFIG = targetConfig;
+  }
+  var oldRoot = asset.ROOT;
+  var oldSrc = asset.SRC;
+  var oldSSrc = path.join(oldSrc, 'server');
+  var oldDist = asset.DIST;
+  var oldContentPath = asset.contentBase;
+  var nRoot = '';
+  var nSrc = '';
+  var nDist = '';
+  var nContentPath = '';
+
+  var runself = function () {
+    var tmpsrc = oldSrc.replace(oldRoot, '');
+    var tmpssrc = oldSSrc.replace(oldRoot, '');
+    var tmpdist = oldDist.replace(oldRoot, '');
+    tmpsrc = path.join('/', tmpsrc);
+    tmpssrc = path.join('/', tmpssrc);
+    tmpdist = path.join('/', tmpdist);
+    var tmpAry = tmpssrc.split('/');
+    tmpAry.forEach(function (item, ii) {
+      if (ii > 0) {
+        if (!nRoot) {
+          nRoot = __dirname;
+        }
+        nRoot = path.join(nRoot, '../');
+      }
+    });
+    nSrc = path.join(nRoot, tmpsrc);
+    nDist = path.join(nRoot, tmpdist);
+    nContentPath = nDist;
+  }();
+  asset.ROOT = nRoot;
+  asset.SRC = nSrc;
+  asset.DIST = nDist;
+  asset.options.scenes = targetConfig;
+  asset.options.scenes.isXcx = true;
+  var mapper = {};
+  asset.options.scenes.mapper = mapper;
+  if (typeof wx == 'undefined') {
+    global.CONFIG.ROOT = nRoot;
+    global.Configs.mapper = global.CONFIG.mapper = mapper;
+  } else {
+    wx.CONFIG.ROOT = nRoot;
+  }
+  return asset;
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/global.js */ 27), "/"))
+
+/***/ }),
+
+/***/ 27:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the wx reference is available
+	if (typeof wx === "object") g = wx;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
 /***/ 30:
 /*!*******************!*\
   !*** ./js/app.js ***!
@@ -592,7 +592,7 @@ process.umask = function() { return 0; };
 
 
 //app.js
-__webpack_require__(/*! ./envconfigs */ 25)();
+__webpack_require__(/*! ./envconfigs */ 26)();
 App({
   onLaunch: function onLaunch() {
     var _this = this;
