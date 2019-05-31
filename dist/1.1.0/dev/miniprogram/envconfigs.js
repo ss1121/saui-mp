@@ -1,6 +1,6 @@
 ; require("./runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[59],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[60],{
 
 /***/ 12:
 /*!**************************************************************************!*\
@@ -473,7 +473,7 @@ module.exports = function (asset) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 28:
 /*!**************************!*\
   !*** ./js/envconfigs.js ***!
   \**************************/
@@ -544,11 +544,11 @@ module.exports = function (opts) {
   }
   return asset;
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/global.js */ 27), "/"))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/global.js */ 29), "/"))
 
 /***/ }),
 
-/***/ 27:
+/***/ 29:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
@@ -580,4 +580,4 @@ module.exports = g;
 
 /***/ })
 
-},[[26,0]]]);
+},[[28,0]]]);

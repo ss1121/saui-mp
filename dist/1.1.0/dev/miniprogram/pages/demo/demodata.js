@@ -1,6 +1,6 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[230],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[234],{
 
 /***/ 24:
 /*!**********************************!*\
@@ -738,7 +738,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 29:
+/***/ 31:
 /*!***********************************!*\
   !*** ./js/pages/demo/demodata.js ***!
   \***********************************/
@@ -1078,4 +1078,4 @@ var diytour2Data = exports.diytour2Data = {
 
 /***/ })
 
-},[[29,0]]]);
+},[[31,0]]]);

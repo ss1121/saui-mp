@@ -54,6 +54,12 @@ Object.defineProperty(exports, 'formatQuery', {
     return _util.formatQuery;
   }
 });
+Object.defineProperty(exports, 'formatToUrl', {
+  enumerable: true,
+  get: function get() {
+    return _util.formatToUrl;
+  }
+});
 Object.defineProperty(exports, 'suid', {
   enumerable: true,
   get: function get() {
@@ -161,6 +167,7 @@ exports.isFunction = isFunction;
 exports.clone = clone;
 exports.isEmpty = isEmpty;
 exports.formatQuery = formatQuery;
+exports.formatToUrl = formatToUrl;
 exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
@@ -194,7 +201,7 @@ function objTypeof(obj, type) {
 }
 
 function isObject(obj) {
-  return objTypeof(obj) == 'object';
+  return objTypeof(obj) == 'object' && !isArray(obj);
 }
 
 function isArray(obj) {
@@ -241,6 +248,22 @@ function formatQuery(url) {
   return { url: aim, query: query };
 }
 
+function formatToUrl(url) {
+  var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (isString(url) && isObject(param)) {
+    var queryStr = '';
+    Object.keys(param).forEach(function (key) {
+      queryStr += '&' + key + '=' + param[key];
+    });
+    if (queryStr) {
+      url += '?' + queryStr;
+      url = url.replace('?&', '?').replace('&&', '&');
+    }
+  }
+  return url;
+}
+
 var suidCount = -1;
 function suid(prefix) {
   suidCount++;
@@ -259,8 +282,8 @@ function uuid(prefix, len) {
   var randomNum = mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
   var uuid = (prefix || 'uuid') + (0, _md2.default)(randomNum);
   if (len && typeof len == 'number' && len > 6) {
-    var remainder = len - 4;
-    var pre = uuid.substr(0, 4);
+    var remainder = len - 5;
+    var pre = uuid.substr(0, 5);
     var aft = uuid.substr(uuid.length - remainder);
     return pre + aft;
   } else {
@@ -520,7 +543,7 @@ function setItemSortIdf(item, context) {
 
       if (context) {
         // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.uniqId;
+        item.fromComponent = context.data.fromComponent || context.data.uniqId;
       }
 
       Object.keys(item).forEach(function (key) {
@@ -562,6 +585,14 @@ function resetItem(data, context) {
   var incAttrs = [];
   if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
     return data;
+  }
+
+  if (context && data.$$id && data.methods) {
+    var methods = data.methods;
+    Object.keys(methods).forEach(function (key) {
+      context[key] = methods[key].bind(context);
+    });
+    delete data.methods;
   }
 
   Object.keys(data).forEach(function (key) {
@@ -818,11 +849,13 @@ function subTree(item, dataAry, deep, index) {
     item['@list'] = {
       $$id: $id,
       data: nsons,
+      type: item.type,
       listClass: item.liClass || 'ul',
       itemClass: treeProps.itemClass || '',
       itemStyle: treeProps.itemStyle || '',
       show: item.hasOwnProperty('show') ? item.show : true,
-      fromTree: fromTree
+      fromComponent: fromTree
+      // fromTree : fromTree
     };
     item['__sort'] = (item['__sort'] || []).concat('@list');
   }
@@ -852,6 +885,8 @@ function tree(dataAry, props, fromTree) {
   dataAry.forEach(function (item, ii) {
     treeDeep = 1;
     if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
+      // item.fromTree = fromTree
+      item.fromComponent = fromTree;
       if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
         var clsName = item.itemClass || item.class;
         clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';
@@ -907,11 +942,14 @@ var _util = __webpack_require__(/*! ./util */ 1);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _hooks = function () {
-  function _hooks(key) {
+  function _hooks() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, _hooks);
 
     this.actions = {};
     this.storeData = {};
+    this.storage = props.storage;
   }
 
   _createClass(_hooks, [{
@@ -919,22 +957,36 @@ var _hooks = function () {
     value: function destory() {
       this.actions = null;
       this.storeData = null;
+      wx.clearStorageSync();
+    }
+  }, {
+    key: 'getInfo',
+    value: function getInfo() {
+      return this.storage ? getStorageInfoSync() : this.storeData;
     }
   }, {
     key: 'setItem',
     value: function setItem(key, val) {
-      this.storeData[key] = val;
+      try {
+        this.storage ? wx.setStorageSync(key, val) : this.storeData[key] = val;
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'getItem',
     value: function getItem(key) {
-      return this.storeData[key];
+      try {
+        return this.storage ? wx.getStorageSync(key) : this.storeData[key];
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'append',
     value: function append(key, val) {
       if (this.storeData[key]) {
-        var sData = this.storeData[key];
+        var sData = this.getItem(key);
         if ((0, _util.isArray)(sData)) {
           sData = sData.concat(val);
         } else if ((0, _util.isObject)(sData)) {
@@ -944,8 +996,9 @@ var _hooks = function () {
             sData[(0, _util.suid)('random_')] = val;
           }
         } else {
-          this.setItem(key, val);
+          sData = val;
         }
+        this.setItem(key, sData);
       } else {
         this.setItem(key, val);
       }
@@ -953,8 +1006,16 @@ var _hooks = function () {
   }, {
     key: 'delete',
     value: function _delete(key) {
-      this.storeData[key] = null;
+      this.storage ? wx.removeStorageSync(key) : this.storeData[key] = null;
     }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      this.destory();
+    }
+
+    // ========= 下面为钩子方法 ===========
+
   }, {
     key: 'on',
     value: function on(key, cb) {
@@ -1039,10 +1100,10 @@ var _hooks = function () {
 }();
 
 var myhooks = {};
-function hooks(idf) {
+function hooks(idf, storage) {
   if ((0, _util.isString)(idf)) {
     if (!myhooks[idf]) {
-      myhooks[idf] = new _hooks();
+      myhooks[idf] = new _hooks({ storage: storage });
     }
     return myhooks[idf];
   }
@@ -1119,7 +1180,8 @@ function reSetItemAttr(item, list) {
     }
   }
 
-  var newItem = item['$$id'] ? item : (0, _foritem.resetItem)(item, this);
+  // const newItem = item['$$id'] ? item : resetItem(item, this)
+  var newItem = (0, _foritem.resetItem)(item, this);
   return newItem;
 }
 
@@ -1631,47 +1693,40 @@ function post(url, data) {
 function getImgRealPath(obj) {
   if (lib.isString(obj)) return obj;
   if (lib.isObject(obj)) {
-    return obj.img && obj.img.src ? obj.img.src : obj.src ? obj.src : obj.img;
+    return obj.path ? obj.path : obj.src ? obj.src : obj.img ? obj.img.src ? obj.img.src : obj.img : '';
+  }
+}
+
+function formDataName(param) {
+  var basename = _path2.default.basename(param);
+  var extname = _path2.default.extname(basename);
+  return basename.length > 10 ? lib.uuid('upimg_', 12) + extname : basename;
+}
+
+function doUpload(param) {
+  if (param.url == 'cloud') {
+    param.cloudPath = param.formData.name;
+    wx.cloud.uploadFile(param);
+  } else {
+    wx.uploadFile(param);
   }
 }
 
 function _up(params) {
-  return new Promise(function (resolve, reject) {
-    var oldSuccess = params.success;
-    var oldError = params.error;
-    params.success = function (res) {
-      if (typeof oldSuccess == 'function') {
-        oldSuccess(res);
-      }
-      resolve(res);
-    };
-
-    params.error = function (err) {
-      if (typeof oldError == 'function') {
-        oldError(err);
-      }
-      reject(err);
-    };
-
-    params.fail = params.error;
-
-    if (Array.isArray(params.filePath)) {
-      var every = params.filePath.map(function (one) {
-        one = getImgRealPath(one);
-        return new Promise(function (rs, rj) {
+  if (Array.isArray(params.filePath)) {
+    var every = [];
+    params.filePath.forEach(function (one) {
+      one = getImgRealPath(one);
+      if (one) {
+        var p = new Promise(function (rs, rj) {
           var nParams = {};
           Object.keys(params).forEach(function (key) {
             if (key == 'filePath') {
               nParams[key] = one;
             } else {
               if (key == 'formData') {
-                var basename = _path2.default.basename(one);
-                var extname = _path2.default.extname(basename);
-                if (basename.length > 10) {
-                  nParams[key] = Object.assign(params[key], { name: lib.uuid('upimg_', 12) + extname }); // 重命名上传文件名
-                } else {
-                  nParams[key] = params[key];
-                }
+                params[key].name = formDataName(one);
+                nParams[key] = params[key];
               } else {
                 nParams[key] = params[key];
               }
@@ -1683,17 +1738,45 @@ function _up(params) {
           nParams.error = function (err) {
             rj(err);
           };
-          wx.uploadFile(nParams);
+          nParams.fail = function (err) {
+            rj(err);
+          };
+          // wx.uploadFile(nParams)
+          doUpload(nParams);
         });
-      });
-      Promise.all(every).then(function (res) {
-        return resolve(res);
-      });
-    } else {
+        every.push(p);
+      }
+    });
+    return Promise.all(every).then(function (res) {
+      wx.hideLoading();
+      return res;
+    });
+  } else {
+    return new Promise(function (resolve, reject) {
+      var oldSuccess = params.success;
+      var oldError = params.error;
+      params.success = function (res) {
+        wx.hideLoading();
+        if (typeof oldSuccess == 'function') {
+          oldSuccess(res);
+        }
+        resolve(res);
+      };
+
+      params.error = function (err) {
+        if (typeof oldError == 'function') {
+          oldError(err);
+        }
+        reject(err);
+      };
+
+      params.fail = params.error;
       params.filePath = getImgRealPath(params.filePath);
-      wx.uploadFile(params);
-    }
-  });
+      params.formData.name = formDataName(params.filePath);
+      // wx.uploadFile(params)
+      doUpload(params);
+    });
+  }
 }
 
 function upload(url, data) {
@@ -1716,6 +1799,9 @@ function upload(url, data) {
   postParam.formData = postParam.data;
   delete postParam.data;
   if (postParam.url && postParam.filePath) {
+    wx.showLoading({
+      title: '上传中...'
+    });
     return _up(postParam);
   } else {
     return Promise.reject('url\u548CfilePath\u53C2\u6570\u4E3A\u5FC5\u586B\u9879\uFF0Curl\u8BF7\u586B\u5199\u670D\u52A1\u5668\u5730\u5740, filePath\u8BF7\u586B\u5199\u4E0A\u4F20\u56FE\u7247\u5730\u5740');

@@ -28,6 +28,7 @@ exports.isFunction = isFunction;
 exports.clone = clone;
 exports.isEmpty = isEmpty;
 exports.formatQuery = formatQuery;
+exports.formatToUrl = formatToUrl;
 exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
@@ -61,7 +62,7 @@ function objTypeof(obj, type) {
 }
 
 function isObject(obj) {
-  return objTypeof(obj) == 'object';
+  return objTypeof(obj) == 'object' && !isArray(obj);
 }
 
 function isArray(obj) {
@@ -108,6 +109,22 @@ function formatQuery(url) {
   return { url: aim, query: query };
 }
 
+function formatToUrl(url) {
+  var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (isString(url) && isObject(param)) {
+    var queryStr = '';
+    Object.keys(param).forEach(function (key) {
+      queryStr += '&' + key + '=' + param[key];
+    });
+    if (queryStr) {
+      url += '?' + queryStr;
+      url = url.replace('?&', '?').replace('&&', '&');
+    }
+  }
+  return url;
+}
+
 var suidCount = -1;
 function suid(prefix) {
   suidCount++;
@@ -126,8 +143,8 @@ function uuid(prefix, len) {
   var randomNum = mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
   var uuid = (prefix || 'uuid') + (0, _md2.default)(randomNum);
   if (len && typeof len == 'number' && len > 6) {
-    var remainder = len - 4;
-    var pre = uuid.substr(0, 4);
+    var remainder = len - 5;
+    var pre = uuid.substr(0, 5);
     var aft = uuid.substr(uuid.length - remainder);
     return pre + aft;
   } else {
@@ -387,7 +404,7 @@ function setItemSortIdf(item, context) {
 
       if (context) {
         // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.uniqId;
+        item.fromComponent = context.data.fromComponent || context.data.uniqId;
       }
 
       Object.keys(item).forEach(function (key) {
@@ -429,6 +446,14 @@ function resetItem(data, context) {
   var incAttrs = [];
   if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
     return data;
+  }
+
+  if (context && data.$$id && data.methods) {
+    var methods = data.methods;
+    Object.keys(methods).forEach(function (key) {
+      context[key] = methods[key].bind(context);
+    });
+    delete data.methods;
   }
 
   Object.keys(data).forEach(function (key) {

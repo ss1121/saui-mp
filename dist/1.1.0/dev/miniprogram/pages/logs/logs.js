@@ -1,8 +1,8 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[235],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[239],{
 
-/***/ 28:
+/***/ 30:
 /*!**************************!*\
   !*** ./js/utils/util.js ***!
   \**************************/
@@ -35,7 +35,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 73:
+/***/ 76:
 /*!*******************************!*\
   !*** ./js/pages/logs/logs.js ***!
   \*******************************/
@@ -47,7 +47,7 @@ module.exports = {
 
 
 //logs.js
-var util = __webpack_require__(/*! ../../utils/util.js */ 28);
+var util = __webpack_require__(/*! ../../utils/util.js */ 30);
 
 Page({
   data: {
@@ -64,4 +64,4 @@ Page({
 
 /***/ })
 
-},[[73,0]]]);
+},[[76,0]]]);

@@ -1,8 +1,8 @@
 ; require("../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[236],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[243],{
 
-/***/ 28:
+/***/ 30:
 /*!**************************!*\
   !*** ./js/utils/util.js ***!
   \**************************/
@@ -35,4 +35,4 @@ module.exports = {
 
 /***/ })
 
-},[[28,0]]]);
+},[[30,0]]]);

@@ -1,6 +1,6 @@
 ; require("../../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[47],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[48],{
 
 /***/ 0:
 /*!******************************************!*\
@@ -53,6 +53,12 @@ Object.defineProperty(exports, 'formatQuery', {
   enumerable: true,
   get: function get() {
     return _util.formatQuery;
+  }
+});
+Object.defineProperty(exports, 'formatToUrl', {
+  enumerable: true,
+  get: function get() {
+    return _util.formatToUrl;
   }
 });
 Object.defineProperty(exports, 'suid', {
@@ -163,6 +169,7 @@ exports.isFunction = isFunction;
 exports.clone = clone;
 exports.isEmpty = isEmpty;
 exports.formatQuery = formatQuery;
+exports.formatToUrl = formatToUrl;
 exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
@@ -196,7 +203,7 @@ function objTypeof(obj, type) {
 }
 
 function isObject(obj) {
-  return objTypeof(obj) == 'object';
+  return objTypeof(obj) == 'object' && !isArray(obj);
 }
 
 function isArray(obj) {
@@ -243,6 +250,22 @@ function formatQuery(url) {
   return { url: aim, query: query };
 }
 
+function formatToUrl(url) {
+  var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (isString(url) && isObject(param)) {
+    var queryStr = '';
+    Object.keys(param).forEach(function (key) {
+      queryStr += '&' + key + '=' + param[key];
+    });
+    if (queryStr) {
+      url += '?' + queryStr;
+      url = url.replace('?&', '?').replace('&&', '&');
+    }
+  }
+  return url;
+}
+
 var suidCount = -1;
 function suid(prefix) {
   suidCount++;
@@ -261,8 +284,8 @@ function uuid(prefix, len) {
   var randomNum = mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
   var uuid = (prefix || 'uuid') + (0, _md2.default)(randomNum);
   if (len && typeof len == 'number' && len > 6) {
-    var remainder = len - 4;
-    var pre = uuid.substr(0, 4);
+    var remainder = len - 5;
+    var pre = uuid.substr(0, 5);
     var aft = uuid.substr(uuid.length - remainder);
     return pre + aft;
   } else {
@@ -296,11 +319,14 @@ var _util = __webpack_require__(/*! ./util */ 1);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _hooks = function () {
-  function _hooks(key) {
+  function _hooks() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, _hooks);
 
     this.actions = {};
     this.storeData = {};
+    this.storage = props.storage;
   }
 
   _createClass(_hooks, [{
@@ -308,22 +334,36 @@ var _hooks = function () {
     value: function destory() {
       this.actions = null;
       this.storeData = null;
+      wx.clearStorageSync();
+    }
+  }, {
+    key: 'getInfo',
+    value: function getInfo() {
+      return this.storage ? getStorageInfoSync() : this.storeData;
     }
   }, {
     key: 'setItem',
     value: function setItem(key, val) {
-      this.storeData[key] = val;
+      try {
+        this.storage ? wx.setStorageSync(key, val) : this.storeData[key] = val;
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'getItem',
     value: function getItem(key) {
-      return this.storeData[key];
+      try {
+        return this.storage ? wx.getStorageSync(key) : this.storeData[key];
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'append',
     value: function append(key, val) {
       if (this.storeData[key]) {
-        var sData = this.storeData[key];
+        var sData = this.getItem(key);
         if ((0, _util.isArray)(sData)) {
           sData = sData.concat(val);
         } else if ((0, _util.isObject)(sData)) {
@@ -333,8 +373,9 @@ var _hooks = function () {
             sData[(0, _util.suid)('random_')] = val;
           }
         } else {
-          this.setItem(key, val);
+          sData = val;
         }
+        this.setItem(key, sData);
       } else {
         this.setItem(key, val);
       }
@@ -342,8 +383,16 @@ var _hooks = function () {
   }, {
     key: 'delete',
     value: function _delete(key) {
-      this.storeData[key] = null;
+      this.storage ? wx.removeStorageSync(key) : this.storeData[key] = null;
     }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      this.destory();
+    }
+
+    // ========= 下面为钩子方法 ===========
+
   }, {
     key: 'on',
     value: function on(key, cb) {
@@ -428,10 +477,10 @@ var _hooks = function () {
 }();
 
 var myhooks = {};
-function hooks(idf) {
+function hooks(idf, storage) {
   if ((0, _util.isString)(idf)) {
     if (!myhooks[idf]) {
-      myhooks[idf] = new _hooks();
+      myhooks[idf] = new _hooks({ storage: storage });
     }
     return myhooks[idf];
   }
@@ -509,7 +558,8 @@ function reSetItemAttr(item, list) {
     }
   }
 
-  var newItem = item['$$id'] ? item : (0, _foritem.resetItem)(item, this);
+  // const newItem = item['$$id'] ? item : resetItem(item, this)
+  var newItem = (0, _foritem.resetItem)(item, this);
   return newItem;
 }
 
@@ -1186,7 +1236,7 @@ var baseBehavior = exports.baseBehavior = function baseBehavior(app, mytype) {
 
 /***/ }),
 
-/***/ 160:
+/***/ 167:
 /*!***********************************!*\
   !*** ./js/demo/ui/modal/index.js ***!
   \***********************************/
@@ -1196,6 +1246,12 @@ var baseBehavior = exports.baseBehavior = function baseBehavior(app, mytype) {
 
 "use strict";
 
+
+var _data = __webpack_require__(/*! ./data */ 32);
+
+var _data2 = _interopRequireDefault(_data);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //index.js
 //获取应用实例
@@ -1265,17 +1321,19 @@ Pager({
     var theAim = query.direction.replace(/_/g, "/");
     var type = query.type;
     var aside1 = this.getElementsById('actionSide1');
+    console.log(type);
     if (theAim) {
       switch (theAim) {
         case theAim:
           (function () {
             var direction = theAim || 'right';
             aside1.reset()[direction]({
-              itemClass: type && type == 'full' ? '' : 'bar',
-              title: [{ title: '弹窗1', class: 'h2' }, { title: '支持多弹窗，灵活属性设置可以实现多种弹窗效果', class: 'h6', style: 'margin: 0 0 50rpx 0;' }, {
-                title: '打开第二个弹窗',
-                aim: 'open-as2'
-              }]
+              itemClass: type && type == 'full' ? 'full' : 'bar',
+              title: {
+                title: '推荐理由',
+                itemClass: 'size17 fw-bold ss-center'
+              },
+              body: _data2.default
             });
           })();
           break;
@@ -1455,47 +1513,40 @@ function post(url, data) {
 function getImgRealPath(obj) {
   if (lib.isString(obj)) return obj;
   if (lib.isObject(obj)) {
-    return obj.img && obj.img.src ? obj.img.src : obj.src ? obj.src : obj.img;
+    return obj.path ? obj.path : obj.src ? obj.src : obj.img ? obj.img.src ? obj.img.src : obj.img : '';
+  }
+}
+
+function formDataName(param) {
+  var basename = _path2.default.basename(param);
+  var extname = _path2.default.extname(basename);
+  return basename.length > 10 ? lib.uuid('upimg_', 12) + extname : basename;
+}
+
+function doUpload(param) {
+  if (param.url == 'cloud') {
+    param.cloudPath = param.formData.name;
+    wx.cloud.uploadFile(param);
+  } else {
+    wx.uploadFile(param);
   }
 }
 
 function _up(params) {
-  return new Promise(function (resolve, reject) {
-    var oldSuccess = params.success;
-    var oldError = params.error;
-    params.success = function (res) {
-      if (typeof oldSuccess == 'function') {
-        oldSuccess(res);
-      }
-      resolve(res);
-    };
-
-    params.error = function (err) {
-      if (typeof oldError == 'function') {
-        oldError(err);
-      }
-      reject(err);
-    };
-
-    params.fail = params.error;
-
-    if (Array.isArray(params.filePath)) {
-      var every = params.filePath.map(function (one) {
-        one = getImgRealPath(one);
-        return new Promise(function (rs, rj) {
+  if (Array.isArray(params.filePath)) {
+    var every = [];
+    params.filePath.forEach(function (one) {
+      one = getImgRealPath(one);
+      if (one) {
+        var p = new Promise(function (rs, rj) {
           var nParams = {};
           Object.keys(params).forEach(function (key) {
             if (key == 'filePath') {
               nParams[key] = one;
             } else {
               if (key == 'formData') {
-                var basename = _path2.default.basename(one);
-                var extname = _path2.default.extname(basename);
-                if (basename.length > 10) {
-                  nParams[key] = Object.assign(params[key], { name: lib.uuid('upimg_', 12) + extname }); // 重命名上传文件名
-                } else {
-                  nParams[key] = params[key];
-                }
+                params[key].name = formDataName(one);
+                nParams[key] = params[key];
               } else {
                 nParams[key] = params[key];
               }
@@ -1507,17 +1558,45 @@ function _up(params) {
           nParams.error = function (err) {
             rj(err);
           };
-          wx.uploadFile(nParams);
+          nParams.fail = function (err) {
+            rj(err);
+          };
+          // wx.uploadFile(nParams)
+          doUpload(nParams);
         });
-      });
-      Promise.all(every).then(function (res) {
-        return resolve(res);
-      });
-    } else {
+        every.push(p);
+      }
+    });
+    return Promise.all(every).then(function (res) {
+      wx.hideLoading();
+      return res;
+    });
+  } else {
+    return new Promise(function (resolve, reject) {
+      var oldSuccess = params.success;
+      var oldError = params.error;
+      params.success = function (res) {
+        wx.hideLoading();
+        if (typeof oldSuccess == 'function') {
+          oldSuccess(res);
+        }
+        resolve(res);
+      };
+
+      params.error = function (err) {
+        if (typeof oldError == 'function') {
+          oldError(err);
+        }
+        reject(err);
+      };
+
+      params.fail = params.error;
       params.filePath = getImgRealPath(params.filePath);
-      wx.uploadFile(params);
-    }
-  });
+      params.formData.name = formDataName(params.filePath);
+      // wx.uploadFile(params)
+      doUpload(params);
+    });
+  }
 }
 
 function upload(url, data) {
@@ -1540,6 +1619,9 @@ function upload(url, data) {
   postParam.formData = postParam.data;
   delete postParam.data;
   if (postParam.url && postParam.filePath) {
+    wx.showLoading({
+      title: '上传中...'
+    });
     return _up(postParam);
   } else {
     return Promise.reject('url\u548CfilePath\u53C2\u6570\u4E3A\u5FC5\u586B\u9879\uFF0Curl\u8BF7\u586B\u5199\u670D\u52A1\u5668\u5730\u5740, filePath\u8BF7\u586B\u5199\u4E0A\u4F20\u56FE\u7247\u5730\u5740');
@@ -1651,7 +1733,8 @@ var commonBehavior = exports.commonBehavior = function commonBehavior(app, mytyp
         var properties = this.properties;
         var props = properties.item || properties.list || properties.dataSource;
         var id = properties.id;
-        this.mountId = props.$$id ? false : id; // 如果$$id，则交给
+        // this.mountId = props.$$id ? false : id  // 如果$$id，则交给
+        this.mountId = id || props.$$id; // 如果$$id，则交给
         props['show'] = props.hasOwnProperty('show') ? props.show : true;
         this.setData({ uniqId: this.uniqId });
       },
@@ -1670,13 +1753,20 @@ var commonBehavior = exports.commonBehavior = function commonBehavior(app, mytyp
         if (this.data.fromComponent) {
           this.componentInst = app['_vars'][this.data.fromComponent];
         }
+        this.mount();
       },
 
       //组件实例被移动到树的另一个位置
       moved: function moved() {},
 
       //组件实例从节点树中移除
-      detached: function detached() {}
+      detached: function detached() {
+        var _this = this;
+
+        setTimeout(function () {
+          app['_vars'][_this.uniqId] = null;
+        }, 50);
+      }
     },
     methods: {
       getData: function getData() {
@@ -1950,9 +2040,9 @@ function pageDataElement(data) {
       var $id = data['$$id'];
       eles[$id] = $id;
       if (data.methods) {
-        var _methods = data.methods;
-        if (lib.isObject(_methods)) {
-          acts[$id] = Object.assign(acts, _methods);
+        var methods = data.methods;
+        if (lib.isObject(methods)) {
+          acts[$id] = Object.assign(acts, methods);
           delete data.methods;
         }
       }
@@ -1967,7 +2057,7 @@ function pageDataElement(data) {
 
             if (item.methods) {
               if (lib.isObject(item.methods)) {
-                acts[_$id] = Object.assign(acts, methods);
+                acts[_$id] = Object.assign(acts, item.methods);
                 delete item.methods;
               }
             }
@@ -2203,6 +2293,52 @@ module.exports = charenc;
 
 /***/ }),
 
+/***/ 32:
+/*!**********************************!*\
+  !*** ./js/demo/ui/modal/data.js ***!
+  \**********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var data = [{
+  title: [{
+    title: '小程序',
+    itemClass: 'article-title-b bb-default mb-10-r pb-6-r'
+  }, {
+    title: '保持小程序的原生风格，跟随腾讯的开发规范，使用webpack4编译小程序资源文件。这样做的好处是只需要解决小程序的坑，能够快速的应用部署到小程序的新功能和新特性，避免多走弯路',
+    itemClass: 'article-content'
+  }],
+  titleClass: 'mb-40-r'
+}, {
+  title: [{
+    title: '与aotoo一致的开发规范',
+    itemClass: 'article-title-b bb-default mb-10-r pb-6-r'
+  }, {
+    title: '在熟悉的规范中开发，小程序同样支持item, list, tree等基础元件，能够更加方便的开发小程序组件',
+    itemClass: 'article-content'
+  }],
+  titleClass: 'mb-40-r'
+}, {
+  title: [{
+    title: '减少模板开发',
+    itemClass: 'article-title-b bb-default mb-10-r pb-6-r'
+  }, {
+    title: '在大的项目开发时，模板的规范化非常影响项目的健康发展，以及极大的增加了人员培训，维护的成本。因此减少与规范化模板的产生就能够自然的提升开发效率',
+    itemClass: 'article-content'
+  }]
+}];
+
+exports.default = data;
+
+/***/ }),
+
 /***/ 4:
 /*!************************************************************!*\
   !*** /Users/sslin/lgh/xiaochengxu/node_modules/md5/md5.js ***!
@@ -2410,7 +2546,7 @@ function setItemSortIdf(item, context) {
 
       if (context) {
         // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.uniqId;
+        item.fromComponent = context.data.fromComponent || context.data.uniqId;
       }
 
       Object.keys(item).forEach(function (key) {
@@ -2452,6 +2588,14 @@ function resetItem(data, context) {
   var incAttrs = [];
   if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
     return data;
+  }
+
+  if (context && data.$$id && data.methods) {
+    var methods = data.methods;
+    Object.keys(methods).forEach(function (key) {
+      context[key] = methods[key].bind(context);
+    });
+    delete data.methods;
   }
 
   Object.keys(data).forEach(function (key) {
@@ -2543,7 +2687,7 @@ function updateSelf(params) {
 
     var mylist = list;
     var fromTree = this.data.fromTree;
-    mylist = fromTree ? lib.listToTree(mylist, fromTree) : reSetList.call(this, list);
+    mylist = fromTree ? lib.listToTree.call(this, mylist, fromTree) : reSetList.call(this, list);
     this.setData({
       $list: mylist,
       props: listProps
@@ -2564,9 +2708,15 @@ var listBehavior = exports.listBehavior = function listBehavior(app, mytype) {
           }
         }
       },
+
       fromTree: {
         type: Boolean | String, // 来自tree，tree的结构依赖list生成
         value: false // 来自tree实例的 uniqId
+      },
+
+      fromComponent: {
+        type: String,
+        value: ''
       }
     },
     data: {
@@ -2585,7 +2735,7 @@ var listBehavior = exports.listBehavior = function listBehavior(app, mytype) {
 
       ready: function ready() {
         //组件布局完成，这时可以获取节点信息，也可以操作节点
-        var fromTree = this.data.$list.fromTree; // 来自tree实例的 uniqId
+        var fromTree = this.data.fromTree || this.data.$list.fromTree; // 来自tree实例的 uniqId
         var activePage = this.activePage;
         if (this.data.$list['$$id']) {
           var $id = this.data.$list['$$id'];
@@ -2621,13 +2771,13 @@ var listBehavior = exports.listBehavior = function listBehavior(app, mytype) {
             if (key.indexOf('$list.') == -1) {
               nkey = '$list.' + key;
             }
-            target[nkey] = reSetItemAttr.call(_this2, param[key], _this2.data.props);
+            target[nkey] = reSetItemAttr.call(_this2, param[key], _this2.data.$list);
           });
           param = target;
           this.setData(param, cb);
         }
         if (lib.isArray(param)) {
-          var _target = Object.assign({ data: param }, this.data.props);
+          var _target = Object.assign({ data: param }, this.data.$list);
           var mylist = reSetList.call(this, _target);
           this.setData({ $list: mylist }, cb);
         }
@@ -3092,11 +3242,13 @@ function subTree(item, dataAry, deep, index) {
     item['@list'] = {
       $$id: $id,
       data: nsons,
+      type: item.type,
       listClass: item.liClass || 'ul',
       itemClass: treeProps.itemClass || '',
       itemStyle: treeProps.itemStyle || '',
       show: item.hasOwnProperty('show') ? item.show : true,
-      fromTree: fromTree
+      fromComponent: fromTree
+      // fromTree : fromTree
     };
     item['__sort'] = (item['__sort'] || []).concat('@list');
   }
@@ -3126,6 +3278,8 @@ function tree(dataAry, props, fromTree) {
   dataAry.forEach(function (item, ii) {
     treeDeep = 1;
     if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
+      // item.fromTree = fromTree
+      item.fromComponent = fromTree;
       if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
         var clsName = item.itemClass || item.class;
         clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';
@@ -3158,4 +3312,4 @@ function listToTree(_list, fromTree) {
 
 /***/ })
 
-},[[160,0]]]);
+},[[167,0]]]);

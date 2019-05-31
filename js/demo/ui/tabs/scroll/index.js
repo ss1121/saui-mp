@@ -9,40 +9,44 @@ const tabData = {
   data: [
     {
       title: '选项一',
-      content: '如果使用scroll, scroll标签对flex是不支持的'
+      content: '如果使用scroll, scroll标签对flex是不支持的111111',
     },
     {
       title: '选项二',
-      content: '我是内容部分。B'
+      content: '如果使用scroll, scroll标签对flex是不支持的122222',
     },
     {
       title: '选项三',
-      content: '我是内容部分。C'
+      content: '如果使用scroll, scroll标签对flex是不支持的33333',
     },
     {
       title: '选项四',
-      content: '我是内容部分。C'
+      content: '如果使用scroll, scroll标签对flex是不支持的44444',
     },
     {
       title: '选项五',
-      content: '我是内容部分。C'
+      content: '如果使用scroll, scroll标签对flex是不支持的5555',
     },
     {
       title: '选项六',
-      content: '我是内容部分。C'
+      content: '如果使用scroll, scroll标签对flex是不支持的66666',
     },
     {
       title: '选项七',
-      content: '我是内容部分。C'
+      content: '如果使用scroll, scroll标签对flex是不支持的777777',
     }
   ],
-  listClass: 'tabs-default-scroll hei-p100 bg-fff'
+  listClass: 'tabs-default-scroll hei-p100 ',
+  // itemClass: 'card-bg'
 }
 
 
 Pager({
   data: {
     motto: tabData
+  },
+  onLoad: function(e){
+    console.log(e)
   }
   // onLoad(){
   //   setTimeout(() => {

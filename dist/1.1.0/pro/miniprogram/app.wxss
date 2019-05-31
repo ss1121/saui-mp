@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'iconfont'; /* project id 1074841 */
-  src: url("//at.alicdn.com/t/font_1074841_mi97rruy34n.eot");
-  src: url("//at.alicdn.com/t/font_1074841_mi97rruy34n.eot?#iefix") format('embedded-opentype'), url("//at.alicdn.com/t/font_1074841_mi97rruy34n.woff2") format('woff2'), url("//at.alicdn.com/t/font_1074841_mi97rruy34n.woff") format('woff'), url("//at.alicdn.com/t/font_1074841_mi97rruy34n.ttf") format('truetype'), url("//at.alicdn.com/t/font_1074841_mi97rruy34n.svg#iconfont") format('svg');
+  src: url("//at.alicdn.com/t/font_1074841_npostftnpq.eot");
+  src: url("//at.alicdn.com/t/font_1074841_npostftnpq.eot?#iefix") format('embedded-opentype'), url("//at.alicdn.com/t/font_1074841_npostftnpq.woff2") format('woff2'), url("//at.alicdn.com/t/font_1074841_npostftnpq.woff") format('woff'), url("//at.alicdn.com/t/font_1074841_npostftnpq.ttf") format('truetype'), url("//at.alicdn.com/t/font_1074841_npostftnpq.svg#iconfont") format('svg');
 }
 .icon-dot,
 .icon-dot-small,
@@ -42,6 +42,8 @@
 .icon-2:before,
 .icon-3:before,
 .icon-4:before,
+.icon-index:before,
+.icon-about:before,
 .icon-menu-1:before,
 .icon-menu-2:before,
 .icon-menu-3:before,
@@ -94,6 +96,12 @@
 }
 .icon-4:before {
   content: '\e6a7';
+}
+.icon-index:before {
+  content: '\e61e';
+}
+.icon-about:before {
+  content: '\e601';
 }
 .icon-menu-1:before {
   content: '\e61f';
@@ -2780,6 +2788,9 @@
 .mb-40-r {
   margin-bottom: 40rpx;
 }
+.mt-4-r {
+  margin-top: 4rpx;
+}
 .mt-8-r {
   margin-top: 8rpx;
 }
@@ -3680,6 +3691,9 @@ slider {
 .block {
   display: block;
 }
+.scroll-wrap-nav {
+  height: calc(100% - 88rpx);
+}
 .boxer {
   background: #f4f5f6;
   color: #666;
@@ -3693,6 +3707,10 @@ slider {
 }
 .boxer.boxer-hei-auto {
   height: auto;
+}
+.demowrap-x {
+  padding: 24rpx;
+  width: calc(100% - 48rpx);
 }
 .title-sm-grey {
   color: #999;
@@ -3758,7 +3776,8 @@ slider {
   color: #999;
   font-size: 14px;
 }
-.card-bg {
+.card-bg,
+.tabs-default-scroll .content-box .content-item {
   background: #fff;
   border-radius: 12rpx;
   padding: 0 30rpx;
@@ -3891,6 +3910,33 @@ slider {
 .list-pic-column .item-body {
   width: 100%;
   padding: 16rpx 0 38rpx 0;
+}
+.list-nav {
+  background: #fff;
+  border-top: 1px solid #e5e5e5;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 88rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  color: #333;
+}
+.list-nav .item {
+  flex: 1;
+  text-align: center;
+}
+.list-nav .item.active {
+  color: #4b9afc;
+}
+.list-nav .item-icon {
+  font-size: 38rpx;
+}
+.list-nav .item-title {
+  font-size: 24rpx;
 }
 .as-common,
 .actionSide-right,
@@ -4252,6 +4298,7 @@ input {
 .tabs-default .menu-box,
 .tabs-default-scroll .menu-box {
   white-space: nowrap;
+  width: calc(100% - 40rpx);
   padding: 0 20rpx;
   line-height: 88rpx;
 }
@@ -4294,13 +4341,19 @@ input {
 }
 .tab-container .content-box {
   padding: 30rpx;
+  width: calc(100% - 60rpx);
 }
 .tabs-default-scroll .content-box {
   height: calc(100% - 88rpx);
 }
 .tabs-default-scroll .content-box .content-item {
+  margin-bottom: 20rpx;
   height: 800rpx;
   width: auto;
+}
+.tabs-default-scroll swiper-item {
+  position: relative !important;
+  transform: none;
 }
 /**app.wxss**/
 .container {

@@ -28,6 +28,7 @@ exports.isFunction = isFunction;
 exports.clone = clone;
 exports.isEmpty = isEmpty;
 exports.formatQuery = formatQuery;
+exports.formatToUrl = formatToUrl;
 exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
@@ -61,7 +62,7 @@ function objTypeof(obj, type) {
 }
 
 function isObject(obj) {
-  return objTypeof(obj) == 'object';
+  return objTypeof(obj) == 'object' && !isArray(obj);
 }
 
 function isArray(obj) {
@@ -108,6 +109,22 @@ function formatQuery(url) {
   return { url: aim, query: query };
 }
 
+function formatToUrl(url) {
+  var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (isString(url) && isObject(param)) {
+    var queryStr = '';
+    Object.keys(param).forEach(function (key) {
+      queryStr += '&' + key + '=' + param[key];
+    });
+    if (queryStr) {
+      url += '?' + queryStr;
+      url = url.replace('?&', '?').replace('&&', '&');
+    }
+  }
+  return url;
+}
+
 var suidCount = -1;
 function suid(prefix) {
   suidCount++;
@@ -126,8 +143,8 @@ function uuid(prefix, len) {
   var randomNum = mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
   var uuid = (prefix || 'uuid') + (0, _md2.default)(randomNum);
   if (len && typeof len == 'number' && len > 6) {
-    var remainder = len - 4;
-    var pre = uuid.substr(0, 4);
+    var remainder = len - 5;
+    var pre = uuid.substr(0, 5);
     var aft = uuid.substr(uuid.length - remainder);
     return pre + aft;
   } else {
@@ -518,11 +535,14 @@ var _util = __webpack_require__(/*! ./util */ 1);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _hooks = function () {
-  function _hooks(key) {
+  function _hooks() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, _hooks);
 
     this.actions = {};
     this.storeData = {};
+    this.storage = props.storage;
   }
 
   _createClass(_hooks, [{
@@ -530,22 +550,36 @@ var _hooks = function () {
     value: function destory() {
       this.actions = null;
       this.storeData = null;
+      wx.clearStorageSync();
+    }
+  }, {
+    key: 'getInfo',
+    value: function getInfo() {
+      return this.storage ? getStorageInfoSync() : this.storeData;
     }
   }, {
     key: 'setItem',
     value: function setItem(key, val) {
-      this.storeData[key] = val;
+      try {
+        this.storage ? wx.setStorageSync(key, val) : this.storeData[key] = val;
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'getItem',
     value: function getItem(key) {
-      return this.storeData[key];
+      try {
+        return this.storage ? wx.getStorageSync(key) : this.storeData[key];
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'append',
     value: function append(key, val) {
       if (this.storeData[key]) {
-        var sData = this.storeData[key];
+        var sData = this.getItem(key);
         if ((0, _util.isArray)(sData)) {
           sData = sData.concat(val);
         } else if ((0, _util.isObject)(sData)) {
@@ -555,8 +589,9 @@ var _hooks = function () {
             sData[(0, _util.suid)('random_')] = val;
           }
         } else {
-          this.setItem(key, val);
+          sData = val;
         }
+        this.setItem(key, sData);
       } else {
         this.setItem(key, val);
       }
@@ -564,8 +599,16 @@ var _hooks = function () {
   }, {
     key: 'delete',
     value: function _delete(key) {
-      this.storeData[key] = null;
+      this.storage ? wx.removeStorageSync(key) : this.storeData[key] = null;
     }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      this.destory();
+    }
+
+    // ========= 下面为钩子方法 ===========
+
   }, {
     key: 'on',
     value: function on(key, cb) {
@@ -650,10 +693,10 @@ var _hooks = function () {
 }();
 
 var myhooks = {};
-function hooks(idf) {
+function hooks(idf, storage) {
   if ((0, _util.isString)(idf)) {
     if (!myhooks[idf]) {
-      myhooks[idf] = new _hooks();
+      myhooks[idf] = new _hooks({ storage: storage });
     }
     return myhooks[idf];
   }

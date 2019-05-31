@@ -54,6 +54,12 @@ Object.defineProperty(exports, 'formatQuery', {
     return _util.formatQuery;
   }
 });
+Object.defineProperty(exports, 'formatToUrl', {
+  enumerable: true,
+  get: function get() {
+    return _util.formatToUrl;
+  }
+});
 Object.defineProperty(exports, 'suid', {
   enumerable: true,
   get: function get() {
@@ -161,6 +167,7 @@ exports.isFunction = isFunction;
 exports.clone = clone;
 exports.isEmpty = isEmpty;
 exports.formatQuery = formatQuery;
+exports.formatToUrl = formatToUrl;
 exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
@@ -194,7 +201,7 @@ function objTypeof(obj, type) {
 }
 
 function isObject(obj) {
-  return objTypeof(obj) == 'object';
+  return objTypeof(obj) == 'object' && !isArray(obj);
 }
 
 function isArray(obj) {
@@ -241,6 +248,22 @@ function formatQuery(url) {
   return { url: aim, query: query };
 }
 
+function formatToUrl(url) {
+  var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (isString(url) && isObject(param)) {
+    var queryStr = '';
+    Object.keys(param).forEach(function (key) {
+      queryStr += '&' + key + '=' + param[key];
+    });
+    if (queryStr) {
+      url += '?' + queryStr;
+      url = url.replace('?&', '?').replace('&&', '&');
+    }
+  }
+  return url;
+}
+
 var suidCount = -1;
 function suid(prefix) {
   suidCount++;
@@ -259,8 +282,8 @@ function uuid(prefix, len) {
   var randomNum = mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
   var uuid = (prefix || 'uuid') + (0, _md2.default)(randomNum);
   if (len && typeof len == 'number' && len > 6) {
-    var remainder = len - 4;
-    var pre = uuid.substr(0, 4);
+    var remainder = len - 5;
+    var pre = uuid.substr(0, 5);
     var aft = uuid.substr(uuid.length - remainder);
     return pre + aft;
   } else {
@@ -372,7 +395,8 @@ var commonBehavior = exports.commonBehavior = function commonBehavior(app, mytyp
         var properties = this.properties;
         var props = properties.item || properties.list || properties.dataSource;
         var id = properties.id;
-        this.mountId = props.$$id ? false : id; // 如果$$id，则交给
+        // this.mountId = props.$$id ? false : id  // 如果$$id，则交给
+        this.mountId = id || props.$$id; // 如果$$id，则交给
         props['show'] = props.hasOwnProperty('show') ? props.show : true;
         this.setData({ uniqId: this.uniqId });
       },
@@ -391,13 +415,20 @@ var commonBehavior = exports.commonBehavior = function commonBehavior(app, mytyp
         if (this.data.fromComponent) {
           this.componentInst = app['_vars'][this.data.fromComponent];
         }
+        this.mount();
       },
 
       //组件实例被移动到树的另一个位置
       moved: function moved() {},
 
       //组件实例从节点树中移除
-      detached: function detached() {}
+      detached: function detached() {
+        var _this = this;
+
+        setTimeout(function () {
+          app['_vars'][_this.uniqId] = null;
+        }, 50);
+      }
     },
     methods: {
       getData: function getData() {
@@ -889,7 +920,7 @@ function setItemSortIdf(item, context) {
 
       if (context) {
         // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.uniqId;
+        item.fromComponent = context.data.fromComponent || context.data.uniqId;
       }
 
       Object.keys(item).forEach(function (key) {
@@ -931,6 +962,14 @@ function resetItem(data, context) {
   var incAttrs = [];
   if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
     return data;
+  }
+
+  if (context && data.$$id && data.methods) {
+    var methods = data.methods;
+    Object.keys(methods).forEach(function (key) {
+      context[key] = methods[key].bind(context);
+    });
+    delete data.methods;
   }
 
   Object.keys(data).forEach(function (key) {
@@ -1021,7 +1060,7 @@ function updateSelf(params) {
 
     var mylist = list;
     var fromTree = this.data.fromTree;
-    mylist = fromTree ? lib.listToTree(mylist, fromTree) : reSetList.call(this, list);
+    mylist = fromTree ? lib.listToTree.call(this, mylist, fromTree) : reSetList.call(this, list);
     this.setData({
       $list: mylist,
       props: listProps
@@ -1042,9 +1081,15 @@ var listBehavior = exports.listBehavior = function listBehavior(app, mytype) {
           }
         }
       },
+
       fromTree: {
         type: Boolean | String, // 来自tree，tree的结构依赖list生成
         value: false // 来自tree实例的 uniqId
+      },
+
+      fromComponent: {
+        type: String,
+        value: ''
       }
     },
     data: {
@@ -1063,7 +1108,7 @@ var listBehavior = exports.listBehavior = function listBehavior(app, mytype) {
 
       ready: function ready() {
         //组件布局完成，这时可以获取节点信息，也可以操作节点
-        var fromTree = this.data.$list.fromTree; // 来自tree实例的 uniqId
+        var fromTree = this.data.fromTree || this.data.$list.fromTree; // 来自tree实例的 uniqId
         var activePage = this.activePage;
         if (this.data.$list['$$id']) {
           var $id = this.data.$list['$$id'];
@@ -1099,13 +1144,13 @@ var listBehavior = exports.listBehavior = function listBehavior(app, mytype) {
             if (key.indexOf('$list.') == -1) {
               nkey = '$list.' + key;
             }
-            target[nkey] = reSetItemAttr.call(_this2, param[key], _this2.data.props);
+            target[nkey] = reSetItemAttr.call(_this2, param[key], _this2.data.$list);
           });
           param = target;
           this.setData(param, cb);
         }
         if (lib.isArray(param)) {
-          var _target = Object.assign({ data: param }, this.data.props);
+          var _target = Object.assign({ data: param }, this.data.$list);
           var mylist = reSetList.call(this, _target);
           this.setData({ $list: mylist }, cb);
         }
@@ -1567,11 +1612,13 @@ function subTree(item, dataAry, deep, index) {
     item['@list'] = {
       $$id: $id,
       data: nsons,
+      type: item.type,
       listClass: item.liClass || 'ul',
       itemClass: treeProps.itemClass || '',
       itemStyle: treeProps.itemStyle || '',
       show: item.hasOwnProperty('show') ? item.show : true,
-      fromTree: fromTree
+      fromComponent: fromTree
+      // fromTree : fromTree
     };
     item['__sort'] = (item['__sort'] || []).concat('@list');
   }
@@ -1601,6 +1648,8 @@ function tree(dataAry, props, fromTree) {
   dataAry.forEach(function (item, ii) {
     treeDeep = 1;
     if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
+      // item.fromTree = fromTree
+      item.fromComponent = fromTree;
       if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
         var clsName = item.itemClass || item.class;
         clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';
@@ -1656,11 +1705,14 @@ var _util = __webpack_require__(/*! ./util */ 1);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _hooks = function () {
-  function _hooks(key) {
+  function _hooks() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, _hooks);
 
     this.actions = {};
     this.storeData = {};
+    this.storage = props.storage;
   }
 
   _createClass(_hooks, [{
@@ -1668,22 +1720,36 @@ var _hooks = function () {
     value: function destory() {
       this.actions = null;
       this.storeData = null;
+      wx.clearStorageSync();
+    }
+  }, {
+    key: 'getInfo',
+    value: function getInfo() {
+      return this.storage ? getStorageInfoSync() : this.storeData;
     }
   }, {
     key: 'setItem',
     value: function setItem(key, val) {
-      this.storeData[key] = val;
+      try {
+        this.storage ? wx.setStorageSync(key, val) : this.storeData[key] = val;
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'getItem',
     value: function getItem(key) {
-      return this.storeData[key];
+      try {
+        return this.storage ? wx.getStorageSync(key) : this.storeData[key];
+      } catch (error) {
+        console.warn(error);
+      }
     }
   }, {
     key: 'append',
     value: function append(key, val) {
       if (this.storeData[key]) {
-        var sData = this.storeData[key];
+        var sData = this.getItem(key);
         if ((0, _util.isArray)(sData)) {
           sData = sData.concat(val);
         } else if ((0, _util.isObject)(sData)) {
@@ -1693,8 +1759,9 @@ var _hooks = function () {
             sData[(0, _util.suid)('random_')] = val;
           }
         } else {
-          this.setItem(key, val);
+          sData = val;
         }
+        this.setItem(key, sData);
       } else {
         this.setItem(key, val);
       }
@@ -1702,8 +1769,16 @@ var _hooks = function () {
   }, {
     key: 'delete',
     value: function _delete(key) {
-      this.storeData[key] = null;
+      this.storage ? wx.removeStorageSync(key) : this.storeData[key] = null;
     }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      this.destory();
+    }
+
+    // ========= 下面为钩子方法 ===========
+
   }, {
     key: 'on',
     value: function on(key, cb) {
@@ -1788,10 +1863,10 @@ var _hooks = function () {
 }();
 
 var myhooks = {};
-function hooks(idf) {
+function hooks(idf, storage) {
   if ((0, _util.isString)(idf)) {
     if (!myhooks[idf]) {
-      myhooks[idf] = new _hooks();
+      myhooks[idf] = new _hooks({ storage: storage });
     }
     return myhooks[idf];
   }
@@ -1868,7 +1943,8 @@ function reSetItemAttr(item, list) {
     }
   }
 
-  var newItem = item['$$id'] ? item : (0, _foritem.resetItem)(item, this);
+  // const newItem = item['$$id'] ? item : resetItem(item, this)
+  var newItem = (0, _foritem.resetItem)(item, this);
   return newItem;
 }
 

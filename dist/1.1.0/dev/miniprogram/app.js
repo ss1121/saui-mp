@@ -473,7 +473,7 @@ module.exports = function (asset) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 28:
 /*!**************************!*\
   !*** ./js/envconfigs.js ***!
   \**************************/
@@ -544,11 +544,11 @@ module.exports = function (opts) {
   }
   return asset;
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/global.js */ 27), "/"))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/global.js */ 29), "/"))
 
 /***/ }),
 
-/***/ 27:
+/***/ 29:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
@@ -580,7 +580,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 30:
+/***/ 33:
 /*!*******************!*\
   !*** ./js/app.js ***!
   \*******************/
@@ -592,7 +592,7 @@ module.exports = g;
 
 
 //app.js
-__webpack_require__(/*! ./envconfigs */ 26)();
+__webpack_require__(/*! ./envconfigs */ 28)();
 App({
   onLaunch: function onLaunch() {
     var _this = this;
@@ -649,4 +649,4 @@ App({
 
 /***/ })
 
-},[[30,0]]]);
+},[[33,0]]]);

@@ -28,6 +28,7 @@ exports.isFunction = isFunction;
 exports.clone = clone;
 exports.isEmpty = isEmpty;
 exports.formatQuery = formatQuery;
+exports.formatToUrl = formatToUrl;
 exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
@@ -61,7 +62,7 @@ function objTypeof(obj, type) {
 }
 
 function isObject(obj) {
-  return objTypeof(obj) == 'object';
+  return objTypeof(obj) == 'object' && !isArray(obj);
 }
 
 function isArray(obj) {
@@ -108,6 +109,22 @@ function formatQuery(url) {
   return { url: aim, query: query };
 }
 
+function formatToUrl(url) {
+  var param = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (isString(url) && isObject(param)) {
+    var queryStr = '';
+    Object.keys(param).forEach(function (key) {
+      queryStr += '&' + key + '=' + param[key];
+    });
+    if (queryStr) {
+      url += '?' + queryStr;
+      url = url.replace('?&', '?').replace('&&', '&');
+    }
+  }
+  return url;
+}
+
 var suidCount = -1;
 function suid(prefix) {
   suidCount++;
@@ -126,8 +143,8 @@ function uuid(prefix, len) {
   var randomNum = mydate.getDay() + mydate.getHours() + mydate.getMinutes() + mydate.getSeconds() + mydate.getMilliseconds() + Math.round(Math.random() * 10000);
   var uuid = (prefix || 'uuid') + (0, _md2.default)(randomNum);
   if (len && typeof len == 'number' && len > 6) {
-    var remainder = len - 4;
-    var pre = uuid.substr(0, 4);
+    var remainder = len - 5;
+    var pre = uuid.substr(0, 5);
     var aft = uuid.substr(uuid.length - remainder);
     return pre + aft;
   } else {
@@ -566,11 +583,13 @@ function subTree(item, dataAry, deep, index) {
     item['@list'] = {
       $$id: $id,
       data: nsons,
+      type: item.type,
       listClass: item.liClass || 'ul',
       itemClass: treeProps.itemClass || '',
       itemStyle: treeProps.itemStyle || '',
       show: item.hasOwnProperty('show') ? item.show : true,
-      fromTree: fromTree
+      fromComponent: fromTree
+      // fromTree : fromTree
     };
     item['__sort'] = (item['__sort'] || []).concat('@list');
   }
@@ -600,6 +619,8 @@ function tree(dataAry, props, fromTree) {
   dataAry.forEach(function (item, ii) {
     treeDeep = 1;
     if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
+      // item.fromTree = fromTree
+      item.fromComponent = fromTree;
       if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
         var clsName = item.itemClass || item.class;
         clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';

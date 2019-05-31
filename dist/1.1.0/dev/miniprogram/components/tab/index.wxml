@@ -2,7 +2,6 @@
 <!-- github: webkixi -->
 <!-- 小程序的模板真是又长又臭 -->
 <!-- <ui-item item="{{$item}}" class-name="{{myClass}}"/> -->
-<wxs src="../aotoo/util.wxs" module="util" />
 
 <import src="../aotoo/templates/item.wxml" />
 <block wx:if="{{$dataSource.show}}">
