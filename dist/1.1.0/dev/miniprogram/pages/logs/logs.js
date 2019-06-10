@@ -1,11 +1,11 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[239],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[257],{
 
 /***/ 30:
-/*!**************************!*\
-  !*** ./js/utils/util.js ***!
-  \**************************/
+/*!***********************************!*\
+  !*** ./src/SaUi/js/utils/util.js ***!
+  \***********************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -35,10 +35,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ 76:
-/*!*******************************!*\
-  !*** ./js/pages/logs/logs.js ***!
-  \*******************************/
+/***/ 86:
+/*!****************************************!*\
+  !*** ./src/SaUi/js/pages/logs/logs.js ***!
+  \****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -64,4 +64,4 @@ Page({
 
 /***/ })
 
-},[[76,0]]]);
+},[[86,0]]]);

@@ -1,11 +1,11 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[233],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[251],{
 
 /***/ 25:
-/*!*******************************!*\
-  !*** ./js/pages/demo/data.js ***!
-  \*******************************/
+/*!****************************************!*\
+  !*** ./src/SaUi/js/pages/demo/data.js ***!
+  \****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {

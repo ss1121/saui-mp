@@ -1,10 +1,11 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[237],[
-/* 0 */
-/*!******************************************!*\
-  !*** ./js/components/aotoo/lib/index.js ***!
-  \******************************************/
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[255],{
+
+/***/ 0:
+/*!***************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/index.js ***!
+  \***************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -115,7 +116,7 @@ Object.defineProperty(exports, 'hooks', {
   }
 });
 
-var _foritem = __webpack_require__(/*! ./foritem */ 5);
+var _foritem = __webpack_require__(/*! ./foritem */ 3);
 
 Object.defineProperty(exports, 'resetItem', {
   enumerable: true,
@@ -138,13 +139,14 @@ Object.defineProperty(exports, 'reSetList', {
     return _forlist.reSetList;
   }
 });
-var md5 = exports.md5 = __webpack_require__(/*! md5 */ 4);
+var md5 = exports.md5 = __webpack_require__(/*! md5 */ 5);
 
 /***/ }),
-/* 1 */
-/*!*****************************************!*\
-  !*** ./js/components/aotoo/lib/util.js ***!
-  \*****************************************/
+
+/***/ 1:
+/*!**************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/util.js ***!
+  \**************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -172,7 +174,7 @@ exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
 
-var _md = __webpack_require__(/*! md5 */ 4);
+var _md = __webpack_require__(/*! md5 */ 5);
 
 var _md2 = _interopRequireDefault(_md);
 
@@ -292,10 +294,1271 @@ function uuid(prefix, len) {
 }
 
 /***/ }),
-/* 2 */
-/*!******************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/common.js ***!
-  \******************************************************/
+
+/***/ 10:
+/*!***************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/hooks.js ***!
+  \***************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.hooks = hooks;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _hooks = function () {
+  function _hooks() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, _hooks);
+
+    this.actions = {};
+    this.storeData = {};
+    this.storage = props.storage;
+  }
+
+  _createClass(_hooks, [{
+    key: 'destory',
+    value: function destory() {
+      this.actions = null;
+      this.storeData = null;
+      // wx.clearStorageSync()
+    }
+  }, {
+    key: 'getInfo',
+    value: function getInfo() {
+      return this.storage ? getStorageInfoSync() : this.storeData;
+    }
+  }, {
+    key: 'setItem',
+    value: function setItem(key, val) {
+      try {
+        if (this.storage) {
+          wx.setStorageSync(key, val);
+        }
+        this.storeData[key] = val;
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  }, {
+    key: 'getItem',
+    value: function getItem(key) {
+      try {
+        var res = void 0;
+        if (this.storage) {
+          res = wx.getStorageSync(key);
+        }
+        if (res) {
+          this.storeData[key] = res;
+        }
+        return res;
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  }, {
+    key: 'append',
+    value: function append(key, val) {
+      if (this.storeData[key]) {
+        var sData = this.getItem(key);
+        if ((0, _util.isArray)(sData)) {
+          sData = sData.concat(val);
+        } else if ((0, _util.isObject)(sData)) {
+          if ((0, _util.isObject)(val)) {
+            sData = Object.assign(sData, val);
+          } else {
+            sData[(0, _util.suid)('random_')] = val;
+          }
+        } else {
+          sData = val;
+        }
+        this.setItem(key, sData);
+      } else {
+        this.setItem(key, val);
+      }
+    }
+  }, {
+    key: 'delete',
+    value: function _delete(key) {
+      if (this.storage) {
+        wx.removeStorageSync(key);
+      }
+      this.storeData[key] = null;
+    }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      this.destory();
+      wx.clearStorageSync();
+    }
+
+    // ========= 下面为钩子方法 ===========
+
+  }, {
+    key: 'on',
+    value: function on(key, cb) {
+      var myActions = this.actions;
+      var hooksActionUniqId = (0, _util.suid)('hooks_action_');
+      if (cb) {
+        cb['hooksActionUniqId'] = hooksActionUniqId;
+      }
+      if ((0, _util.isString)(key)) {
+        if (myActions[key]) {
+          myActions[key] = [].concat(myActions[key]).concat(cb);
+        } else {
+          myActions[key] = [cb];
+        }
+      }
+    }
+  }, {
+    key: 'off',
+    value: function off(key, fun) {
+      if ((0, _util.isString)(key)) {
+        if (fun) {
+          var hooksActionUniqId = fun.hooksActionUniqId;
+          if (hooksActionUniqId) {
+            var theFuns = this.actions[key];
+            var selectFunIndex = void 0;
+            if (theFuns) {
+              theFuns.forEach(function ($f, ii) {
+                if ($f['hooksActionUniqId'] == hooksActionUniqId) {
+                  selectFunIndex = ii;
+                }
+              });
+              if (selectFunIndex) {
+                theFuns.splice(selectFunIndex, 1);
+              }
+            }
+          }
+        } else {
+          delete this.actions[key];
+        }
+      }
+    }
+  }, {
+    key: 'emit',
+    value: function emit(key, param) {
+      var _this = this;
+
+      var ctx = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+      if ((0, _util.isString)(key)) {
+        if (this.actions[key]) {
+          var vals = [];
+          var funs = this.actions[key];
+          funs.forEach(function (fun) {
+            if ((0, _util.isFunction)(fun)) {
+              var res = fun.call(ctx, param);
+              if (res) vals.push(res);else {
+                vals.push(undefined);
+              }
+              if (fun.onlyonetime) {
+                _this.off(key, fun);
+              }
+              // vals.push(fun.call(ctx, param))
+            }
+          });
+          if (vals.length) {
+            return vals;
+          }
+        }
+      }
+    }
+  }, {
+    key: 'one',
+    value: function one(key, cb) {
+      if (key && typeof cb == 'function') {
+        cb.onlyonetime = true;
+      }
+      this.on(key, cb);
+    }
+  }]);
+
+  return _hooks;
+}();
+
+var myhooks = {};
+function hooks(idf, storage) {
+  if ((0, _util.isString)(idf)) {
+    if (!myhooks[idf]) {
+      myhooks[idf] = new _hooks({ storage: storage });
+    }
+    return myhooks[idf];
+  }
+}
+
+/***/ }),
+
+/***/ 11:
+/*!*****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/forlist.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.reSetItemAttr = reSetItemAttr;
+exports.reSetList = reSetList;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var _foritem = __webpack_require__(/*! ./foritem */ 3);
+
+function reSetItemAttr(item, list) {
+  if (typeof item == 'boolean') return item;
+  if (typeof item == 'string' || typeof item == 'number') {
+    item = { title: item };
+  }
+
+  var clsIndex = (0, _util.suid)('index-'); // 将data-index置入每条数据的class中，这样不用去动结构
+  var $ii = clsIndex;
+
+  if (list.itemMethod) {
+    var itm = list.itemMethod;
+    if ((typeof itm === 'undefined' ? 'undefined' : _typeof(itm)) == 'object') {
+      Object.keys(itm).forEach(function (evt) {
+        item[evt] = itm[evt];
+      });
+    }
+  }
+
+  var itmc = list.itemClass || list.class || '';
+  var myClass = item['itemClass'] || item['class'] || item['className'] || '';
+  item['itemClass'] = myClass ? itmc + ' ' + myClass : itmc;
+  item['itemClass'] = item.idf ? 'item itemroot ' + item['itemClass'] : 'item ' + item['itemClass'];
+
+  if (list.itemStyle || list.style) {
+    var itsy = list.itemStyle || list.style;
+    if (item['style'] || item['itemStyle']) {
+      var myStyle = item['style'] || item['itemStyle'];
+      item['style'] = myStyle;
+    } else {
+      item['style'] = itsy;
+    }
+  }
+
+  // if (this.$$is=='tree' && isObject(item)) {
+  if ((0, _util.isObject)(item)) {
+    if (item['attr']) {
+      if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = $ii;
+    } else {
+      if (item['$$typeof']) {
+        item = { title: item, attr: { 'data-treeid': $ii } };
+      } else {
+        item['attr'] = { 'data-treeid': $ii };
+      }
+    }
+  }
+
+  // const newItem = item['$$id'] ? item : resetItem(item, this)
+  var newItem = (0, _foritem.resetItem)(item, this);
+  return newItem;
+}
+
+function reSetArray(data, list) {
+  var _this = this;
+
+  var that = this;
+  try {
+    if (list.methods && (0, _util.isObject)(list.methods)) {
+      var methods = list.methods;
+      Object.keys(methods).forEach(function (key) {
+        var fun = methods[key];
+        if ((0, _util.isFunction)(fun)) {
+          fun = fun.bind(that);
+          that[key] = methods[key];
+        }
+      });
+    }
+    delete list.methods;
+
+    if ((0, _util.isArray)(data)) {
+      list.data = data.map(function (item) {
+        return reSetItemAttr.call(_this, item, list);
+      });
+    }
+    return list;
+  } catch (error) {
+    console.warn('======= lib.reSetArray =======', error);
+  }
+}
+
+function reSetList(list) {
+  if ((0, _util.isObject)(list)) {
+    list['show'] = list.hasOwnProperty('show') ? list.show : true;
+    return reSetArray.call(this, list.data, list);
+  }
+}
+
+/***/ }),
+
+/***/ 12:
+/*!***********************************************!*\
+  !*** ./node_modules/path-browserify/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes, empty elements, or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var last = parts[i];
+    if (last === '.') {
+      parts.splice(i, 1);
+    } else if (last === '..') {
+      parts.splice(i, 1);
+      up++;
+    } else if (up) {
+      parts.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (allowAboveRoot) {
+    for (; up--; up) {
+      parts.unshift('..');
+    }
+  }
+
+  return parts;
+}
+
+// Split a filename into [root, dir, basename, ext], unix version
+// 'root' is just a slash, or nothing.
+var splitPathRe =
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+var splitPath = function(filename) {
+  return splitPathRe.exec(filename).slice(1);
+};
+
+// path.resolve([from ...], to)
+// posix version
+exports.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
+
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
+
+    // Skip empty and invalid entries
+    if (typeof path !== 'string') {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
+
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path.charAt(0) === '/';
+  }
+
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
+
+  // Normalize the path
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+    return !!p;
+  }), !resolvedAbsolute).join('/');
+
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
+
+// path.normalize(path)
+// posix version
+exports.normalize = function(path) {
+  var isAbsolute = exports.isAbsolute(path),
+      trailingSlash = substr(path, -1) === '/';
+
+  // Normalize the path
+  path = normalizeArray(filter(path.split('/'), function(p) {
+    return !!p;
+  }), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+exports.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+exports.join = function() {
+  var paths = Array.prototype.slice.call(arguments, 0);
+  return exports.normalize(filter(paths, function(p, index) {
+    if (typeof p !== 'string') {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    return p;
+  }).join('/'));
+};
+
+
+// path.relative(from, to)
+// posix version
+exports.relative = function(from, to) {
+  from = exports.resolve(from).substr(1);
+  to = exports.resolve(to).substr(1);
+
+  function trim(arr) {
+    var start = 0;
+    for (; start < arr.length; start++) {
+      if (arr[start] !== '') break;
+    }
+
+    var end = arr.length - 1;
+    for (; end >= 0; end--) {
+      if (arr[end] !== '') break;
+    }
+
+    if (start > end) return [];
+    return arr.slice(start, end - start + 1);
+  }
+
+  var fromParts = trim(from.split('/'));
+  var toParts = trim(to.split('/'));
+
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('/');
+};
+
+exports.sep = '/';
+exports.delimiter = ':';
+
+exports.dirname = function(path) {
+  var result = splitPath(path),
+      root = result[0],
+      dir = result[1];
+
+  if (!root && !dir) {
+    // No dirname whatsoever
+    return '.';
+  }
+
+  if (dir) {
+    // It has a dirname, strip trailing slash
+    dir = dir.substr(0, dir.length - 1);
+  }
+
+  return root + dir;
+};
+
+
+exports.basename = function(path, ext) {
+  var f = splitPath(path)[2];
+  // TODO: make this comparison case-insensitive on wxs?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+
+exports.extname = function(path) {
+  return splitPath(path)[3];
+};
+
+function filter (xs, f) {
+    if (xs.filter) return xs.filter(f);
+    var res = [];
+    for (var i = 0; i < xs.length; i++) {
+        if (f(xs[i], i, xs)) res.push(xs[i]);
+    }
+    return res;
+}
+
+// String.prototype.substr - negative index don't work in IE8
+var substr = 'ab'.substr(-1) === 'b'
+    ? function (str, start, len) { return str.substr(start, len) }
+    : function (str, start, len) {
+        if (start < 0) start = str.length + start;
+        return str.substr(start, len);
+    }
+;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ 13)))
+
+/***/ }),
+
+/***/ 13:
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ 14:
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/item.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.itemComponentBehavior = exports.itemBehavior = undefined;
+
+var _common = __webpack_require__(/*! ./common */ 2);
+
+var lib = __webpack_require__(/*! ../../lib */ 0);
+var itemBehavior = exports.itemBehavior = function itemBehavior(app, mytype) {
+  mytype = mytype || 'item';
+  return Behavior({
+    behaviors: [(0, _common.commonBehavior)(app, mytype), (0, _common.commonMethodBehavior)(app, mytype)],
+    properties: {
+      item: {
+        type: Object | String,
+        observer: function observer(params) {
+          if (!this.init) {
+            if (params) {
+              if (params.$$id) {
+                this.setData({ $item: lib.resetItem(params, this) });
+              } else {
+                this.update(params);
+              }
+            }
+          }
+        }
+      },
+      id: String
+    },
+    data: {
+      $item: {}
+    },
+    lifetimes: {
+      created: function created() {
+        this.$$is = 'item';
+      },
+      attached: function attached() {
+        //节点树完成，可以用setData渲染节点，但无法操作节点
+        var xitem = lib.resetItem(this.properties.item);
+        if (xitem) {
+          this.setData({
+            "$item": xitem
+          });
+        }
+      },
+      ready: function ready() {
+        //组件布局完成，这时可以获取节点信息，也可以操作节点
+        var activePage = this.activePage = app.activePage;
+        var $id = this.data.item['$$id'] || this.properties.id || this.data.item['id'];
+        if ($id) {
+          var itemKey = activePage['eles'][$id];
+          if (itemKey) {
+            activePage['elements'][itemKey] = this;
+          } else {
+            activePage['elements'][$id] = this;
+          }
+        }
+      }
+    },
+    methods: {
+      attr: function attr(params) {
+        return this.data.$item.attr;
+      },
+      reset: function reset() {
+        this.setData({ $item: JSON.parse(this.originalDataSource) });
+        return this;
+      },
+      update: function update(param, callback) {
+        if (lib.isObject(param)) {
+          var target = {};
+          Object.keys(param).forEach(function (key) {
+            if (param[key]) {
+              if (key.indexOf('$item.') == -1) {
+                var nkey = '$item.' + key;
+                target[nkey] = param[key];
+              } else {
+                target[key] = param[key];
+              }
+            }
+          });
+          param = target;
+
+          this.setData(param);
+          var _item = lib.resetItem(this.data.$item, this);
+          var cb = lib.isFunction(callback) ? callback : null;
+          this.setData({
+            // item: _item,
+            $item: _item
+          }, cb);
+        }
+        return this;
+      }
+    }
+  });
+};
+
+var itemComponentBehavior = exports.itemComponentBehavior = function itemComponentBehavior(app, mytype) {
+  return Behavior({
+    behaviors: [itemBehavior(app, mytype)],
+    definitionFilter: function definitionFilter(defFields, definitionFilterArr) {
+      // 监管组件的setData
+      defFields.methods = defFields.methods || {};
+      defFields.methods._setData = function (data, opts, callback) {
+        if (lib.isFunction(opts)) {
+          callback = opts;
+          opts = {};
+        }
+        if (this.init) {
+          if (data && lib.isObject(data)) {
+            var myitem = data.$item || data.item || data.dataSource || {};
+            data.$item = lib.resetItem(myitem, this);
+          }
+        }
+        var originalSetData = this._originalSetData; // 原始 setData
+        originalSetData.call(this, data, callback); // 做 data 的 setData
+      };
+    },
+
+    lifetimes: {
+      created: function created() {
+        this._originalSetData = this.setData; // 原始 setData
+        this.setData = this._setData; // 封装后的 setData
+      },
+      ready: function ready() {
+        //组件布局完成，这时可以获取节点信息，也可以操作节点
+        this.mount();
+      }
+    }
+  });
+};
+
+/***/ }),
+
+/***/ 15:
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/tree.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.treeComponentBehavior = exports.treeBehavior = undefined;
+
+var _list = __webpack_require__(/*! ./list */ 6);
+
+var lib = __webpack_require__(/*! ../../lib */ 0);
+
+var treeBehavior = exports.treeBehavior = function treeBehavior(app, mytype) {
+  mytype = mytype || 'tree';
+  return Behavior({
+    behaviors: [(0, _list.listComponentBehavior)(app, mytype)],
+    lifetimes: {
+      created: function created() {
+        this.$$is = 'tree';
+        var uniqId = this.uniqId;
+        this.children = {};
+        app['_vars'][uniqId] = this; // fromTree == uniqId
+      },
+      ready: function ready() {
+        var activePage = this.activePage;
+        var uniqId = this.uniqId;
+        activePage.hooks.on('destory', function () {
+          app['_vars'][uniqId] = null;
+        });
+      }
+    }
+  });
+};
+
+var treeComponentBehavior = exports.treeComponentBehavior = function treeComponentBehavior(app, mytype) {
+  mytype = mytype || 'tree';
+  return Behavior({
+    behaviors: [treeBehavior(app, mytype)]
+  });
+};
+
+/***/ }),
+
+/***/ 16:
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/base.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.baseBehavior = undefined;
+
+var _common = __webpack_require__(/*! ./common */ 2);
+
+var baseBehavior = exports.baseBehavior = function baseBehavior(app, mytype) {
+  mytype = mytype || 'tree';
+  return Behavior({
+    behaviors: [(0, _common.commonBehavior)(app, mytype), (0, _common.commonMethodBehavior)(app, mytype)]
+  });
+};
+
+/***/ }),
+
+/***/ 17:
+/*!**************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/index.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _common = __webpack_require__(/*! ./common */ 2);
+
+Object.defineProperty(exports, "commonBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _common.commonBehavior;
+  }
+});
+Object.defineProperty(exports, "commonMethodBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _common.commonMethodBehavior;
+  }
+});
+Object.defineProperty(exports, "resetStoreEvts", {
+  enumerable: true,
+  get: function get() {
+    return _common.resetStoreEvts;
+  }
+});
+
+var _item = __webpack_require__(/*! ./item */ 14);
+
+Object.defineProperty(exports, "itemBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _item.itemBehavior;
+  }
+});
+Object.defineProperty(exports, "itemComponentBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _item.itemComponentBehavior;
+  }
+});
+
+var _list = __webpack_require__(/*! ./list */ 6);
+
+Object.defineProperty(exports, "listBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _list.listBehavior;
+  }
+});
+Object.defineProperty(exports, "listComponentBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _list.listComponentBehavior;
+  }
+});
+
+var _tree = __webpack_require__(/*! ./tree */ 15);
+
+Object.defineProperty(exports, "treeBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _tree.treeBehavior;
+  }
+});
+Object.defineProperty(exports, "treeComponentBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _tree.treeComponentBehavior;
+  }
+});
+
+var _base = __webpack_require__(/*! ./base */ 16);
+
+Object.defineProperty(exports, "baseBehavior", {
+  enumerable: true,
+  get: function get() {
+    return _base.baseBehavior;
+  }
+});
+
+/***/ }),
+
+/***/ 18:
+/*!*************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/ui.js ***!
+  \*************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.alert = alert;
+function alert(text) {
+  wx.showModal({
+    content: text,
+    showCancel: false
+  });
+}
+
+/***/ }),
+
+/***/ 19:
+/*!****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/utils.js ***!
+  \****************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.post = post;
+exports.upload = upload;
+
+var _path = __webpack_require__(/*! path */ 12);
+
+var _path2 = _interopRequireDefault(_path);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var lib = __webpack_require__(/*! ../lib */ 0);
+
+function post(url, data) {
+  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  return new Promise(function (resolve, reject) {
+    var postParam = {
+      url: url, // 仅为示例，并非真实的接口地址
+      method: 'POST',
+      data: data || {},
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function success(res) {
+        resolve(res);
+      },
+
+      error: function error(e) {
+        reject('网络出错');
+      }
+    };
+    postParam = Object.assign(postParam, param);
+    postParam.fail = postParam.error;
+    if (postParam.url) wx.request(postParam);
+  });
+}
+
+function getImgRealPath(obj) {
+  if (lib.isString(obj)) return obj;
+  if (lib.isObject(obj)) {
+    return obj.path ? obj.path : obj.src ? obj.src : obj.img ? obj.img.src ? obj.img.src : obj.img : '';
+  }
+}
+
+function formDataName(param) {
+  var basename = _path2.default.basename(param);
+  var extname = _path2.default.extname(basename);
+  return basename.length > 10 ? lib.uuid('upimg_', 12) + extname : basename;
+}
+
+function doUpload(param) {
+  if (param.url == 'cloud') {
+    param.cloudPath = param.formData.name;
+    wx.cloud.uploadFile(param);
+  } else {
+    wx.uploadFile(param);
+  }
+}
+
+function _up(params) {
+  if (Array.isArray(params.filePath)) {
+    var every = [];
+    params.filePath.forEach(function (one) {
+      one = getImgRealPath(one);
+      if (one) {
+        var p = new Promise(function (rs, rj) {
+          var nParams = {};
+          Object.keys(params).forEach(function (key) {
+            if (key == 'filePath') {
+              nParams[key] = one;
+            } else {
+              if (key == 'formData') {
+                params[key].name = formDataName(one);
+                nParams[key] = params[key];
+              } else {
+                nParams[key] = params[key];
+              }
+            }
+          });
+          nParams.success = function (res) {
+            rs(res);
+          };
+          nParams.error = function (err) {
+            rj(err);
+          };
+          nParams.fail = function (err) {
+            rj(err);
+          };
+          // wx.uploadFile(nParams)
+          doUpload(nParams);
+        });
+        every.push(p);
+      }
+    });
+    return Promise.all(every).then(function (res) {
+      wx.hideLoading();
+      return res;
+    });
+  } else {
+    return new Promise(function (resolve, reject) {
+      var oldSuccess = params.success;
+      var oldError = params.error;
+      params.success = function (res) {
+        wx.hideLoading();
+        if (typeof oldSuccess == 'function') {
+          oldSuccess(res);
+        }
+        resolve(res);
+      };
+
+      params.error = function (err) {
+        if (typeof oldError == 'function') {
+          oldError(err);
+        }
+        reject(err);
+      };
+
+      params.fail = params.error;
+      params.filePath = getImgRealPath(params.filePath);
+      params.formData.name = formDataName(params.filePath);
+      // wx.uploadFile(params)
+      doUpload(params);
+    });
+  }
+}
+
+function upload(url, data) {
+  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (lib.isObject(url)) param = url;
+  var postParam = {
+    url: url, // 仅为示例，并非真实的接口地址
+    type: 'img',
+    name: 'file',
+    filePath: '',
+    header: {
+      'content-type': 'application/json' // 默认值
+    },
+    data: data || {}
+    // success(res) {},
+    // error: function (e) {}
+  };
+  postParam = Object.assign(postParam, param);
+  postParam.formData = postParam.data;
+  delete postParam.data;
+  if (postParam.url && postParam.filePath) {
+    wx.showLoading({
+      title: '上传中...'
+    });
+    return _up(postParam);
+  } else {
+    return Promise.reject('url\u548CfilePath\u53C2\u6570\u4E3A\u5FC5\u586B\u9879\uFF0Curl\u8BF7\u586B\u5199\u670D\u52A1\u5668\u5730\u5740, filePath\u8BF7\u586B\u5199\u4E0A\u4F20\u56FE\u7247\u5730\u5740');
+  }
+}
+
+/***/ }),
+
+/***/ 2:
+/*!***************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/common.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -670,10 +1933,410 @@ function itemReactFun(e, prefix) {
 }
 
 /***/ }),
-/* 3 */
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/charenc/charenc.js ***!
-  \********************************************************************/
+
+/***/ 20:
+/*!****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _behaviors = __webpack_require__(/*! ./behaviors */ 17);
+
+var _ui = __webpack_require__(/*! ./ui */ 18);
+
+var _utils = __webpack_require__(/*! ./utils */ 19);
+
+var lib = __webpack_require__(/*! ../lib */ 0);
+
+
+function pageDataElement(data) {
+  var nData = void 0;
+  var eles = {};
+  var acts = {};
+  if (lib.isObject(data)) {
+    if (data['$$id']) {
+      var $id = data['$$id'];
+      eles[$id] = $id;
+      if (data.methods) {
+        var methods = data.methods;
+        if (lib.isObject(methods)) {
+          acts[$id] = Object.assign(acts, methods);
+          delete data.methods;
+        }
+      }
+    } else {
+      nData = {};
+      Object.keys(data).forEach(function (key) {
+        var item = data[key];
+        if (lib.isObject(item)) {
+          if (item['$$id']) {
+            var _$id = item['$$id'];
+            eles[_$id] = key;
+
+            if (item.methods) {
+              if (lib.isObject(item.methods)) {
+                acts[_$id] = Object.assign(acts, item.methods);
+                delete item.methods;
+              }
+            }
+
+            if (item.data && lib.isArray(item.data)) {
+              item.data = item.data.map(function (sub) {
+                if (lib.isObject(sub) && sub['$$id']) {
+                  var obj = pageDataElement(sub);
+                  eles = Object.assign(eles, obj.eles); // tree/@list 模式适用,  tree/li模式需要区分是否为idf项
+                  acts = Object.assign(acts, obj.acts);
+                }
+                return sub;
+              });
+            }
+          }
+        }
+        nData[key] = item;
+      });
+    }
+  }
+  nData = nData || data;
+  return { eles: eles, acts: acts, nData: nData };
+}
+
+function mergeActions(inst, acts) {
+  if (lib.isObject(acts)) {
+    Object.entries(acts).forEach(function (item) {
+      var mtdKey = item[0];
+      var mtdFun = item[1];
+      if (lib.isFunction(mtdFun)) {
+        inst[mtdKey] = mtdFun;
+      }
+    });
+  }
+}
+
+var activePage = void 0;
+core.getElementsById = function (id) {
+  if (activePage) {
+    return activePage.getElementsById(id);
+  }
+};
+
+function core(params) {
+  if (lib.isObject(params)) {
+    var app = getApp(params.appConfig);
+    app.hooks = lib.hooks('aotoo');
+
+    if (params.data) {
+      var myData = params.data;
+
+      var _pageDataElement = pageDataElement(myData),
+          eles = _pageDataElement.eles,
+          acts = _pageDataElement.acts,
+          nData = _pageDataElement.nData;
+
+      params.data = nData;
+      app['_vars'] = {};
+    }
+
+    var oldLoad = params.onLoad;
+    params.onLoad = function () {
+      var _this = this,
+          _arguments = arguments;
+
+      this.vars = {};
+      this.elements = {};
+      this.eles = eles || {}; // 存放id映射表
+      this.acts = acts || {};
+      this.uniqId = lib.suid('page');
+      this.hooks = lib.hooks(this.uniqId);
+
+      this.getElementsById = function (key) {
+        return this.elements[key] || this.selectComponent('#' + key);
+      };
+      app.activePage = activePage = this;
+      if (typeof oldLoad == 'function') {
+        setTimeout(function () {
+          oldLoad.apply(_this, _arguments);
+        }, 150);
+      }
+    };
+
+    var oldReady = params.onReady;
+    params.onReady = function () {
+      var _this2 = this,
+          _arguments2 = arguments;
+
+      var that = this;
+
+      var elements = this.eles;
+      var actions = this.acts;
+      var actionIds = Object.keys(actions);
+      actionIds.forEach(function ($$id) {
+        var defineMethods = actions[$$id];
+        if (elements[$$id]) {
+          var instId = elements[$$id];
+          if (that.elements[instId]) {
+            var $component = that.elements[instId];
+            mergeActions($component, defineMethods);
+          }
+        }
+      });
+
+      this.hooks.emit('onReady');
+
+      if (typeof oldReady == 'function') {
+        setTimeout(function () {
+          oldReady.apply(_this2, _arguments2);
+        }, 150);
+      }
+    };
+
+    var oldUnload = params.onUnload;
+    params.onUnload = function () {
+      app.activePage = undefined;
+      activePage = null;
+      (0, _behaviors.resetStoreEvts)();
+      app.hooks.emit('destory');
+      this.hooks.emit('destory');
+      lib.resetSuidCount();
+      this.hooks.destory();
+
+      if (typeof oldUnload == 'function') {
+        oldUnload.apply(this, arguments);
+      }
+    };
+
+    Page(params);
+  }
+}
+
+core.item = function (data, prefix) {
+  if (data) {
+    if (lib.isString(data) || lib.isNumber(data)) {
+      data = { title: data };
+    }
+
+    if (lib.isObject(data)) {
+      data['$$id'] = data['$$id'] || prefix || lib.suid('item__');
+    }
+
+    data.show = data.hasOwnProperty('show') ? data.show : true;
+  }
+  return data;
+};
+
+core.list = function (list, prefix) {
+  if ((typeof list === "undefined" ? "undefined" : _typeof(list)) == 'object') {
+    if (lib.isArray(list)) {
+      list = { data: list };
+    }
+    list['$$id'] = list['$$id'] || prefix || lib.suid('list__');
+    list['show'] = list.hasOwnProperty('show') ? list.show : true;
+    return list;
+  }
+};
+
+core.tree = function (data) {
+  return core.list(data, lib.suid('tree__'));
+};
+
+function setItem(item) {
+  var $item = item;
+  if (!item.hasOwnProperty('show')) {
+    $item = core.item(item);
+  }
+  $item = lib.resetItem($item);
+  return $item;
+}
+
+core.lib = lib;
+core.alert = _ui.alert;
+core.post = _utils.post;
+core.upload = _utils.upload;
+core.setItem = setItem;
+core.commonBehavior = _behaviors.commonBehavior;
+core.commonMethodBehavior = _behaviors.commonMethodBehavior;
+core.baseBehavior = _behaviors.baseBehavior;
+core.itemBehavior = _behaviors.itemBehavior;
+core.itemComponentBehavior = _behaviors.itemComponentBehavior;
+core.listBehavior = _behaviors.listBehavior;
+core.listComponentBehavior = _behaviors.listComponentBehavior;
+core.treeBehavior = _behaviors.treeBehavior;
+core.treeComponentBehavior = _behaviors.treeComponentBehavior;
+core.hooks = lib.hooks;
+module.exports = core;
+
+/***/ }),
+
+/***/ 3:
+/*!*****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/foritem.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.resetItem = resetItem;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
+
+var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
+
+// function setItemSortIdf(item, context) {
+//   if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item
+//   if (typeof item == 'object') {
+//     if (!Array.isArray(item)) {
+//       let extAttrs = {}
+//       let incAttrs = []
+//       item['__sort'] = []
+
+//       if (context) {
+//         // item.fromComponent = context.data.fromComponent||context.data.uniqId
+//         item.fromComponent = context.data.fromComponent || context.data.uniqId
+//       }
+
+//       Object.keys(item).forEach(function (key) {
+//         if (accessKey.indexOf(key) > -1 || (key.indexOf('@')==0 && key.length>1)) {
+//           incAttrs.push(key)
+//         } else {
+//           if (key == 'aim') {
+//             item.catchtap = item[key]
+//           }
+//           extAttrs[key] = item[key]
+//         }
+//       })
+
+//       if (incAttrs.length) {
+//         item['__sort'] = incAttrs
+//         incAttrs.map(attr => {
+//           let oData = item[attr]
+//           if (typeof oData == 'object') {
+//             if (Array.isArray(oData)) {
+//               item[attr] = setSortTemplateName(oData, context)
+//             } else {
+//               if (/^[^@]/.test(attr)) {
+//                 item[attr] = setItemSortIdf(oData, context)
+//               }
+//             }
+//           }
+//         })
+//       }
+//       return item
+//     }
+//   }
+// }
+
+// function setSortTemplateName(data, context) {
+//   if (Array.isArray(data) && data.length) {
+//     return data.map(item => setItemSortIdf(item, context))
+//   }
+// }
+
+function resetItem(data, context, loop) {
+  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') return data;
+  if ((0, _util.isObject)(data)) {
+    var extAttrs = {};
+    var incAttrs = [];
+    data['__sort'] = [];
+
+    if (context) {
+      data.fromComponent = context.data.fromComponent || context.data.uniqId;
+      if (data.methods || data.itemMethod) {
+        var methods = data.methods || data.itemMethod;
+        Object.keys(methods).forEach(function (key) {
+          var fun = methods[key];
+          if ((0, _util.isFunction)(fun)) {
+            fun = fun.bind(context);
+            context[key] = fun;
+          }
+        });
+        delete data.methods;
+        delete data.itemMethod;
+      }
+    }
+
+    Object.keys(data).forEach(function (key) {
+      if (data[key] || data[key] === 0) {
+        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
+          incAttrs.push(key);
+        } else {
+          if (key == 'aim') {
+            data.catchtap = data[key];
+            extAttrs['catchtap'] = data[key];
+            delete data.aim;
+          } else {
+            extAttrs[key] = data[key];
+          }
+        }
+      } else {
+        delete data[key];
+      }
+    });
+
+    data['__sort'] = incAttrs;
+    // for (var attr in data) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = incAttrs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var attr = _step.value;
+
+        var sonItem = data[attr];
+        if ((0, _util.isArray)(sonItem)) {
+          // data[attr] = setSortTemplateName(sonItem, context)
+          data[attr] = sonItem.filter(function (item) {
+            return resetItem(item, context, true);
+          });
+        } else {
+          if (/^[^@]/.test(attr) && sonItem) {
+            data[attr] = resetItem(sonItem, context, true);
+            // data[attr] = setItemSortIdf(sonItem, context)
+          }
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    if (!data.parent && !loop) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
+  }
+
+  // context.props = extAttrs
+  return data;
+}
+
+/***/ }),
+
+/***/ 4:
+/*!*****************************************!*\
+  !*** ./node_modules/charenc/charenc.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -714,19 +2377,20 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 4 */
-/*!************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/md5/md5.js ***!
-  \************************************************************/
+
+/***/ 5:
+/*!*********************************!*\
+  !*** ./node_modules/md5/md5.js ***!
+  \*********************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function(){
   var crypt = __webpack_require__(/*! crypt */ 7),
-      utf8 = __webpack_require__(/*! charenc */ 3).utf8,
+      utf8 = __webpack_require__(/*! charenc */ 4).utf8,
       isBuffer = __webpack_require__(/*! is-buffer */ 8),
-      bin = __webpack_require__(/*! charenc */ 3).bin,
+      bin = __webpack_require__(/*! charenc */ 4).bin,
 
   // The core
   md5 = function (message, options) {
@@ -885,138 +2549,11 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 5 */
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/foritem.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.resetItem = resetItem;
-
-var _util = __webpack_require__(/*! ./util */ 1);
-
-var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
-
-var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
-
-function setItemSortIdf(item, context) {
-  if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item;
-  if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object') {
-    if (!Array.isArray(item)) {
-      var extAttrs = {};
-      var incAttrs = [];
-      item['__sort'] = [];
-
-      if (context) {
-        // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.fromComponent || context.data.uniqId;
-      }
-
-      Object.keys(item).forEach(function (key) {
-        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-          incAttrs.push(key);
-        } else {
-          extAttrs[key] = item[key];
-        }
-      });
-
-      if (incAttrs.length) {
-        item['__sort'] = incAttrs;
-        incAttrs.map(function (attr) {
-          var oData = item[attr];
-          if ((typeof oData === 'undefined' ? 'undefined' : _typeof(oData)) == 'object') {
-            if (Array.isArray(oData)) {
-              item[attr] = setSortTemplateName(oData, context);
-            } else {
-              item[attr] = setItemSortIdf(oData, context);
-            }
-          }
-        });
-      }
-      return item;
-    }
-  }
-}
-
-function setSortTemplateName(data, context) {
-  if (Array.isArray(data) && data.length) {
-    return data.map(function (item) {
-      return setItemSortIdf(item, context);
-    });
-  }
-}
-
-function resetItem(data, context) {
-  var extAttrs = {};
-  var incAttrs = [];
-  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
-    return data;
-  }
-
-  if (context && data.$$id && data.methods) {
-    var methods = data.methods;
-    Object.keys(methods).forEach(function (key) {
-      context[key] = methods[key].bind(context);
-    });
-    delete data.methods;
-  }
-
-  Object.keys(data).forEach(function (key) {
-    if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-      incAttrs.push(key);
-    } else {
-      if (key == 'aim') {
-        data.catchtap = data[key];
-      }
-      extAttrs[key] = data[key];
-    }
-  });
-
-  data['__sort'] = incAttrs;
-
-  var _loop = function _loop() {
-    var sonItem = data[attr];
-    if (attr == 'itemMethod') {
-      if (context && (0, _util.isObject)(sonItem)) {
-        Object.keys(sonItem).forEach(function (fn) {
-          context[fn] = sonItem[fn];
-        });
-        delete data.itemMethod;
-      }
-    } else {
-      if (Array.isArray(sonItem)) {
-        data[attr] = setSortTemplateName(sonItem, context);
-      } else {
-        data[attr] = setItemSortIdf(sonItem, context);
-      }
-    }
-  };
-
-  for (var attr in data) {
-    _loop();
-  }
-  if (!data.parent) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
-
-  // context.props = extAttrs
-  return data;
-}
-
-/***/ }),
-/* 6 */
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/list.js ***!
-  \****************************************************/
+/***/ 6:
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/list.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1400,10 +2937,11 @@ var listComponentBehavior = exports.listComponentBehavior = function listCompone
 };
 
 /***/ }),
-/* 7 */
-/*!****************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/crypt/crypt.js ***!
-  \****************************************************************/
+
+/***/ 7:
+/*!*************************************!*\
+  !*** ./node_modules/crypt/crypt.js ***!
+  \*************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -1507,1686 +3045,11 @@ var listComponentBehavior = exports.listComponentBehavior = function listCompone
 
 
 /***/ }),
-/* 8 */
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/is-buffer/index.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
 
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
-
-
-/***/ }),
-/* 9 */
-/*!*****************************************!*\
-  !*** ./js/components/aotoo/lib/tree.js ***!
-  \*****************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.tree = tree;
-exports.listToTree = listToTree;
-
-var _util = __webpack_require__(/*! ./util */ 1);
-
-var filter = function filter(data, callback) {
-  if ((0, _util.isArray)(data)) {
-    return data.filter(callback);
-  }
-};
-var idrecode = [];
-var treeProps = {};
-function valideClassName(clsname, level) {
-  var reCls = / *level([\d]* *)?/ig;
-  var myLevelCls = 'level' + level;
-  if (clsname) {
-    if (reCls.test(clsname)) {
-      clsname = clsname.replace(reCls, '');
-    }
-    clsname += ' ' + myLevelCls;
-    return clsname;
-  }
-}
-
-var treeDeep = 1;
-function subTree(item, dataAry, deep, index) {
-  deep = treeDeep = deep || 1;
-  var fromTree = void 0;
-  if (this && this.fromTree) {
-    fromTree = this.fromTree;
-  }
-  var nsons = [];
-  var sons = filter(dataAry, function (o) {
-    return o.parent == item.idf;
-  });
-  sons.forEach(function (son, ii) {
-    var _clsName = son.itemClass || son.class;
-    _clsName = valideClassName(_clsName, deep);
-    son.itemClass = _clsName;
-    if (son.idf && idrecode.indexOf(son.idf) == -1) {
-      idrecode.push(son.idf);
-      nsons = nsons.concat([subTree.call({ fromTree: fromTree }, son, dataAry, ++deep, ii)]);
-      --deep;
-    } else {
-      nsons = nsons.concat(son);
-    }
-  });
-  if (nsons.length) {
-    // item.li = nsons
-    // item['__sort'] = (item['__sort']||[]).concat('li')
-    var treeid = item.attr && item.attr['data-treeid'] || index;
-    // const $id = item.$$id || item.id || `level${deep}-${treeid}`
-    var $id = item.$$id || item.id || '' + treeid;
-    item['@list'] = {
-      $$id: $id,
-      data: nsons,
-      type: item.type,
-      listClass: item.liClass || 'ul',
-      itemClass: treeProps.itemClass || '',
-      itemStyle: treeProps.itemStyle || '',
-      show: item.hasOwnProperty('show') ? item.show : true,
-      fromComponent: fromTree
-      // fromTree : fromTree
-    };
-    item['__sort'] = (item['__sort'] || []).concat('@list');
-  }
-  return item;
-}
-
-function owerTree(item) {
-  var ary = [];
-  item.forEach(function (o) {
-    if (Array.isArray(o)) return owerTree(item);
-    ary.push(o);
-  });
-  if (ary.length) {
-    return { li: ary };
-  }
-}
-
-// TreeStructor
-// 此处tree的算法与aotoo的tree算法有差异
-function tree(dataAry, props, fromTree) {
-  var menus = [];
-  idrecode = [];
-  treeProps = {
-    itemClass: props.itemClass || props.class,
-    itemStyle: props.itemStyle || props.style
-  };
-  dataAry.forEach(function (item, ii) {
-    treeDeep = 1;
-    if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
-      // item.fromTree = fromTree
-      item.fromComponent = fromTree;
-      if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
-        var clsName = item.itemClass || item.class;
-        clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';
-        item.itemClass = clsName;
-        var nItem = subTree.call({ fromTree: fromTree }, item, dataAry, ii);
-        nItem.__deep = treeDeep;
-        menus.push(nItem);
-      }
-      if (!item.idf && !item.parent) {
-        menus.push(item);
-      }
-    }
-    if (Array.isArray(item)) {
-      var _tmp = owerTree(item);
-      if (_tmp) {
-        menus.push(_tmp);
-      }
-    }
-  });
-  return menus;
-}
-
-function listToTree(_list, fromTree) {
-  var list = (0, _util.clone)(_list);
-  if ((0, _util.isObject)(list) && list.data) {
-    list.data = tree(list.data, list, fromTree);
-  }
-  return list;
-}
-
-/***/ }),
-/* 10 */
+/***/ 78:
 /*!******************************************!*\
-  !*** ./js/components/aotoo/lib/hooks.js ***!
+  !*** ./src/SaUi/js/pages/empty/index.js ***!
   \******************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-exports.hooks = hooks;
-
-var _util = __webpack_require__(/*! ./util */ 1);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _hooks = function () {
-  function _hooks() {
-    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _classCallCheck(this, _hooks);
-
-    this.actions = {};
-    this.storeData = {};
-    this.storage = props.storage;
-  }
-
-  _createClass(_hooks, [{
-    key: 'destory',
-    value: function destory() {
-      this.actions = null;
-      this.storeData = null;
-      wx.clearStorageSync();
-    }
-  }, {
-    key: 'getInfo',
-    value: function getInfo() {
-      return this.storage ? getStorageInfoSync() : this.storeData;
-    }
-  }, {
-    key: 'setItem',
-    value: function setItem(key, val) {
-      try {
-        this.storage ? wx.setStorageSync(key, val) : this.storeData[key] = val;
-      } catch (error) {
-        console.warn(error);
-      }
-    }
-  }, {
-    key: 'getItem',
-    value: function getItem(key) {
-      try {
-        return this.storage ? wx.getStorageSync(key) : this.storeData[key];
-      } catch (error) {
-        console.warn(error);
-      }
-    }
-  }, {
-    key: 'append',
-    value: function append(key, val) {
-      if (this.storeData[key]) {
-        var sData = this.getItem(key);
-        if ((0, _util.isArray)(sData)) {
-          sData = sData.concat(val);
-        } else if ((0, _util.isObject)(sData)) {
-          if ((0, _util.isObject)(val)) {
-            sData = Object.assign(sData, val);
-          } else {
-            sData[(0, _util.suid)('random_')] = val;
-          }
-        } else {
-          sData = val;
-        }
-        this.setItem(key, sData);
-      } else {
-        this.setItem(key, val);
-      }
-    }
-  }, {
-    key: 'delete',
-    value: function _delete(key) {
-      this.storage ? wx.removeStorageSync(key) : this.storeData[key] = null;
-    }
-  }, {
-    key: 'clear',
-    value: function clear() {
-      this.destory();
-    }
-
-    // ========= 下面为钩子方法 ===========
-
-  }, {
-    key: 'on',
-    value: function on(key, cb) {
-      var myActions = this.actions;
-      var hooksActionUniqId = (0, _util.suid)('hooks_action_');
-      if (cb) {
-        cb['hooksActionUniqId'] = hooksActionUniqId;
-      }
-      if ((0, _util.isString)(key)) {
-        if (myActions[key]) {
-          myActions[key] = [].concat(myActions[key]).concat(cb);
-        } else {
-          myActions[key] = [cb];
-        }
-      }
-    }
-  }, {
-    key: 'off',
-    value: function off(key, fun) {
-      if ((0, _util.isString)(key)) {
-        if (fun) {
-          var hooksActionUniqId = fun.hooksActionUniqId;
-          if (hooksActionUniqId) {
-            var theFuns = this.actions[key];
-            var selectFunIndex = void 0;
-            if (theFuns) {
-              theFuns.forEach(function ($f, ii) {
-                if ($f['hooksActionUniqId'] == hooksActionUniqId) {
-                  selectFunIndex = ii;
-                }
-              });
-              if (selectFunIndex) {
-                theFuns.splice(selectFunIndex, 1);
-              }
-            }
-          }
-        } else {
-          delete this.actions[key];
-        }
-      }
-    }
-  }, {
-    key: 'emit',
-    value: function emit(key, param) {
-      var _this = this;
-
-      var ctx = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-      if ((0, _util.isString)(key)) {
-        if (this.actions[key]) {
-          var vals = [];
-          var funs = this.actions[key];
-          funs.forEach(function (fun) {
-            if ((0, _util.isFunction)(fun)) {
-              var res = fun.call(ctx, param);
-              if (res) vals.push(res);else {
-                vals.push(undefined);
-              }
-              if (fun.onlyonetime) {
-                _this.off(key, fun);
-              }
-              // vals.push(fun.call(ctx, param))
-            }
-          });
-          if (vals.length) {
-            return vals;
-          }
-        }
-      }
-    }
-  }, {
-    key: 'one',
-    value: function one(key, cb) {
-      if (key && typeof cb == 'function') {
-        cb.onlyonetime = true;
-      }
-      this.on(key, cb);
-    }
-  }]);
-
-  return _hooks;
-}();
-
-var myhooks = {};
-function hooks(idf, storage) {
-  if ((0, _util.isString)(idf)) {
-    if (!myhooks[idf]) {
-      myhooks[idf] = new _hooks({ storage: storage });
-    }
-    return myhooks[idf];
-  }
-}
-
-/***/ }),
-/* 11 */
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/forlist.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.reSetItemAttr = reSetItemAttr;
-exports.reSetList = reSetList;
-
-var _util = __webpack_require__(/*! ./util */ 1);
-
-var _foritem = __webpack_require__(/*! ./foritem */ 5);
-
-function reSetItemAttr(item, list) {
-  if (typeof item == 'boolean') return item;
-  if (typeof item == 'string' || typeof item == 'number') {
-    item = { title: item };
-  }
-
-  var clsIndex = (0, _util.suid)('index-'); // 将data-index置入每条数据的class中，这样不用去动结构
-  var $ii = clsIndex;
-
-  if (list.itemMethod) {
-    var itm = list.itemMethod;
-    if ((typeof itm === 'undefined' ? 'undefined' : _typeof(itm)) == 'object') {
-      Object.keys(itm).forEach(function (evt) {
-        item[evt] = itm[evt];
-      });
-    }
-  }
-
-  var itmc = list.itemClass || list.class || '';
-  var myClass = item['itemClass'] || item['class'] || item['className'] || '';
-  item['itemClass'] = myClass ? itmc + ' ' + myClass : itmc;
-  item['itemClass'] = item.idf ? 'item itemroot ' + item['itemClass'] : 'item ' + item['itemClass'];
-
-  if (list.itemStyle || list.style) {
-    var itsy = list.itemStyle || list.style;
-    if (item['style'] || item['itemStyle']) {
-      var myStyle = item['style'] || item['itemStyle'];
-      item['style'] = myStyle;
-    } else {
-      item['style'] = itsy;
-    }
-  }
-
-  // if (this.$$is=='tree' && isObject(item)) {
-  if ((0, _util.isObject)(item)) {
-    if (item['attr']) {
-      if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = $ii;
-    } else {
-      if (item['$$typeof']) {
-        item = { title: item, attr: { 'data-treeid': $ii } };
-      } else {
-        item['attr'] = { 'data-treeid': $ii };
-      }
-    }
-  }
-
-  // const newItem = item['$$id'] ? item : resetItem(item, this)
-  var newItem = (0, _foritem.resetItem)(item, this);
-  return newItem;
-}
-
-function reSetArray(data, list) {
-  var _this = this;
-
-  if ((0, _util.isArray)(data)) {
-    list.data = data.map(function (item) {
-      return reSetItemAttr.call(_this, item, list);
-    });
-  }
-  return list;
-}
-
-function reSetList(list) {
-  if ((0, _util.isObject)(list)) {
-    list['show'] = list.hasOwnProperty('show') ? list.show : true;
-    return reSetArray.call(this, list.data, list);
-  }
-}
-
-/***/ }),
-/* 12 */
-/*!**************************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/path-browserify/index.js ***!
-  \**************************************************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// resolves . and .. elements in a path array with directory names there
-// must be no slashes, empty elements, or device names (c:\) in the array
-// (so also no leading and trailing slashes - it does not distinguish
-// relative and absolute paths)
-function normalizeArray(parts, allowAboveRoot) {
-  // if the path tries to go above the root, `up` ends up > 0
-  var up = 0;
-  for (var i = parts.length - 1; i >= 0; i--) {
-    var last = parts[i];
-    if (last === '.') {
-      parts.splice(i, 1);
-    } else if (last === '..') {
-      parts.splice(i, 1);
-      up++;
-    } else if (up) {
-      parts.splice(i, 1);
-      up--;
-    }
-  }
-
-  // if the path is allowed to go above the root, restore leading ..s
-  if (allowAboveRoot) {
-    for (; up--; up) {
-      parts.unshift('..');
-    }
-  }
-
-  return parts;
-}
-
-// Split a filename into [root, dir, basename, ext], unix version
-// 'root' is just a slash, or nothing.
-var splitPathRe =
-    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-var splitPath = function(filename) {
-  return splitPathRe.exec(filename).slice(1);
-};
-
-// path.resolve([from ...], to)
-// posix version
-exports.resolve = function() {
-  var resolvedPath = '',
-      resolvedAbsolute = false;
-
-  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-    var path = (i >= 0) ? arguments[i] : process.cwd();
-
-    // Skip empty and invalid entries
-    if (typeof path !== 'string') {
-      throw new TypeError('Arguments to path.resolve must be strings');
-    } else if (!path) {
-      continue;
-    }
-
-    resolvedPath = path + '/' + resolvedPath;
-    resolvedAbsolute = path.charAt(0) === '/';
-  }
-
-  // At this point the path should be resolved to a full absolute path, but
-  // handle relative paths to be safe (might happen when process.cwd() fails)
-
-  // Normalize the path
-  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
-    return !!p;
-  }), !resolvedAbsolute).join('/');
-
-  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-};
-
-// path.normalize(path)
-// posix version
-exports.normalize = function(path) {
-  var isAbsolute = exports.isAbsolute(path),
-      trailingSlash = substr(path, -1) === '/';
-
-  // Normalize the path
-  path = normalizeArray(filter(path.split('/'), function(p) {
-    return !!p;
-  }), !isAbsolute).join('/');
-
-  if (!path && !isAbsolute) {
-    path = '.';
-  }
-  if (path && trailingSlash) {
-    path += '/';
-  }
-
-  return (isAbsolute ? '/' : '') + path;
-};
-
-// posix version
-exports.isAbsolute = function(path) {
-  return path.charAt(0) === '/';
-};
-
-// posix version
-exports.join = function() {
-  var paths = Array.prototype.slice.call(arguments, 0);
-  return exports.normalize(filter(paths, function(p, index) {
-    if (typeof p !== 'string') {
-      throw new TypeError('Arguments to path.join must be strings');
-    }
-    return p;
-  }).join('/'));
-};
-
-
-// path.relative(from, to)
-// posix version
-exports.relative = function(from, to) {
-  from = exports.resolve(from).substr(1);
-  to = exports.resolve(to).substr(1);
-
-  function trim(arr) {
-    var start = 0;
-    for (; start < arr.length; start++) {
-      if (arr[start] !== '') break;
-    }
-
-    var end = arr.length - 1;
-    for (; end >= 0; end--) {
-      if (arr[end] !== '') break;
-    }
-
-    if (start > end) return [];
-    return arr.slice(start, end - start + 1);
-  }
-
-  var fromParts = trim(from.split('/'));
-  var toParts = trim(to.split('/'));
-
-  var length = Math.min(fromParts.length, toParts.length);
-  var samePartsLength = length;
-  for (var i = 0; i < length; i++) {
-    if (fromParts[i] !== toParts[i]) {
-      samePartsLength = i;
-      break;
-    }
-  }
-
-  var outputParts = [];
-  for (var i = samePartsLength; i < fromParts.length; i++) {
-    outputParts.push('..');
-  }
-
-  outputParts = outputParts.concat(toParts.slice(samePartsLength));
-
-  return outputParts.join('/');
-};
-
-exports.sep = '/';
-exports.delimiter = ':';
-
-exports.dirname = function(path) {
-  var result = splitPath(path),
-      root = result[0],
-      dir = result[1];
-
-  if (!root && !dir) {
-    // No dirname whatsoever
-    return '.';
-  }
-
-  if (dir) {
-    // It has a dirname, strip trailing slash
-    dir = dir.substr(0, dir.length - 1);
-  }
-
-  return root + dir;
-};
-
-
-exports.basename = function(path, ext) {
-  var f = splitPath(path)[2];
-  // TODO: make this comparison case-insensitive on wxs?
-  if (ext && f.substr(-1 * ext.length) === ext) {
-    f = f.substr(0, f.length - ext.length);
-  }
-  return f;
-};
-
-
-exports.extname = function(path) {
-  return splitPath(path)[3];
-};
-
-function filter (xs, f) {
-    if (xs.filter) return xs.filter(f);
-    var res = [];
-    for (var i = 0; i < xs.length; i++) {
-        if (f(xs[i], i, xs)) res.push(xs[i]);
-    }
-    return res;
-}
-
-// String.prototype.substr - negative index don't work in IE8
-var substr = 'ab'.substr(-1) === 'b'
-    ? function (str, start, len) { return str.substr(start, len) }
-    : function (str, start, len) {
-        if (start < 0) start = str.length + start;
-        return str.substr(start, len);
-    }
-;
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ 13)))
-
-/***/ }),
-/* 13 */
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/process/browser.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 14 */
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/item.js ***!
-  \****************************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.itemComponentBehavior = exports.itemBehavior = undefined;
-
-var _common = __webpack_require__(/*! ./common */ 2);
-
-var lib = __webpack_require__(/*! ../../lib */ 0);
-var itemBehavior = exports.itemBehavior = function itemBehavior(app, mytype) {
-  mytype = mytype || 'item';
-  return Behavior({
-    behaviors: [(0, _common.commonBehavior)(app, mytype), (0, _common.commonMethodBehavior)(app, mytype)],
-    properties: {
-      item: {
-        type: Object | String,
-        observer: function observer(params) {
-          if (!this.init) {
-            if (params) {
-              if (params.$$id) {
-                this.setData({ $item: lib.resetItem(params, this) });
-              } else {
-                this.update(params);
-              }
-            }
-          }
-        }
-      },
-      id: String
-    },
-    data: {
-      $item: {}
-    },
-    lifetimes: {
-      created: function created() {
-        this.$$is = 'item';
-      },
-      attached: function attached() {
-        //节点树完成，可以用setData渲染节点，但无法操作节点
-        var xitem = lib.resetItem(this.properties.item);
-        if (xitem) {
-          this.setData({
-            "$item": xitem
-          });
-        }
-      },
-      ready: function ready() {
-        //组件布局完成，这时可以获取节点信息，也可以操作节点
-        var activePage = this.activePage = app.activePage;
-        var $id = this.data.item['$$id'] || this.properties.id || this.data.item['id'];
-        if ($id) {
-          var itemKey = activePage['eles'][$id];
-          if (itemKey) {
-            activePage['elements'][itemKey] = this;
-          } else {
-            activePage['elements'][$id] = this;
-          }
-        }
-      }
-    },
-    methods: {
-      attr: function attr(params) {
-        return this.data.$item.attr;
-      },
-      reset: function reset() {
-        this.setData({ $item: JSON.parse(this.originalDataSource) });
-        return this;
-      },
-      update: function update(param, callback) {
-        if (lib.isObject(param)) {
-          var target = {};
-          Object.keys(param).forEach(function (key) {
-            if (key.indexOf('$item.') == -1) {
-              var nkey = '$item.' + key;
-              target[nkey] = param[key];
-            } else {
-              target[key] = param[key];
-            }
-          });
-          param = target;
-
-          this.setData(param);
-          var _item = lib.resetItem(this.data.$item, this);
-          var cb = lib.isFunction(callback) ? callback : null;
-          this.setData({
-            // item: _item,
-            $item: _item
-          }, cb);
-        }
-        return this;
-      }
-    }
-  });
-};
-
-var itemComponentBehavior = exports.itemComponentBehavior = function itemComponentBehavior(app, mytype) {
-  return Behavior({
-    behaviors: [itemBehavior(app, mytype)],
-    definitionFilter: function definitionFilter(defFields, definitionFilterArr) {
-      // 监管组件的setData
-      defFields.methods = defFields.methods || {};
-      defFields.methods._setData = function (data, opts, callback) {
-        if (lib.isFunction(opts)) {
-          callback = opts;
-          opts = {};
-        }
-        if (this.init) {
-          if (data && lib.isObject(data)) {
-            var myitem = data.$item || data.item || data.dataSource || {};
-            data.$item = lib.resetItem(myitem, this);
-          }
-        }
-        var originalSetData = this._originalSetData; // 原始 setData
-        originalSetData.call(this, data, callback); // 做 data 的 setData
-      };
-    },
-
-    lifetimes: {
-      created: function created() {
-        this._originalSetData = this.setData; // 原始 setData
-        this.setData = this._setData; // 封装后的 setData
-      },
-      ready: function ready() {
-        //组件布局完成，这时可以获取节点信息，也可以操作节点
-        this.mount();
-      }
-    }
-  });
-};
-
-/***/ }),
-/* 15 */
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/tree.js ***!
-  \****************************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.treeComponentBehavior = exports.treeBehavior = undefined;
-
-var _list = __webpack_require__(/*! ./list */ 6);
-
-var lib = __webpack_require__(/*! ../../lib */ 0);
-
-var treeBehavior = exports.treeBehavior = function treeBehavior(app, mytype) {
-  mytype = mytype || 'tree';
-  return Behavior({
-    behaviors: [(0, _list.listComponentBehavior)(app, mytype)],
-    lifetimes: {
-      created: function created() {
-        this.$$is = 'tree';
-        var uniqId = this.uniqId;
-        this.children = {};
-        app['_vars'][uniqId] = this; // fromTree == uniqId
-      },
-      ready: function ready() {
-        var activePage = this.activePage;
-        var uniqId = this.uniqId;
-        activePage.hooks.on('destory', function () {
-          app['_vars'][uniqId] = null;
-        });
-      }
-    }
-  });
-};
-
-var treeComponentBehavior = exports.treeComponentBehavior = function treeComponentBehavior(app, mytype) {
-  mytype = mytype || 'tree';
-  return Behavior({
-    behaviors: [treeBehavior(app, mytype)]
-  });
-};
-
-/***/ }),
-/* 16 */
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/base.js ***!
-  \****************************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.baseBehavior = undefined;
-
-var _common = __webpack_require__(/*! ./common */ 2);
-
-var baseBehavior = exports.baseBehavior = function baseBehavior(app, mytype) {
-  mytype = mytype || 'tree';
-  return Behavior({
-    behaviors: [(0, _common.commonBehavior)(app, mytype), (0, _common.commonMethodBehavior)(app, mytype)]
-  });
-};
-
-/***/ }),
-/* 17 */
-/*!*****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/index.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _common = __webpack_require__(/*! ./common */ 2);
-
-Object.defineProperty(exports, "commonBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _common.commonBehavior;
-  }
-});
-Object.defineProperty(exports, "commonMethodBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _common.commonMethodBehavior;
-  }
-});
-Object.defineProperty(exports, "resetStoreEvts", {
-  enumerable: true,
-  get: function get() {
-    return _common.resetStoreEvts;
-  }
-});
-
-var _item = __webpack_require__(/*! ./item */ 14);
-
-Object.defineProperty(exports, "itemBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _item.itemBehavior;
-  }
-});
-Object.defineProperty(exports, "itemComponentBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _item.itemComponentBehavior;
-  }
-});
-
-var _list = __webpack_require__(/*! ./list */ 6);
-
-Object.defineProperty(exports, "listBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _list.listBehavior;
-  }
-});
-Object.defineProperty(exports, "listComponentBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _list.listComponentBehavior;
-  }
-});
-
-var _tree = __webpack_require__(/*! ./tree */ 15);
-
-Object.defineProperty(exports, "treeBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _tree.treeBehavior;
-  }
-});
-Object.defineProperty(exports, "treeComponentBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _tree.treeComponentBehavior;
-  }
-});
-
-var _base = __webpack_require__(/*! ./base */ 16);
-
-Object.defineProperty(exports, "baseBehavior", {
-  enumerable: true,
-  get: function get() {
-    return _base.baseBehavior;
-  }
-});
-
-/***/ }),
-/* 18 */
-/*!****************************************!*\
-  !*** ./js/components/aotoo/core/ui.js ***!
-  \****************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.alert = alert;
-function alert(text) {
-  wx.showModal({
-    content: text,
-    showCancel: false
-  });
-}
-
-/***/ }),
-/* 19 */
-/*!*******************************************!*\
-  !*** ./js/components/aotoo/core/utils.js ***!
-  \*******************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.post = post;
-exports.upload = upload;
-
-var _path = __webpack_require__(/*! path */ 12);
-
-var _path2 = _interopRequireDefault(_path);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var lib = __webpack_require__(/*! ../lib */ 0);
-
-function post(url, data) {
-  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  return new Promise(function (resolve, reject) {
-    var postParam = {
-      url: url, // 仅为示例，并非真实的接口地址
-      method: 'POST',
-      data: data || {},
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function success(res) {
-        resolve(res);
-      },
-
-      error: function error(e) {
-        reject('网络出错');
-      }
-    };
-    postParam = Object.assign(postParam, param);
-    postParam.fail = postParam.error;
-    if (postParam.url) wx.request(postParam);
-  });
-}
-
-function getImgRealPath(obj) {
-  if (lib.isString(obj)) return obj;
-  if (lib.isObject(obj)) {
-    return obj.path ? obj.path : obj.src ? obj.src : obj.img ? obj.img.src ? obj.img.src : obj.img : '';
-  }
-}
-
-function formDataName(param) {
-  var basename = _path2.default.basename(param);
-  var extname = _path2.default.extname(basename);
-  return basename.length > 10 ? lib.uuid('upimg_', 12) + extname : basename;
-}
-
-function doUpload(param) {
-  if (param.url == 'cloud') {
-    param.cloudPath = param.formData.name;
-    wx.cloud.uploadFile(param);
-  } else {
-    wx.uploadFile(param);
-  }
-}
-
-function _up(params) {
-  if (Array.isArray(params.filePath)) {
-    var every = [];
-    params.filePath.forEach(function (one) {
-      one = getImgRealPath(one);
-      if (one) {
-        var p = new Promise(function (rs, rj) {
-          var nParams = {};
-          Object.keys(params).forEach(function (key) {
-            if (key == 'filePath') {
-              nParams[key] = one;
-            } else {
-              if (key == 'formData') {
-                params[key].name = formDataName(one);
-                nParams[key] = params[key];
-              } else {
-                nParams[key] = params[key];
-              }
-            }
-          });
-          nParams.success = function (res) {
-            rs(res);
-          };
-          nParams.error = function (err) {
-            rj(err);
-          };
-          nParams.fail = function (err) {
-            rj(err);
-          };
-          // wx.uploadFile(nParams)
-          doUpload(nParams);
-        });
-        every.push(p);
-      }
-    });
-    return Promise.all(every).then(function (res) {
-      wx.hideLoading();
-      return res;
-    });
-  } else {
-    return new Promise(function (resolve, reject) {
-      var oldSuccess = params.success;
-      var oldError = params.error;
-      params.success = function (res) {
-        wx.hideLoading();
-        if (typeof oldSuccess == 'function') {
-          oldSuccess(res);
-        }
-        resolve(res);
-      };
-
-      params.error = function (err) {
-        if (typeof oldError == 'function') {
-          oldError(err);
-        }
-        reject(err);
-      };
-
-      params.fail = params.error;
-      params.filePath = getImgRealPath(params.filePath);
-      params.formData.name = formDataName(params.filePath);
-      // wx.uploadFile(params)
-      doUpload(params);
-    });
-  }
-}
-
-function upload(url, data) {
-  var param = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  if (lib.isObject(url)) param = url;
-  var postParam = {
-    url: url, // 仅为示例，并非真实的接口地址
-    type: 'img',
-    name: 'file',
-    filePath: '',
-    header: {
-      'content-type': 'application/json' // 默认值
-    },
-    data: data || {}
-    // success(res) {},
-    // error: function (e) {}
-  };
-  postParam = Object.assign(postParam, param);
-  postParam.formData = postParam.data;
-  delete postParam.data;
-  if (postParam.url && postParam.filePath) {
-    wx.showLoading({
-      title: '上传中...'
-    });
-    return _up(postParam);
-  } else {
-    return Promise.reject('url\u548CfilePath\u53C2\u6570\u4E3A\u5FC5\u586B\u9879\uFF0Curl\u8BF7\u586B\u5199\u670D\u52A1\u5668\u5730\u5740, filePath\u8BF7\u586B\u5199\u4E0A\u4F20\u56FE\u7247\u5730\u5740');
-  }
-}
-
-/***/ }),
-/* 20 */
-/*!*******************************************!*\
-  !*** ./js/components/aotoo/core/index.js ***!
-  \*******************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _behaviors = __webpack_require__(/*! ./behaviors */ 17);
-
-var _ui = __webpack_require__(/*! ./ui */ 18);
-
-var _utils = __webpack_require__(/*! ./utils */ 19);
-
-var lib = __webpack_require__(/*! ../lib */ 0);
-
-
-function pageDataElement(data) {
-  var nData = void 0;
-  var eles = {};
-  var acts = {};
-  if (lib.isObject(data)) {
-    if (data['$$id']) {
-      var $id = data['$$id'];
-      eles[$id] = $id;
-      if (data.methods) {
-        var methods = data.methods;
-        if (lib.isObject(methods)) {
-          acts[$id] = Object.assign(acts, methods);
-          delete data.methods;
-        }
-      }
-    } else {
-      nData = {};
-      Object.keys(data).forEach(function (key) {
-        var item = data[key];
-        if (lib.isObject(item)) {
-          if (item['$$id']) {
-            var _$id = item['$$id'];
-            eles[_$id] = key;
-
-            if (item.methods) {
-              if (lib.isObject(item.methods)) {
-                acts[_$id] = Object.assign(acts, item.methods);
-                delete item.methods;
-              }
-            }
-
-            if (item.data && lib.isArray(item.data)) {
-              item.data = item.data.map(function (sub) {
-                if (lib.isObject(sub) && sub['$$id']) {
-                  var obj = pageDataElement(sub);
-                  eles = Object.assign(eles, obj.eles); // tree/@list 模式适用,  tree/li模式需要区分是否为idf项
-                  acts = Object.assign(acts, obj.acts);
-                }
-                return sub;
-              });
-            }
-          }
-        }
-        nData[key] = item;
-      });
-    }
-  }
-  nData = nData || data;
-  return { eles: eles, acts: acts, nData: nData };
-}
-
-function mergeActions(inst, acts) {
-  if (lib.isObject(acts)) {
-    Object.entries(acts).forEach(function (item) {
-      var mtdKey = item[0];
-      var mtdFun = item[1];
-      if (lib.isFunction(mtdFun)) {
-        inst[mtdKey] = mtdFun;
-      }
-    });
-  }
-}
-
-var activePage = void 0;
-core.getElementsById = function (id) {
-  if (activePage) {
-    return activePage.getElementsById(id);
-  }
-};
-
-function core(params) {
-  if (lib.isObject(params)) {
-    var app = getApp(params.appConfig);
-    app.hooks = lib.hooks('aotoo');
-
-    if (params.data) {
-      var myData = params.data;
-
-      var _pageDataElement = pageDataElement(myData),
-          eles = _pageDataElement.eles,
-          acts = _pageDataElement.acts,
-          nData = _pageDataElement.nData;
-
-      params.data = nData;
-      app['_vars'] = {};
-    }
-
-    var oldLoad = params.onLoad;
-    params.onLoad = function () {
-      var _this = this,
-          _arguments = arguments;
-
-      this.vars = {};
-      this.elements = {};
-      this.eles = eles || {}; // 存放id映射表
-      this.acts = acts || {};
-      this.uniqId = lib.suid('page');
-      this.hooks = lib.hooks(this.uniqId);
-
-      this.getElementsById = function (key) {
-        return this.elements[key] || this.selectComponent('#' + key);
-      };
-      app.activePage = activePage = this;
-      if (typeof oldLoad == 'function') {
-        setTimeout(function () {
-          oldLoad.apply(_this, _arguments);
-        }, 150);
-      }
-    };
-
-    var oldReady = params.onReady;
-    params.onReady = function () {
-      var _this2 = this,
-          _arguments2 = arguments;
-
-      var that = this;
-
-      var elements = this.eles;
-      var actions = this.acts;
-      var actionIds = Object.keys(actions);
-      actionIds.forEach(function ($$id) {
-        var defineMethods = actions[$$id];
-        if (elements[$$id]) {
-          var instId = elements[$$id];
-          if (that.elements[instId]) {
-            var $component = that.elements[instId];
-            mergeActions($component, defineMethods);
-          }
-        }
-      });
-
-      this.hooks.emit('onReady');
-
-      if (typeof oldReady == 'function') {
-        setTimeout(function () {
-          oldReady.apply(_this2, _arguments2);
-        }, 150);
-      }
-    };
-
-    var oldUnload = params.onUnload;
-    params.onUnload = function () {
-      app.activePage = undefined;
-      activePage = null;
-      (0, _behaviors.resetStoreEvts)();
-      app.hooks.emit('destory');
-      this.hooks.emit('destory');
-      lib.resetSuidCount();
-      this.hooks.destory();
-
-      if (typeof oldUnload == 'function') {
-        oldUnload.apply(this, arguments);
-      }
-    };
-
-    Page(params);
-  }
-}
-
-core.item = function (data, prefix) {
-  if (data) {
-    if (lib.isString(data) || lib.isNumber(data)) {
-      data = { title: data };
-    }
-
-    if (lib.isObject(data)) {
-      data['$$id'] = data['$$id'] || prefix || lib.suid('item__');
-    }
-
-    data.show = data.hasOwnProperty('show') ? data.show : true;
-  }
-  return data;
-};
-
-core.list = function (list, prefix) {
-  if ((typeof list === "undefined" ? "undefined" : _typeof(list)) == 'object') {
-    if (lib.isArray(list)) {
-      list = { data: list };
-    }
-    list['$$id'] = list['$$id'] || prefix || lib.suid('list__');
-    list['show'] = list.hasOwnProperty('show') ? list.show : true;
-    return list;
-  }
-};
-
-core.tree = function (data) {
-  return core.list(data, lib.suid('tree__'));
-};
-
-function setItem(item) {
-  var $item = item;
-  if (!item.hasOwnProperty('show')) {
-    $item = core.item(item);
-  }
-  $item = lib.resetItem($item);
-  return $item;
-}
-
-core.lib = lib;
-core.alert = _ui.alert;
-core.post = _utils.post;
-core.upload = _utils.upload;
-core.setItem = setItem;
-core.commonBehavior = _behaviors.commonBehavior;
-core.commonMethodBehavior = _behaviors.commonMethodBehavior;
-core.baseBehavior = _behaviors.baseBehavior;
-core.itemBehavior = _behaviors.itemBehavior;
-core.itemComponentBehavior = _behaviors.itemComponentBehavior;
-core.listBehavior = _behaviors.listBehavior;
-core.listComponentBehavior = _behaviors.listComponentBehavior;
-core.treeBehavior = _behaviors.treeBehavior;
-core.treeComponentBehavior = _behaviors.treeComponentBehavior;
-core.hooks = lib.hooks;
-module.exports = core;
-
-/***/ }),
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */
-/*!*********************************!*\
-  !*** ./js/pages/empty/index.js ***!
-  \*********************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3252,5 +3115,186 @@ Pager({
   }
 });
 
+/***/ }),
+
+/***/ 8:
+/*!*****************************************!*\
+  !*** ./node_modules/is-buffer/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
+
+/***/ }),
+
+/***/ 9:
+/*!**************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/tree.js ***!
+  \**************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.tree = tree;
+exports.listToTree = listToTree;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var _foritem = __webpack_require__(/*! ./foritem */ 3);
+
+var filter = function filter(data, callback) {
+  if ((0, _util.isArray)(data)) {
+    return data.filter(callback);
+  }
+};
+var idrecode = [];
+var treeProps = {};
+function valideClassName(clsname, level) {
+  var reCls = / *level([\d]* *)?/ig;
+  var myLevelCls = 'level' + level;
+  if (clsname) {
+    if (reCls.test(clsname)) {
+      clsname = clsname.replace(reCls, '');
+    }
+    clsname += ' ' + myLevelCls;
+    return clsname;
+  }
+}
+
+var treeDeep = 1;
+function subTree(item, dataAry, deep, index) {
+  deep = treeDeep = deep || 1;
+  var fromTree = void 0;
+  if (this && this.fromTree) {
+    fromTree = this.fromTree;
+  }
+  var nsons = [];
+  var sons = filter(dataAry, function (o) {
+    return o.parent == item.idf;
+  });
+  sons.forEach(function (son, ii) {
+    var _clsName = son.itemClass || son.class;
+    _clsName = valideClassName(_clsName, deep);
+    son.itemClass = _clsName;
+    if (son.idf && idrecode.indexOf(son.idf) == -1) {
+      idrecode.push(son.idf);
+      nsons = nsons.concat([subTree.call({ fromTree: fromTree }, son, dataAry, ++deep, ii)]);
+      --deep;
+    } else {
+      nsons = nsons.concat(son);
+    }
+  });
+  if (nsons.length) {
+    // item.li = nsons
+    // item['__sort'] = (item['__sort']||[]).concat('li')
+    var treeid = item.attr && item.attr['data-treeid'] || index;
+    // const $id = item.$$id || item.id || `level${deep}-${treeid}`
+    var $id = item.$$id || item.id || '' + treeid;
+    item['@list'] = {
+      $$id: $id,
+      data: nsons,
+      type: item.type,
+      listClass: item.liClass || 'ul',
+      itemClass: treeProps.itemClass || '',
+      itemStyle: treeProps.itemStyle || '',
+      show: item.hasOwnProperty('show') ? item.show : true,
+      fromComponent: fromTree
+      // fromTree : fromTree
+
+      // item['__sort'] = (item['__sort'] || []).concat('@list')
+    };
+  }
+  item = (0, _foritem.resetItem)(item);
+  return item;
+}
+
+function owerTree(item) {
+  var ary = [];
+  item.forEach(function (o) {
+    if (Array.isArray(o)) return owerTree(item);
+    ary.push(o);
+  });
+  if (ary.length) {
+    return { li: ary };
+  }
+}
+
+// TreeStructor
+// 此处tree的算法与aotoo的tree算法有差异
+function tree(dataAry, props, fromTree) {
+  var menus = [];
+  idrecode = [];
+  treeProps = {
+    itemClass: props.itemClass || props.class,
+    itemStyle: props.itemStyle || props.style
+  };
+  dataAry.forEach(function (item, ii) {
+    treeDeep = 1;
+    if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object' && !Array.isArray(item)) {
+      // item.fromTree = fromTree
+      item.fromComponent = fromTree;
+      if (item.idf && !item.parent && idrecode.indexOf(item.idf) == -1) {
+        var clsName = item.itemClass || item.class;
+        clsName = clsName ? clsName.indexOf('level0') == -1 ? clsName + ' level0' : clsName : 'level0';
+        item.itemClass = clsName;
+        var nItem = subTree.call({ fromTree: fromTree }, item, dataAry, ii);
+        nItem.__deep = treeDeep;
+        menus.push(nItem);
+      }
+      if (!item.idf && !item.parent) {
+        menus.push(item);
+      }
+    }
+    if (Array.isArray(item)) {
+      var _tmp = owerTree(item);
+      if (_tmp) {
+        menus.push(_tmp);
+      }
+    }
+  });
+  return menus;
+}
+
+function listToTree(_list, fromTree) {
+  var list = (0, _util.clone)(_list);
+  if ((0, _util.isObject)(list) && list.data) {
+    list.data = tree.call(this, list.data, list, fromTree);
+  }
+  return list;
+}
+
 /***/ })
-],[[68,0]]]);
+
+},[[78,0]]]);

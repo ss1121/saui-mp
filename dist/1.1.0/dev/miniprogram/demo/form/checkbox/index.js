@@ -1,11 +1,11 @@
 ; require("../../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[25],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[28],{
 
 /***/ 0:
-/*!******************************************!*\
-  !*** ./js/components/aotoo/lib/index.js ***!
-  \******************************************/
+/*!***************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/index.js ***!
+  \***************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -116,7 +116,7 @@ Object.defineProperty(exports, 'hooks', {
   }
 });
 
-var _foritem = __webpack_require__(/*! ./foritem */ 5);
+var _foritem = __webpack_require__(/*! ./foritem */ 3);
 
 Object.defineProperty(exports, 'resetItem', {
   enumerable: true,
@@ -139,14 +139,14 @@ Object.defineProperty(exports, 'reSetList', {
     return _forlist.reSetList;
   }
 });
-var md5 = exports.md5 = __webpack_require__(/*! md5 */ 4);
+var md5 = exports.md5 = __webpack_require__(/*! md5 */ 5);
 
 /***/ }),
 
 /***/ 1:
-/*!*****************************************!*\
-  !*** ./js/components/aotoo/lib/util.js ***!
-  \*****************************************/
+/*!**************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/util.js ***!
+  \**************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -174,7 +174,7 @@ exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
 
-var _md = __webpack_require__(/*! md5 */ 4);
+var _md = __webpack_require__(/*! md5 */ 5);
 
 var _md2 = _interopRequireDefault(_md);
 
@@ -296,9 +296,9 @@ function uuid(prefix, len) {
 /***/ }),
 
 /***/ 10:
-/*!******************************************!*\
-  !*** ./js/components/aotoo/lib/hooks.js ***!
-  \******************************************/
+/*!***************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/hooks.js ***!
+  \***************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -334,7 +334,7 @@ var _hooks = function () {
     value: function destory() {
       this.actions = null;
       this.storeData = null;
-      wx.clearStorageSync();
+      // wx.clearStorageSync()
     }
   }, {
     key: 'getInfo',
@@ -345,7 +345,10 @@ var _hooks = function () {
     key: 'setItem',
     value: function setItem(key, val) {
       try {
-        this.storage ? wx.setStorageSync(key, val) : this.storeData[key] = val;
+        if (this.storage) {
+          wx.setStorageSync(key, val);
+        }
+        this.storeData[key] = val;
       } catch (error) {
         console.warn(error);
       }
@@ -354,7 +357,14 @@ var _hooks = function () {
     key: 'getItem',
     value: function getItem(key) {
       try {
-        return this.storage ? wx.getStorageSync(key) : this.storeData[key];
+        var res = void 0;
+        if (this.storage) {
+          res = wx.getStorageSync(key);
+        }
+        if (res) {
+          this.storeData[key] = res;
+        }
+        return res;
       } catch (error) {
         console.warn(error);
       }
@@ -383,12 +393,16 @@ var _hooks = function () {
   }, {
     key: 'delete',
     value: function _delete(key) {
-      this.storage ? wx.removeStorageSync(key) : this.storeData[key] = null;
+      if (this.storage) {
+        wx.removeStorageSync(key);
+      }
+      this.storeData[key] = null;
     }
   }, {
     key: 'clear',
     value: function clear() {
       this.destory();
+      wx.clearStorageSync();
     }
 
     // ========= 下面为钩子方法 ===========
@@ -488,10 +502,122 @@ function hooks(idf, storage) {
 
 /***/ }),
 
-/***/ 107:
-/*!****************************************!*\
-  !*** ./js/demo/form/checkbox/index.js ***!
-  \****************************************/
+/***/ 11:
+/*!*****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/forlist.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.reSetItemAttr = reSetItemAttr;
+exports.reSetList = reSetList;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var _foritem = __webpack_require__(/*! ./foritem */ 3);
+
+function reSetItemAttr(item, list) {
+  if (typeof item == 'boolean') return item;
+  if (typeof item == 'string' || typeof item == 'number') {
+    item = { title: item };
+  }
+
+  var clsIndex = (0, _util.suid)('index-'); // 将data-index置入每条数据的class中，这样不用去动结构
+  var $ii = clsIndex;
+
+  if (list.itemMethod) {
+    var itm = list.itemMethod;
+    if ((typeof itm === 'undefined' ? 'undefined' : _typeof(itm)) == 'object') {
+      Object.keys(itm).forEach(function (evt) {
+        item[evt] = itm[evt];
+      });
+    }
+  }
+
+  var itmc = list.itemClass || list.class || '';
+  var myClass = item['itemClass'] || item['class'] || item['className'] || '';
+  item['itemClass'] = myClass ? itmc + ' ' + myClass : itmc;
+  item['itemClass'] = item.idf ? 'item itemroot ' + item['itemClass'] : 'item ' + item['itemClass'];
+
+  if (list.itemStyle || list.style) {
+    var itsy = list.itemStyle || list.style;
+    if (item['style'] || item['itemStyle']) {
+      var myStyle = item['style'] || item['itemStyle'];
+      item['style'] = myStyle;
+    } else {
+      item['style'] = itsy;
+    }
+  }
+
+  // if (this.$$is=='tree' && isObject(item)) {
+  if ((0, _util.isObject)(item)) {
+    if (item['attr']) {
+      if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = $ii;
+    } else {
+      if (item['$$typeof']) {
+        item = { title: item, attr: { 'data-treeid': $ii } };
+      } else {
+        item['attr'] = { 'data-treeid': $ii };
+      }
+    }
+  }
+
+  // const newItem = item['$$id'] ? item : resetItem(item, this)
+  var newItem = (0, _foritem.resetItem)(item, this);
+  return newItem;
+}
+
+function reSetArray(data, list) {
+  var _this = this;
+
+  var that = this;
+  try {
+    if (list.methods && (0, _util.isObject)(list.methods)) {
+      var methods = list.methods;
+      Object.keys(methods).forEach(function (key) {
+        var fun = methods[key];
+        if ((0, _util.isFunction)(fun)) {
+          fun = fun.bind(that);
+          that[key] = methods[key];
+        }
+      });
+    }
+    delete list.methods;
+
+    if ((0, _util.isArray)(data)) {
+      list.data = data.map(function (item) {
+        return reSetItemAttr.call(_this, item, list);
+      });
+    }
+    return list;
+  } catch (error) {
+    console.warn('======= lib.reSetArray =======', error);
+  }
+}
+
+function reSetList(list) {
+  if ((0, _util.isObject)(list)) {
+    list['show'] = list.hasOwnProperty('show') ? list.show : true;
+    return reSetArray.call(this, list.data, list);
+  }
+}
+
+/***/ }),
+
+/***/ 117:
+/*!*************************************************!*\
+  !*** ./src/SaUi/js/demo/form/checkbox/index.js ***!
+  \*************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -579,105 +705,10 @@ Pager({
 
 /***/ }),
 
-/***/ 11:
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/forlist.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.reSetItemAttr = reSetItemAttr;
-exports.reSetList = reSetList;
-
-var _util = __webpack_require__(/*! ./util */ 1);
-
-var _foritem = __webpack_require__(/*! ./foritem */ 5);
-
-function reSetItemAttr(item, list) {
-  if (typeof item == 'boolean') return item;
-  if (typeof item == 'string' || typeof item == 'number') {
-    item = { title: item };
-  }
-
-  var clsIndex = (0, _util.suid)('index-'); // 将data-index置入每条数据的class中，这样不用去动结构
-  var $ii = clsIndex;
-
-  if (list.itemMethod) {
-    var itm = list.itemMethod;
-    if ((typeof itm === 'undefined' ? 'undefined' : _typeof(itm)) == 'object') {
-      Object.keys(itm).forEach(function (evt) {
-        item[evt] = itm[evt];
-      });
-    }
-  }
-
-  var itmc = list.itemClass || list.class || '';
-  var myClass = item['itemClass'] || item['class'] || item['className'] || '';
-  item['itemClass'] = myClass ? itmc + ' ' + myClass : itmc;
-  item['itemClass'] = item.idf ? 'item itemroot ' + item['itemClass'] : 'item ' + item['itemClass'];
-
-  if (list.itemStyle || list.style) {
-    var itsy = list.itemStyle || list.style;
-    if (item['style'] || item['itemStyle']) {
-      var myStyle = item['style'] || item['itemStyle'];
-      item['style'] = myStyle;
-    } else {
-      item['style'] = itsy;
-    }
-  }
-
-  // if (this.$$is=='tree' && isObject(item)) {
-  if ((0, _util.isObject)(item)) {
-    if (item['attr']) {
-      if (!item['attr']['data-treeid']) item['attr']['data-treeid'] = $ii;
-    } else {
-      if (item['$$typeof']) {
-        item = { title: item, attr: { 'data-treeid': $ii } };
-      } else {
-        item['attr'] = { 'data-treeid': $ii };
-      }
-    }
-  }
-
-  // const newItem = item['$$id'] ? item : resetItem(item, this)
-  var newItem = (0, _foritem.resetItem)(item, this);
-  return newItem;
-}
-
-function reSetArray(data, list) {
-  var _this = this;
-
-  if ((0, _util.isArray)(data)) {
-    list.data = data.map(function (item) {
-      return reSetItemAttr.call(_this, item, list);
-    });
-  }
-  return list;
-}
-
-function reSetList(list) {
-  if ((0, _util.isObject)(list)) {
-    list['show'] = list.hasOwnProperty('show') ? list.show : true;
-    return reSetArray.call(this, list.data, list);
-  }
-}
-
-/***/ }),
-
 /***/ 12:
-/*!**************************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/path-browserify/index.js ***!
-  \**************************************************************************/
+/*!***********************************************!*\
+  !*** ./node_modules/path-browserify/index.js ***!
+  \***********************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -912,9 +943,9 @@ var substr = 'ab'.substr(-1) === 'b'
 /***/ }),
 
 /***/ 13:
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/process/browser.js ***!
-  \********************************************************************/
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -1108,9 +1139,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ 14:
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/item.js ***!
-  \****************************************************/
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/item.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1189,11 +1220,13 @@ var itemBehavior = exports.itemBehavior = function itemBehavior(app, mytype) {
         if (lib.isObject(param)) {
           var target = {};
           Object.keys(param).forEach(function (key) {
-            if (key.indexOf('$item.') == -1) {
-              var nkey = '$item.' + key;
-              target[nkey] = param[key];
-            } else {
-              target[key] = param[key];
+            if (param[key]) {
+              if (key.indexOf('$item.') == -1) {
+                var nkey = '$item.' + key;
+                target[nkey] = param[key];
+              } else {
+                target[key] = param[key];
+              }
             }
           });
           param = target;
@@ -1250,9 +1283,9 @@ var itemComponentBehavior = exports.itemComponentBehavior = function itemCompone
 /***/ }),
 
 /***/ 15:
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/tree.js ***!
-  \****************************************************/
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/tree.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1301,9 +1334,9 @@ var treeComponentBehavior = exports.treeComponentBehavior = function treeCompone
 /***/ }),
 
 /***/ 16:
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/base.js ***!
-  \****************************************************/
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/base.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1328,9 +1361,9 @@ var baseBehavior = exports.baseBehavior = function baseBehavior(app, mytype) {
 /***/ }),
 
 /***/ 17:
-/*!*****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/index.js ***!
-  \*****************************************************/
+/*!**************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/index.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1420,9 +1453,9 @@ Object.defineProperty(exports, "baseBehavior", {
 /***/ }),
 
 /***/ 18:
-/*!****************************************!*\
-  !*** ./js/components/aotoo/core/ui.js ***!
-  \****************************************/
+/*!*************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/ui.js ***!
+  \*************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1444,9 +1477,9 @@ function alert(text) {
 /***/ }),
 
 /***/ 19:
-/*!*******************************************!*\
-  !*** ./js/components/aotoo/core/utils.js ***!
-  \*******************************************/
+/*!****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/utils.js ***!
+  \****************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1614,9 +1647,9 @@ function upload(url, data) {
 /***/ }),
 
 /***/ 2:
-/*!******************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/common.js ***!
-  \******************************************************/
+/*!***************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/common.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1993,9 +2026,9 @@ function itemReactFun(e, prefix) {
 /***/ }),
 
 /***/ 20:
-/*!*******************************************!*\
-  !*** ./js/components/aotoo/core/index.js ***!
-  \*******************************************/
+/*!****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/index.js ***!
+  \****************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2232,9 +2265,169 @@ module.exports = core;
 /***/ }),
 
 /***/ 3:
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/charenc/charenc.js ***!
-  \********************************************************************/
+/*!*****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/foritem.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.resetItem = resetItem;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
+
+var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
+
+// function setItemSortIdf(item, context) {
+//   if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item
+//   if (typeof item == 'object') {
+//     if (!Array.isArray(item)) {
+//       let extAttrs = {}
+//       let incAttrs = []
+//       item['__sort'] = []
+
+//       if (context) {
+//         // item.fromComponent = context.data.fromComponent||context.data.uniqId
+//         item.fromComponent = context.data.fromComponent || context.data.uniqId
+//       }
+
+//       Object.keys(item).forEach(function (key) {
+//         if (accessKey.indexOf(key) > -1 || (key.indexOf('@')==0 && key.length>1)) {
+//           incAttrs.push(key)
+//         } else {
+//           if (key == 'aim') {
+//             item.catchtap = item[key]
+//           }
+//           extAttrs[key] = item[key]
+//         }
+//       })
+
+//       if (incAttrs.length) {
+//         item['__sort'] = incAttrs
+//         incAttrs.map(attr => {
+//           let oData = item[attr]
+//           if (typeof oData == 'object') {
+//             if (Array.isArray(oData)) {
+//               item[attr] = setSortTemplateName(oData, context)
+//             } else {
+//               if (/^[^@]/.test(attr)) {
+//                 item[attr] = setItemSortIdf(oData, context)
+//               }
+//             }
+//           }
+//         })
+//       }
+//       return item
+//     }
+//   }
+// }
+
+// function setSortTemplateName(data, context) {
+//   if (Array.isArray(data) && data.length) {
+//     return data.map(item => setItemSortIdf(item, context))
+//   }
+// }
+
+function resetItem(data, context, loop) {
+  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') return data;
+  if ((0, _util.isObject)(data)) {
+    var extAttrs = {};
+    var incAttrs = [];
+    data['__sort'] = [];
+
+    if (context) {
+      data.fromComponent = context.data.fromComponent || context.data.uniqId;
+      if (data.methods || data.itemMethod) {
+        var methods = data.methods || data.itemMethod;
+        Object.keys(methods).forEach(function (key) {
+          var fun = methods[key];
+          if ((0, _util.isFunction)(fun)) {
+            fun = fun.bind(context);
+            context[key] = fun;
+          }
+        });
+        delete data.methods;
+        delete data.itemMethod;
+      }
+    }
+
+    Object.keys(data).forEach(function (key) {
+      if (data[key] || data[key] === 0) {
+        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
+          incAttrs.push(key);
+        } else {
+          if (key == 'aim') {
+            data.catchtap = data[key];
+            extAttrs['catchtap'] = data[key];
+            delete data.aim;
+          } else {
+            extAttrs[key] = data[key];
+          }
+        }
+      } else {
+        delete data[key];
+      }
+    });
+
+    data['__sort'] = incAttrs;
+    // for (var attr in data) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = incAttrs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var attr = _step.value;
+
+        var sonItem = data[attr];
+        if ((0, _util.isArray)(sonItem)) {
+          // data[attr] = setSortTemplateName(sonItem, context)
+          data[attr] = sonItem.filter(function (item) {
+            return resetItem(item, context, true);
+          });
+        } else {
+          if (/^[^@]/.test(attr) && sonItem) {
+            data[attr] = resetItem(sonItem, context, true);
+            // data[attr] = setItemSortIdf(sonItem, context)
+          }
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    if (!data.parent && !loop) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
+  }
+
+  // context.props = extAttrs
+  return data;
+}
+
+/***/ }),
+
+/***/ 4:
+/*!*****************************************!*\
+  !*** ./node_modules/charenc/charenc.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -2276,19 +2469,19 @@ module.exports = charenc;
 
 /***/ }),
 
-/***/ 4:
-/*!************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/md5/md5.js ***!
-  \************************************************************/
+/***/ 5:
+/*!*********************************!*\
+  !*** ./node_modules/md5/md5.js ***!
+  \*********************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function(){
   var crypt = __webpack_require__(/*! crypt */ 7),
-      utf8 = __webpack_require__(/*! charenc */ 3).utf8,
+      utf8 = __webpack_require__(/*! charenc */ 4).utf8,
       isBuffer = __webpack_require__(/*! is-buffer */ 8),
-      bin = __webpack_require__(/*! charenc */ 3).bin,
+      bin = __webpack_require__(/*! charenc */ 4).bin,
 
   // The core
   md5 = function (message, options) {
@@ -2448,139 +2641,10 @@ module.exports = charenc;
 
 /***/ }),
 
-/***/ 5:
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/foritem.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.resetItem = resetItem;
-
-var _util = __webpack_require__(/*! ./util */ 1);
-
-var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
-
-var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
-
-function setItemSortIdf(item, context) {
-  if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item;
-  if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object') {
-    if (!Array.isArray(item)) {
-      var extAttrs = {};
-      var incAttrs = [];
-      item['__sort'] = [];
-
-      if (context) {
-        // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.fromComponent || context.data.uniqId;
-      }
-
-      Object.keys(item).forEach(function (key) {
-        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-          incAttrs.push(key);
-        } else {
-          extAttrs[key] = item[key];
-        }
-      });
-
-      if (incAttrs.length) {
-        item['__sort'] = incAttrs;
-        incAttrs.map(function (attr) {
-          var oData = item[attr];
-          if ((typeof oData === 'undefined' ? 'undefined' : _typeof(oData)) == 'object') {
-            if (Array.isArray(oData)) {
-              item[attr] = setSortTemplateName(oData, context);
-            } else {
-              item[attr] = setItemSortIdf(oData, context);
-            }
-          }
-        });
-      }
-      return item;
-    }
-  }
-}
-
-function setSortTemplateName(data, context) {
-  if (Array.isArray(data) && data.length) {
-    return data.map(function (item) {
-      return setItemSortIdf(item, context);
-    });
-  }
-}
-
-function resetItem(data, context) {
-  var extAttrs = {};
-  var incAttrs = [];
-  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
-    return data;
-  }
-
-  if (context && data.$$id && data.methods) {
-    var methods = data.methods;
-    Object.keys(methods).forEach(function (key) {
-      context[key] = methods[key].bind(context);
-    });
-    delete data.methods;
-  }
-
-  Object.keys(data).forEach(function (key) {
-    if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-      incAttrs.push(key);
-    } else {
-      if (key == 'aim') {
-        data.catchtap = data[key];
-      }
-      extAttrs[key] = data[key];
-    }
-  });
-
-  data['__sort'] = incAttrs;
-
-  var _loop = function _loop() {
-    var sonItem = data[attr];
-    if (attr == 'itemMethod') {
-      if (context && (0, _util.isObject)(sonItem)) {
-        Object.keys(sonItem).forEach(function (fn) {
-          context[fn] = sonItem[fn];
-        });
-        delete data.itemMethod;
-      }
-    } else {
-      if (Array.isArray(sonItem)) {
-        data[attr] = setSortTemplateName(sonItem, context);
-      } else {
-        data[attr] = setItemSortIdf(sonItem, context);
-      }
-    }
-  };
-
-  for (var attr in data) {
-    _loop();
-  }
-  if (!data.parent) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
-
-  // context.props = extAttrs
-  return data;
-}
-
-/***/ }),
-
 /***/ 6:
-/*!****************************************************!*\
-  !*** ./js/components/aotoo/core/behaviors/list.js ***!
-  \****************************************************/
+/*!*************************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/behaviors/list.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2966,9 +3030,9 @@ var listComponentBehavior = exports.listComponentBehavior = function listCompone
 /***/ }),
 
 /***/ 7:
-/*!****************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/crypt/crypt.js ***!
-  \****************************************************************/
+/*!*************************************!*\
+  !*** ./node_modules/crypt/crypt.js ***!
+  \*************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -3074,9 +3138,9 @@ var listComponentBehavior = exports.listComponentBehavior = function listCompone
 /***/ }),
 
 /***/ 8:
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/is-buffer/index.js ***!
-  \********************************************************************/
+/*!*****************************************!*\
+  !*** ./node_modules/is-buffer/index.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -3107,9 +3171,9 @@ function isSlowBuffer (obj) {
 /***/ }),
 
 /***/ 9:
-/*!*****************************************!*\
-  !*** ./js/components/aotoo/lib/tree.js ***!
-  \*****************************************/
+/*!**************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/tree.js ***!
+  \**************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3127,6 +3191,8 @@ exports.tree = tree;
 exports.listToTree = listToTree;
 
 var _util = __webpack_require__(/*! ./util */ 1);
+
+var _foritem = __webpack_require__(/*! ./foritem */ 3);
 
 var filter = function filter(data, callback) {
   if ((0, _util.isArray)(data)) {
@@ -3186,9 +3252,11 @@ function subTree(item, dataAry, deep, index) {
       show: item.hasOwnProperty('show') ? item.show : true,
       fromComponent: fromTree
       // fromTree : fromTree
+
+      // item['__sort'] = (item['__sort'] || []).concat('@list')
     };
-    item['__sort'] = (item['__sort'] || []).concat('@list');
   }
+  item = (0, _foritem.resetItem)(item);
   return item;
 }
 
@@ -3242,11 +3310,11 @@ function tree(dataAry, props, fromTree) {
 function listToTree(_list, fromTree) {
   var list = (0, _util.clone)(_list);
   if ((0, _util.isObject)(list) && list.data) {
-    list.data = tree(list.data, list, fromTree);
+    list.data = tree.call(this, list.data, list, fromTree);
   }
   return list;
 }
 
 /***/ })
 
-},[[107,0]]]);
+},[[117,0]]]);

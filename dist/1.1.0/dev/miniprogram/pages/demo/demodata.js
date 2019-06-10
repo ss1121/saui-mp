@@ -1,11 +1,11 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[234],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[252],{
 
 /***/ 24:
-/*!**********************************!*\
-  !*** ./js/pages/demo/adapter.js ***!
-  \**********************************/
+/*!*******************************************!*\
+  !*** ./src/SaUi/js/pages/demo/adapter.js ***!
+  \*******************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -471,9 +471,9 @@ exports.default = {
 /***/ }),
 
 /***/ 25:
-/*!*******************************!*\
-  !*** ./js/pages/demo/data.js ***!
-  \*******************************/
+/*!****************************************!*\
+  !*** ./src/SaUi/js/pages/demo/data.js ***!
+  \****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -738,10 +738,10 @@ exports.default = {
 
 /***/ }),
 
-/***/ 31:
-/*!***********************************!*\
-  !*** ./js/pages/demo/demodata.js ***!
-  \***********************************/
+/***/ 33:
+/*!********************************************!*\
+  !*** ./src/SaUi/js/pages/demo/demodata.js ***!
+  \********************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1078,4 +1078,4 @@ var diytour2Data = exports.diytour2Data = {
 
 /***/ })
 
-},[[31,0]]]);
+},[[33,0]]]);

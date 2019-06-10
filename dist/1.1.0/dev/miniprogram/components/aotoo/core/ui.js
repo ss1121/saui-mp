@@ -3,9 +3,9 @@
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[10],{
 
 /***/ 18:
-/*!****************************************!*\
-  !*** ./js/components/aotoo/core/ui.js ***!
-  \****************************************/
+/*!*************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/core/ui.js ***!
+  \*************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {

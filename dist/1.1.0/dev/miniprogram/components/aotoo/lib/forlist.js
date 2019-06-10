@@ -3,9 +3,9 @@
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[14],[
 /* 0 */,
 /* 1 */
-/*!*****************************************!*\
-  !*** ./js/components/aotoo/lib/util.js ***!
-  \*****************************************/
+/*!**************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/util.js ***!
+  \**************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -33,7 +33,7 @@ exports.suid = suid;
 exports.resetSuidCount = resetSuidCount;
 exports.uuid = uuid;
 
-var _md = __webpack_require__(/*! md5 */ 4);
+var _md = __webpack_require__(/*! md5 */ 5);
 
 var _md2 = _interopRequireDefault(_md);
 
@@ -155,9 +155,168 @@ function uuid(prefix, len) {
 /***/ }),
 /* 2 */,
 /* 3 */
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/charenc/charenc.js ***!
-  \********************************************************************/
+/*!*****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/foritem.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.resetItem = resetItem;
+
+var _util = __webpack_require__(/*! ./util */ 1);
+
+var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
+
+var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
+
+// function setItemSortIdf(item, context) {
+//   if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item
+//   if (typeof item == 'object') {
+//     if (!Array.isArray(item)) {
+//       let extAttrs = {}
+//       let incAttrs = []
+//       item['__sort'] = []
+
+//       if (context) {
+//         // item.fromComponent = context.data.fromComponent||context.data.uniqId
+//         item.fromComponent = context.data.fromComponent || context.data.uniqId
+//       }
+
+//       Object.keys(item).forEach(function (key) {
+//         if (accessKey.indexOf(key) > -1 || (key.indexOf('@')==0 && key.length>1)) {
+//           incAttrs.push(key)
+//         } else {
+//           if (key == 'aim') {
+//             item.catchtap = item[key]
+//           }
+//           extAttrs[key] = item[key]
+//         }
+//       })
+
+//       if (incAttrs.length) {
+//         item['__sort'] = incAttrs
+//         incAttrs.map(attr => {
+//           let oData = item[attr]
+//           if (typeof oData == 'object') {
+//             if (Array.isArray(oData)) {
+//               item[attr] = setSortTemplateName(oData, context)
+//             } else {
+//               if (/^[^@]/.test(attr)) {
+//                 item[attr] = setItemSortIdf(oData, context)
+//               }
+//             }
+//           }
+//         })
+//       }
+//       return item
+//     }
+//   }
+// }
+
+// function setSortTemplateName(data, context) {
+//   if (Array.isArray(data) && data.length) {
+//     return data.map(item => setItemSortIdf(item, context))
+//   }
+// }
+
+function resetItem(data, context, loop) {
+  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') return data;
+  if ((0, _util.isObject)(data)) {
+    var extAttrs = {};
+    var incAttrs = [];
+    data['__sort'] = [];
+
+    if (context) {
+      data.fromComponent = context.data.fromComponent || context.data.uniqId;
+      if (data.methods || data.itemMethod) {
+        var methods = data.methods || data.itemMethod;
+        Object.keys(methods).forEach(function (key) {
+          var fun = methods[key];
+          if ((0, _util.isFunction)(fun)) {
+            fun = fun.bind(context);
+            context[key] = fun;
+          }
+        });
+        delete data.methods;
+        delete data.itemMethod;
+      }
+    }
+
+    Object.keys(data).forEach(function (key) {
+      if (data[key] || data[key] === 0) {
+        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
+          incAttrs.push(key);
+        } else {
+          if (key == 'aim') {
+            data.catchtap = data[key];
+            extAttrs['catchtap'] = data[key];
+            delete data.aim;
+          } else {
+            extAttrs[key] = data[key];
+          }
+        }
+      } else {
+        delete data[key];
+      }
+    });
+
+    data['__sort'] = incAttrs;
+    // for (var attr in data) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = incAttrs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var attr = _step.value;
+
+        var sonItem = data[attr];
+        if ((0, _util.isArray)(sonItem)) {
+          // data[attr] = setSortTemplateName(sonItem, context)
+          data[attr] = sonItem.filter(function (item) {
+            return resetItem(item, context, true);
+          });
+        } else {
+          if (/^[^@]/.test(attr) && sonItem) {
+            data[attr] = resetItem(sonItem, context, true);
+            // data[attr] = setItemSortIdf(sonItem, context)
+          }
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    if (!data.parent && !loop) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
+  }
+
+  // context.props = extAttrs
+  return data;
+}
+
+/***/ }),
+/* 4 */
+/*!*****************************************!*\
+  !*** ./node_modules/charenc/charenc.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -198,19 +357,19 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 4 */
-/*!************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/md5/md5.js ***!
-  \************************************************************/
+/* 5 */
+/*!*********************************!*\
+  !*** ./node_modules/md5/md5.js ***!
+  \*********************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function(){
   var crypt = __webpack_require__(/*! crypt */ 7),
-      utf8 = __webpack_require__(/*! charenc */ 3).utf8,
+      utf8 = __webpack_require__(/*! charenc */ 4).utf8,
       isBuffer = __webpack_require__(/*! is-buffer */ 8),
-      bin = __webpack_require__(/*! charenc */ 3).bin,
+      bin = __webpack_require__(/*! charenc */ 4).bin,
 
   // The core
   md5 = function (message, options) {
@@ -369,139 +528,11 @@ module.exports = charenc;
 
 
 /***/ }),
-/* 5 */
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/foritem.js ***!
-  \********************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.resetItem = resetItem;
-
-var _util = __webpack_require__(/*! ./util */ 1);
-
-var attrKey = ['aim', 'attr', 'class', 'itemClass', 'style', 'itemStyle', 'template', 'tap', 'catchtap', 'longtap', 'catchlongtap', 'longpress', 'catchlongpress', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'data-treeid', 'id', 'treeid', 'src', '$$id', '__sort', 'tempName', 'idf', 'parent', 'show', 'type', 'typeOptions', 'hoverclass', '__actionMask', 'data', 'mode'];
-
-var accessKey = ['title', 'img', 'icon', 'list', 'tree', 'item', 'header', 'body', 'footer', 'dot', 'li', 'k', 'v'];
-
-function setItemSortIdf(item, context) {
-  if (typeof item == 'string' || typeof item == 'number' || typeof item == 'boolean') return item;
-  if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) == 'object') {
-    if (!Array.isArray(item)) {
-      var extAttrs = {};
-      var incAttrs = [];
-      item['__sort'] = [];
-
-      if (context) {
-        // item.fromComponent = context.data.fromComponent||context.data.uniqId
-        item.fromComponent = context.data.fromComponent || context.data.uniqId;
-      }
-
-      Object.keys(item).forEach(function (key) {
-        if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-          incAttrs.push(key);
-        } else {
-          extAttrs[key] = item[key];
-        }
-      });
-
-      if (incAttrs.length) {
-        item['__sort'] = incAttrs;
-        incAttrs.map(function (attr) {
-          var oData = item[attr];
-          if ((typeof oData === 'undefined' ? 'undefined' : _typeof(oData)) == 'object') {
-            if (Array.isArray(oData)) {
-              item[attr] = setSortTemplateName(oData, context);
-            } else {
-              item[attr] = setItemSortIdf(oData, context);
-            }
-          }
-        });
-      }
-      return item;
-    }
-  }
-}
-
-function setSortTemplateName(data, context) {
-  if (Array.isArray(data) && data.length) {
-    return data.map(function (item) {
-      return setItemSortIdf(item, context);
-    });
-  }
-}
-
-function resetItem(data, context) {
-  var extAttrs = {};
-  var incAttrs = [];
-  if (typeof data == 'string' || typeof data == 'number' || typeof data == 'boolean') {
-    return data;
-  }
-
-  if (context && data.$$id && data.methods) {
-    var methods = data.methods;
-    Object.keys(methods).forEach(function (key) {
-      context[key] = methods[key].bind(context);
-    });
-    delete data.methods;
-  }
-
-  Object.keys(data).forEach(function (key) {
-    if (accessKey.indexOf(key) > -1 || key.indexOf('@') == 0 && key.length > 1) {
-      incAttrs.push(key);
-    } else {
-      if (key == 'aim') {
-        data.catchtap = data[key];
-      }
-      extAttrs[key] = data[key];
-    }
-  });
-
-  data['__sort'] = incAttrs;
-
-  var _loop = function _loop() {
-    var sonItem = data[attr];
-    if (attr == 'itemMethod') {
-      if (context && (0, _util.isObject)(sonItem)) {
-        Object.keys(sonItem).forEach(function (fn) {
-          context[fn] = sonItem[fn];
-        });
-        delete data.itemMethod;
-      }
-    } else {
-      if (Array.isArray(sonItem)) {
-        data[attr] = setSortTemplateName(sonItem, context);
-      } else {
-        data[attr] = setItemSortIdf(sonItem, context);
-      }
-    }
-  };
-
-  for (var attr in data) {
-    _loop();
-  }
-  if (!data.parent) data.itemDataRoot = true; // 标识该item是最顶层item，class style用作容器描述
-
-  // context.props = extAttrs
-  return data;
-}
-
-/***/ }),
 /* 6 */,
 /* 7 */
-/*!****************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/crypt/crypt.js ***!
-  \****************************************************************/
+/*!*************************************!*\
+  !*** ./node_modules/crypt/crypt.js ***!
+  \*************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -606,9 +637,9 @@ function resetItem(data, context) {
 
 /***/ }),
 /* 8 */
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/is-buffer/index.js ***!
-  \********************************************************************/
+/*!*****************************************!*\
+  !*** ./node_modules/is-buffer/index.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -640,9 +671,9 @@ function isSlowBuffer (obj) {
 /* 9 */,
 /* 10 */,
 /* 11 */
-/*!********************************************!*\
-  !*** ./js/components/aotoo/lib/forlist.js ***!
-  \********************************************/
+/*!*****************************************************!*\
+  !*** ./src/SaUi/js/components/aotoo/lib/forlist.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -661,7 +692,7 @@ exports.reSetList = reSetList;
 
 var _util = __webpack_require__(/*! ./util */ 1);
 
-var _foritem = __webpack_require__(/*! ./foritem */ 5);
+var _foritem = __webpack_require__(/*! ./foritem */ 3);
 
 function reSetItemAttr(item, list) {
   if (typeof item == 'boolean') return item;
@@ -717,12 +748,29 @@ function reSetItemAttr(item, list) {
 function reSetArray(data, list) {
   var _this = this;
 
-  if ((0, _util.isArray)(data)) {
-    list.data = data.map(function (item) {
-      return reSetItemAttr.call(_this, item, list);
-    });
+  var that = this;
+  try {
+    if (list.methods && (0, _util.isObject)(list.methods)) {
+      var methods = list.methods;
+      Object.keys(methods).forEach(function (key) {
+        var fun = methods[key];
+        if ((0, _util.isFunction)(fun)) {
+          fun = fun.bind(that);
+          that[key] = methods[key];
+        }
+      });
+    }
+    delete list.methods;
+
+    if ((0, _util.isArray)(data)) {
+      list.data = data.map(function (item) {
+        return reSetItemAttr.call(_this, item, list);
+      });
+    }
+    return list;
+  } catch (error) {
+    console.warn('======= lib.reSetArray =======', error);
   }
-  return list;
 }
 
 function reSetList(list) {

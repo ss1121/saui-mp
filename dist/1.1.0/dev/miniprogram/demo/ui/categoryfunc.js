@@ -1,11 +1,11 @@
 ; require("../../runtime.js");
 /**auto import common&runtime js**/
-(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[39],{
+(wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[43],{
 
-/***/ 59:
-/*!************************************!*\
-  !*** ./js/demo/ui/categoryfunc.js ***!
-  \************************************/
+/***/ 69:
+/*!*********************************************!*\
+  !*** ./src/SaUi/js/demo/ui/categoryfunc.js ***!
+  \*********************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -43,4 +43,4 @@
 
 /***/ })
 
-},[[59,0]]]);
+},[[69,0]]]);

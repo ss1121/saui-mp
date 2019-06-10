@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "pages":[
     "pages/index/index",
     "pages/demo/index",
     "pages/demo/tab/index",
@@ -7,8 +7,7 @@
     "pages/my/index",
     "pages/logs/logs"
   ],
-  "subpackages": [
-    {
+  "subpackages": [{
       "root": "demo/",
       "name": "mydemo",
       "pages": [
@@ -42,6 +41,9 @@
         "ui/tabs/scroll/index",
         "ui/tabs/fnormal/index",
         "ui/tabs/fscroll/index",
+        "ui/toast/index",
+        "ui/score/index",
+        "spiderchar/index",
         "uploads/index"
       ]
     }
@@ -56,11 +58,10 @@
     "ui-collapse": "/components/collapse/index",
     "ui-uploads": "/components/uploads/index"
   },
-  "window": {
-    "backgroundTextStyle": "light",
+  "window":{
+    "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "demo",
-    "navigationBarTextStyle": "black"
-  },
-  "sitemapLocation": "sitemap.json"
+    "navigationBarTextStyle":"black"
+  }
 }

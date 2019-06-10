@@ -3,9 +3,9 @@
 (wx["webpackJsonp"] = wx["webpackJsonp"] || []).push([[1],{
 
 /***/ 12:
-/*!**************************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/path-browserify/index.js ***!
-  \**************************************************************************/
+/*!***********************************************!*\
+  !*** ./node_modules/path-browserify/index.js ***!
+  \***********************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -240,9 +240,9 @@ var substr = 'ab'.substr(-1) === 'b'
 /***/ }),
 
 /***/ 13:
-/*!********************************************************************!*\
-  !*** /Users/sslin/lgh/xiaochengxu/node_modules/process/browser.js ***!
-  \********************************************************************/
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
@@ -436,9 +436,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ 23:
-/*!****************************!*\
-  !*** ./configs/default.js ***!
-  \****************************/
+/*!*************************************!*\
+  !*** ./src/SaUi/configs/default.js ***!
+  \*************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -474,9 +474,9 @@ module.exports = function (asset) {
 /***/ }),
 
 /***/ 28:
-/*!**************************!*\
-  !*** ./js/envconfigs.js ***!
-  \**************************/
+/*!***********************************!*\
+  !*** ./src/SaUi/js/envconfigs.js ***!
+  \***********************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -485,7 +485,7 @@ module.exports = function (asset) {
 /* WEBPACK VAR INJECTION */(function(global, __dirname) {
 
 var path = __webpack_require__(/*! path */ 12);
-var asset = { "name": "SaUi", "ROOT": "/Users/sslin/lgh/xiaochengxu", "version": "1.1.0", "TYPE": "mp", "startup": true, "isDev": true, "SRC": "/Users/sslin/lgh/xiaochengxu/src/SaUi", "DIST": "/Users/sslin/lgh/xiaochengxu/src/SaUi/dist/1.1.0/dev", "HOST": "localhost", "PORT": 8300, "PROXYPORT": 8317, "options": { "cloud": true, "appid": "wx6dfd3ea360d61f4d" }, "argv": { "_": ["dev"] }, "isXcx": true };
+var asset = { "name": "SaUi", "ROOT": "/Users/sslin/lgh/xiaochengxu", "version": "1.1.0", "TYPE": "mp", "startup": true, "isDev": true, "SRC": "/Users/sslin/lgh/xiaochengxu/src/SaUi", "DIST": "/Users/sslin/lgh/xiaochengxu/src/SaUi/dist/1.1.0/dev", "HOST": "localhost", "PORT": 8300, "PROXYPORT": 8317, "options": { "cloud": true, "appid": "wx6dfd3ea360d61f4d" }, "argv": { "_": [] }, "isXcx": true };
 var scene = 'default';
 module.exports = function (opts) {
   var targetConfig = __webpack_require__(/*! ../configs/default */ 23)(asset);
@@ -580,10 +580,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 33:
-/*!*******************!*\
-  !*** ./js/app.js ***!
-  \*******************/
+/***/ 35:
+/*!****************************!*\
+  !*** ./src/SaUi/js/app.js ***!
+  \****************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -649,4 +649,4 @@ App({
 
 /***/ })
 
-},[[33,0]]]);
+},[[35,0]]]);

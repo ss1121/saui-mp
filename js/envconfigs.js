@@ -1,6 +1,6 @@
 
 const path = require('path')
-const asset = {"name":"SaUi","ROOT":"/Users/sslin/lgh/xiaochengxu","version":"1.1.0","TYPE":"mp","startup":true,"isDev":true,"SRC":"/Users/sslin/lgh/xiaochengxu/src/SaUi","DIST":"/Users/sslin/lgh/xiaochengxu/src/SaUi/dist/1.1.0/dev","HOST":"localhost","PORT":8300,"PROXYPORT":8317,"options":{"cloud":true,"appid":"wx6dfd3ea360d61f4d"},"argv":{"_":["dev"]},"isXcx":true} 
+const asset = {"name":"SaUi","ROOT":"/Users/sslin/lgh/xiaochengxu","version":"1.1.0","TYPE":"mp","startup":true,"isDev":true,"SRC":"/Users/sslin/lgh/xiaochengxu/src/SaUi","DIST":"/Users/sslin/lgh/xiaochengxu/src/SaUi/dist/1.1.0/dev","HOST":"localhost","PORT":8300,"PROXYPORT":8317,"options":{"cloud":true,"appid":"wx6dfd3ea360d61f4d"},"argv":{"_":[]},"isXcx":true} 
 const scene = 'default'
 module.exports = function (opts) {
   let targetConfig = require('../configs/default')(asset)

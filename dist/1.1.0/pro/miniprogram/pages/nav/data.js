@@ -1,1 +1,1 @@
-require("../../runtime.js"),(wx.webpackJsonp=wx.webpackJsonp||[]).push([[241],{27:function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0});t.default=[{title:"首页",attrx:"index"},{title:"我的",attrx:"my"}]}},[[27,0]]]);
+require("../../runtime.js"),(wx.webpackJsonp=wx.webpackJsonp||[]).push([[254],{27:function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0});t.default=[{title:"首页",attrx:"index"},{title:"我的",attrx:"my"}]}},[[27,0]]]);
