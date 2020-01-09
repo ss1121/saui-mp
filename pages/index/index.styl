@@ -1,0 +1,117 @@
+@import "../../common/commonfunc"
+
+.closeIt
+  z-index: 99;
+
+.index-swiper-modal
+  background: #fff
+  border-radius: $modal-radius
+  width: 80vw
+  height: auto
+  color: #fff
+  margin-bottom: 60rpx
+  overflow: hidden
+  &.item-hei
+    height: 66vh
+  .swiper-item
+    border-radius: $modal-radius
+    overflow: hidden
+  .item-wrapper
+    // ss-display-flex(column, center, center, center)
+    text-align: center
+    border-radius: $modal-radius
+    overflow: hidden
+    height: 100%
+  .item-header
+    padding: 3.5vh 0 5vh;
+  .item-body
+    display: inline-flex
+    margin-bottom: 3vh;
+
+.item-wrapper-1
+  background: url('https://7373-ss-1-4vn7o-1259184764.tcb.qcloud.la/01.png?sign=3c1a6d422bec20d22c399a665eb142b4&t=1576743850') no-repeat #fff
+  background-position: top center
+  background-size: contain;
+.item-wrapper-2
+  background: url('https://7373-ss-1-4vn7o-1259184764.tcb.qcloud.la/02.png?sign=50622463fe1556925d50c92508a47736&t=1570523821') no-repeat #fff
+  background-position: top center
+  background-size: contain;
+  
+
+.wx-swiper-dots
+  bottom: 4vh!important
+
+.index-header
+  background: url('https://7373-ss-1-4vn7o-1259184764.tcb.qcloud.la/bj.png?sign=1ae35843964d688e2ac34ac1bf538a25&t=1570523659') no-repeat #f4f4f4
+  background-position: top center
+  background-size: contain;
+
+
+
+.index-btn
+  ss-btnFunc( $btn-radius, $bgc: #2567FF, $bc: #2567FF, $color: #fff, $hover-bg: #2567FF, $border-radius-small: $btn-radius-s)
+  border: none
+  box-shadow: $box-shadow-btn
+  background: linear-gradient(90deg,rgba(87,142,254,1),rgba(37,103,255,1))
+  width: 172rpx
+  line-height: 60rpx
+  font-weight: bold
+  &:active
+    background: #2567FF
+    border-color: #2567FF
+    color: #fff
+
+.ss-tree-list
+  padding: 40rpx 25rpx
+
+.item-body-btn
+  height: 48%
+  width: 70%
+  box-sizing: border-box
+  ss-display-flex(row, center, center)
+
+.tip-fixed
+  width: 80rpx
+  height: @width 
+  line-height: @height
+  border-radius: @width
+  background: linear-gradient(90deg,rgba(87,142,254,1),rgba(37,103,255,1))
+  color: #fff;
+  font-size: 50rpx;
+  text-align: center;
+  position: fixed
+  bottom: 200rpx
+  right: 50rpx
+  z-index: 1
+  &:before
+    content: '\e6ad'
+  &.case
+    bottom: 320rpx
+    font-size: 40rpx;
+    background: linear-gradient(90deg, #ec7e70, #ff5553)
+    &:before
+      content: ''
+  &.message
+    bottom: 440rpx
+    font-size: 40rpx;
+    background: linear-gradient(90deg, #57df98, #07c160)
+    &:before
+      content: ''
+
+
+.popups-wrap
+  z-index: 3
+
+.btn-text
+  background: #fff!important;
+  padding: 0!important;
+  margin: 0;
+  line-height: 40rpx!important;
+  border-radius: 0!important;
+  margin: 0 5rpx!important;
+  color: $color-minor!important
+  font-size: 32rpx!important
+
+
+.input-item-content
+  padding: 0

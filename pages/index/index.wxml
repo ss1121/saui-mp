@@ -1,0 +1,11 @@
+<view class="boxer">
+  <scroll-view scroll-y="{{isScrollx}}" class="scroll-wrap-nav">
+    <ui-item item="{{headLogo}}" />
+    <ui-list list="{{menuData}}" />
+    <ad unit-id="adunit-fa99beb9aaa46953" ad-type="grid" grid-opacity="0.8" grid-count="5" ad-theme="white"></ad>
+  </scroll-view>
+  <ui-item item="{{tipFixed}}" />
+  <ui-item item="{{case}}" />
+  <ui-item item="{{messages}}" />
+  <ui-ss-pop item="{{tipsX}}" />
+</view>

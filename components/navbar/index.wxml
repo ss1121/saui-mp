@@ -1,0 +1,8 @@
+<view class='nav-wrap + {{navbarData.class}}' style='height: {{height*2 + 20}}px;'>
+  <view class='nav-title' style='line-height: {{height*2 + 44}}px;'></view>
+  <view class='nav-capsule' style='height: {{height*2 + 44}}px;' wx:if='{{navbarData.showCapsule}}'>
+    <view bindtap='_backhome'>
+      {{navbarData.title}}
+    </view>
+  </view>
+</view>

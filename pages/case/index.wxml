@@ -1,0 +1,5 @@
+<nav-bar navbar-data='{{nvabarData}}'></nav-bar>
+<view class="boxer" style='margin-top: {{height}}px; height: calc(100vh - {{height}}px); z-index: 100'>
+  <ui-list list="{{caseList}}" />
+  <ui-item item ="{{caseClose}}" />
+</view>

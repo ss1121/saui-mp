@@ -1,0 +1,4 @@
+<view class="boxer">
+  <ui-tree list="{{tabConfig}}" class="tab-boxer" />
+  <ad unit-id="adunit-fa99beb9aaa46953" ad-type="grid" grid-opacity="0.8" grid-count="5" ad-theme="white"></ad>
+</view>

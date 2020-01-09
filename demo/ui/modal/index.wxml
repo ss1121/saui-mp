@@ -1,0 +1,6 @@
+<view class="boxer">
+  <scroll-view  scroll-y="{{true}}" class="scroll-wrap-nav bg-fff">
+    <ui-item item="{{motto}}" />
+    <action-side item="{{actionSide}}" /> 
+  </scroll-view> 
+</view>
