@@ -1,0 +1,48 @@
+/* 顶部要固定定位   标题要居中   自定义按钮和标题要和右边微信原生的胶囊上下对齐 */
+.nav-wrap {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: #f5f5f5;
+  color: #000;
+  z-index: 99;
+}
+.nav-wrap.bg-fff {
+  background: #fff;
+  color: #000;
+}
+/* 标题要居中 */
+.nav-title {
+  position: absolute;
+  text-align: center;
+  max-width: 400rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 35rpx;
+}
+
+.nav-capsule {
+  display: flex;
+  align-items: center;
+  margin-left: 30rpx;
+  height: 100%;
+}
+
+
+.back-home {
+  border-radius: 0;
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.logo-pic {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 100%;
+}

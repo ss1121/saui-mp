@@ -1,0 +1,27 @@
+<nav-bar navbar-data='{{nvabarData}}'></nav-bar>
+<view class="boxer" style='margin-top: {{height}}px; height: calc(100vh - {{height}}px); z-index: 100;'>
+  <!-- <ui-list list="{{canvasList}}"/> -->
+  <!-- <view class="mb-20-r">
+    <block wx:if="{{isLogin}}">
+      <text>尊敬的用户，</text>
+      <view bind:tap="onUpgrades" style="display: inline-block;">升级为vip用户</view>
+      <text>，你将拥有去除水印，自定义图片跟祝福语的功能</text>
+    </block>
+    <block wx:else><text>尊敬的游客，请先</text><button class="btn-login" bindgetuserinfo='getWXuserInfo' open-type="getUserInfo">登录</button><text>，你将了解如何去除水印，自定义图片跟祝福语的功能</text></block>
+  </view> -->
+  <view class="page-section page-section-spacing swiper" style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;">
+    <swiper indicator-dots="true" bindchange="onSwiper">
+      <block wx:for="{{swiper.data}}" wx:key="vid" wx:for-index="vid">
+        <swiper-item>
+          <canvas class='share-canvas' canvas-id="{{swiper.data[vid].id}}" disable-scroll="true"></canvas>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="pages-btnx">
+    <view class="item-btn" bindtap="onRefresh" ><text>刷新祝福语</text></view>
+    <button class="item-btn" bindgetuserinfo='getWXuserInfo' open-type="getUserInfo" >获取头像</button>
+  </view>
+  <button class="button-done save-button" type="primary" bindtap="saveShareImageAD">制作卡片</button>
+  <!-- <ad unit-id="adunit-3f3ba6ddc9150ef2"></ad> -->
+</view>

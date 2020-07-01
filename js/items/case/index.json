@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "SAUI 案例",
+  "enablePullDownRefresh": false,
+  "disableScroll": false,
+  "usingComponents": {
+    "ui-item": "/components/aotoo/item/index",
+    "ui-list": "/components/aotoo/list/index",
+    "nav-bar": "/components/navbar/index"
+  },
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black"
+}

@@ -1,0 +1,454 @@
+
+<view class="boxer">
+  <ui-ss-pop item="{{tipsX}}" />
+  <!-- <ui-list list="{{pagesSerach}}"> -->
+  <view class="p-search">
+    <view class="item-li item-address item-icon-arrow"><text>广州</text></view>
+    <view class="item-li item-time item-icon-arrow">
+      <view class="left">
+        <view><text>住 </text><text>03-01</text></view>
+        <view><text>离 </text><text>03-04</text></view>
+      </view>
+      <view class="right"><text>3</text><text>晚</text></view>
+    </view>
+    <view class="item-li item-search item-icon-search"><text class="textellipsis-1">关键字/位置/品牌/星级</text></view>
+  </view>
+  <!-- 筛选列表 -->
+  <ui-list list="{{pScreenList}}"/>
+  <!-- <view class="ss-scrore-list color-333">
+    <ui-item item="{{pScreen1}}" />
+    <ui-item item="{{pScreen2}}" />
+    <ui-item item="{{pScreen3}}" />
+    <ui-item item="{{pScreen3}}" />
+  </view> -->
+  <!-- <view class="p-screen">
+    <view class="item-li item-icon-arrow" bind:tap="onModalCheck?type=popularity"><text>欢迎度排序</text></view>
+    <view class="item-li item-icon-arrow"><text>位置距离</text></view>
+    <view class="item-li item-icon-arrow"><text>价格/星级</text></view>
+    <view class="item-li item-icon-arrow"><text>筛选</text></view>
+  </view> -->
+  <scroll-view scroll-x="true" class="p-screen-scroll-x">
+    <view class="item-li"><text>4.5分以上</text></view>
+    <view class="item-li"><text>优惠促销</text></view>
+    <view class="item-li"><text>双床房</text></view>
+    <view class="item-li"><text>大床房</text></view>
+    <view class="item-li"><text>浪漫情侣</text></view>
+    <view class="item-li"><text>含早餐</text></view>
+    <view class="item-li"><text>积分兑换</text></view>
+    <view class="item-li"><text>微信用户专享</text></view>
+    <view class="item-li"><text>亲子酒店</text></view>
+  </scroll-view>
+  <view class="sys-scroll">
+    <swiper class="p-ad">
+      <swiper-item style="background: #2275cf; color: #fff; display: flex; justify-content: center; align-items: center"><text>我是广告</text></swiper-item>
+      <swiper-item style="background: #ff7e11; color: #fff; display: flex; justify-content: center; align-items: center"><text>我是广告</text></swiper-item>
+    </swiper>
+    <view class="p-list">
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10">
+            <view>
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10">
+            <view>
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="p-item">
+        <view class="item-pic"><image src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i1/2200807943511/O1CN01TtsgiR1bo5ApWz6XP_!!2200807943511-0-pixelsss.jpg_250x250.jpg" /></view>
+        <view class="item-content">
+          <view class="item-title list-title mb-6-r">
+            <text>为什么图片可以不一样大小？</text>
+          </view>
+          <view class="flex-row-wrap color-primary mb-6-r size12">
+            <view class="mr-10-r"><text class="fw-bold">4.8</text><text>分</text></view>
+            <view class="mr-10-r"><text class="fw-bold">棒</text></view>
+            <view class="mr-10-r"><text>"早餐丰富"</text></view>
+            <view class="color-grey"><text>1261点评</text></view>
+          </view>
+          <view class="flex-row-wrap-between-center size10 ">
+            <view class="">
+              <view class="mb-6-r">
+                <view class="tag-primary mr-6-r"><text>黄金会员减41 </text></view>
+                <view class="tag-default mr-6-r"><text>门店新客减287 | 积分兑换</text></view>
+                <view class="tag-minor"><text>亲子酒店</text></view>
+              </view>
+              <view class="color-primary"><text>最新预定：半小时前</text></view>
+            </view>
+            <view class="flex-1">
+              <view class="flex-row-end">
+                <view class="text-line-through mr-6-r"><text>￥818</text></view>
+                <view class="color-primary"><text>￥</text><text class="size14">490</text><text class="color-grey">起</text></view>
+              </view>
+              <view class="flex-row-end">
+                <view class="tag-default"><text>已减￥328</text></view>
+                <view class="icon-wh"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="fixed-x" bind:tap="onShowDifPic">观看视频，查看源码</view>
+</view>
+
+<!-- 列表图片之所以可能不同高度，是因为左边的高度，是由右边的内容而撑开的 -->

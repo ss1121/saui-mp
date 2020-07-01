@@ -1,0 +1,11 @@
+{
+  "enablePullDownRefresh": true,
+  "disableScroll": true,
+  "usingComponents": {
+    "nav-bar": "/components/navbar/index"
+  },
+  "navigationBarBackgroundColor": "#f5f5f5",
+  "navigationBarTitleText": "没什么大不了，死不了就还好",
+  "navigationBarTextStyle": "white",
+  "navigationStyle": "custom"
+}

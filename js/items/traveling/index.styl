@@ -1,0 +1,259 @@
+// vendors = official
+@import "../../common/commonfunc"
+@import "../../common/css/tabs"
+@import "../../common/css/grid"
+
+
+$page-margin= 30rpx
+
+$font-size = 28rpx
+$color = #000
+$activeColor = #227ce1
+$height = 70rpx
+$bgHeight = calc(100vh - 42rpx)   //90rpx + 2rpx(下边线)== $height
+
+
+$arrowSize = 16rpx
+$arrowColor = #999
+$arrrowMl = 8rpx
+
+.tabs-column-uilist-btn
+  >ui-list
+    ssfunc-tabs-column-com(true)
+
+ss-search-big()
+  ss-display-flex(row nowrap, flex-start)
+  font-size: 24rpx
+  background: #f5f5f5;
+  border-radius: 40rpx;
+  box-sizing: border-box
+  height: 80rpx;
+  padding: 18rpx 0 
+  color: #000
+  >.item-li
+    flex: auto
+    border-right: 1rpx solid #e5e5e5
+    padding: 0 20rpx
+    ss-display-flex(row nowrap, space-between, center)
+    &:last-child
+      border-right: none
+    &.item-address    
+      box-sizing: border-box
+      flex: initial
+      width: 25%
+      text
+        display: block
+        flex: 1
+        text-align: center
+    &.item-time
+      font-size: 20rpx
+      text
+        white-space: nowrap
+    &.item-search
+      color: #999
+
+view 
+  font-size: inherit
+
+.item-icon-arrow
+  &:after
+    content: '\e794'
+    color: $arrowColor
+    margin-left: $arrrowMl
+    font-size: $arrowSize
+  &.active
+    &:after
+      content: '\e6b0'
+
+.item-icon-search
+  &:before
+    font-size: 22rpx
+    content: '\e78e'
+    margin-right: 10rpx
+
+.text-line-through
+  text-decoration-line: line-through
+
+.boxer
+  background: #fff
+
+.p-search
+  margin: 10rpx 0 10rpx $page-margin
+  width: 90%
+  ss-search-big()
+  .right
+    margin-left: 20rpx
+
+// .p-screen
+//   ss-display-flex(row nowrap, flex-start)
+//   color: #000
+//   margin-bottom: 25rpx
+//   position: sticky
+//   >.item-li
+//     flex: 1
+//     ss-display-flex(row nowrap, center, center)
+
+.ss-scrore-list
+  ss-display-flex(row nowrap, flex-start)
+  background: #fff
+  color: $color
+  font-size: $font-size
+  margin-bottom: 10rpx
+  position: relative
+  height: $height
+  >ui-item
+    flex: 1
+.ss-scrore-item
+  text-align: center
+  height: 100%
+  .item-title
+    ss-display-flex(row nowrap, center, center)
+    height: 100%
+    text
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      white-space: normal
+  &.active
+    .item-title
+      color: $activeColor
+  &.active-all
+    .item-title
+      color: $activeColor
+    .ss-scrore-pop,.ss-scrore-list-pop
+      display: block
+
+.ss-scrore-list-pop
+  position: absolute
+  // top: $height
+  left 0
+  width: 100vw
+  background: #fff
+  // box-shadow:0px -10px 12px 0px rgba(21,61,106,0.03);
+  display: none
+  height: 100vh
+  // height: $bgHeight
+  background: fade-out(#000, .8)
+  z-index 3
+  &.active
+    display: block
+  .tabs-column
+    max-height: 70vh
+
+.p-screen-scroll-x
+  color: #333
+  white-space: nowrap
+  margin-bottom: 25rpx
+  position: sticky
+  .item-li
+    display: inline-block
+    background: #f5f5f5
+    border-radius: 60rpx
+    height: 60rpx
+    line-height: @height
+    padding: 0 20rpx
+    margin-left: 20rpx
+
+.item-check
+  padding: 0 20rpx 0 0
+  margin-left: 20rpx
+
+.p-ad
+  height 100rpx
+  position: sticky
+
+.sys-scroll
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch
+  height: calc(100vh - 80rpx - 36rpx - 40rpx - 25rpx - 60rpx - 25rpx)
+
+
+.p-list
+  background: #f5f5f5
+//   overflow-y: scroll
+//   -webkit-overflow-scrolling: touch
+//   height: 100%
+
+.p-item
+  margin-top: 4rpx
+  background: #fff
+  ss-display-flex(row nowrap, flex-start)
+  overflow: hidden
+  .item-pic
+    flex: 1
+    image
+      width: 240rpx
+      height: 100%
+  .item-title
+    font-weight: bold
+  .item-content
+    flex-grow: 1
+    padding: 25rpx 20rpx 15rpx 20rpx
+
+.flex-row-end
+  align-items: center
+
+.tag-primary, .tag-default, .tag-minor, .tag-special
+  font-size: 18rpx;
+  padding: 0 6rpx;
+  height: 24rpx;
+  line-height: 24rpx;
+  font-weight: normal
+  display: inline-block
+
+.popups-wrap
+  z-index: 3
+
+.index-swiper-modal
+  background: #fff
+  border-radius: $modal-radius
+  width: 80vw
+  height: auto
+  color: #fff
+  margin-bottom: 60rpx
+  overflow: hidden
+  &.item-hei
+    height: 66vh
+  .swiper-item
+    border-radius: $modal-radius
+    overflow: hidden
+  .item-wrapper
+    // ss-display-flex(column, center, center, center)
+    text-align: center
+    border-radius: $modal-radius
+    overflow: hidden
+    height: 100%
+    background: url('https://7373-ss-1-4vn7o-1259184764.tcb.qcloud.la/01.png?sign=3c1a6d422bec20d22c399a665eb142b4&t=1576743850') no-repeat #fff
+    background-position: top center
+    background-size: contain;
+  .item-header
+    padding: 3.5vh 0 5vh;
+  .item-body
+    display: inline-flex
+    margin-bottom: 3vh;
+    min-height: 200rpx
+
+.swiper-item
+  height 100%
+
+.page-price
+  background: #fff
+  text-align: left
+  padding: 20rpx
+
+.fixed-x
+  position: fixed
+  bottom: 200rpx
+  right: 30rpx
+  min-width: 130rpx
+  height: 60rpx
+  line-height: 60rpx
+  color: #fff
+  text-align: center
+  background: #ff5552
+  border-radius: 8rpx
+  box-shadow: 0 10rpx 10rpx 0 #f5f5f5
+  padding: 0 15rpx

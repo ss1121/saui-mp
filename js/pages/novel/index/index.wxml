@@ -1,0 +1,4 @@
+<view class="boxer">
+  <view class="item-download" bind:tap="onDownload">点击下载</view>
+  <ad unit-id="adunit-3a1ba135644c7187" ad-type="video" ad-theme="white"></ad>
+</view>

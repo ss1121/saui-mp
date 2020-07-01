@@ -1,0 +1,6 @@
+<view class="boxer">
+  <scroll-view scroll-y="true" class="hei-p100 xx">
+    <ui-item item="{{motto}}" />
+    <ui-markit dataSource="{{markitContet}}" textType="html" />
+  </scroll-view>
+</view>

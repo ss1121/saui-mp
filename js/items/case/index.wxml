@@ -1,0 +1,8 @@
+<nav-bar navbar-data='{{nvabarData}}'></nav-bar>
+<view class="boxer" style='margin-top: {{height}}px; height: calc(100vh - {{height}}px); z-index: 100'>
+  <scroll-view scroll-y="{{true}}" class="hei-p100" scroll-top="{{scrollTopx}}"  bindscroll="onScroll">
+    <ui-list list="{{caseList}}" />
+    <ad unit-id="adunit-79468c2f1ee8ff30" ad-type="video" ad-theme="white"></ad>
+  </scroll-view>
+  <ui-item item ="{{caseClose}}" />
+</view>

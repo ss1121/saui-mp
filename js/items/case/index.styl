@@ -1,0 +1,137 @@
+@import "../../common/commonfunc"
+
+
+.boxer
+  background: #f5f5f5
+  position: relative
+
+.hei-10-r
+  height: 10rpx
+
+.case-head
+  padding: 10rpx 35rpx 0
+  .item-pic image
+    width: 68rpx
+    height @width 
+    border-radius: @width
+  .item-desc
+    color: $color-grey
+  .item-title
+    color: #000
+    font-size: 60rpx
+    font-weight: bold
+
+.case-list
+  margin-bottom: 40rpx
+  &.active
+    .case-item:not(.active), .case-head
+      transition: none;
+      opacity 0
+
+.case-item
+  border-radius: 26rpx
+  box-shadow:0px 18rpx 60rpx 0px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  box-sizing: content-box
+  margin: -20rpx auto
+  position: relative
+  width: 100%
+  transition: all .6s
+  transform: scale(.92, .92)
+  transition-timing-function: cubic-bezier(0,.82,.77,1.42)
+  &.active
+    height: 100vh;
+    border-radius: 0
+    z-index: 99999999999
+    overflow-y: auto
+    position: fixed
+    transform: scale(1, 1)
+    top: 0
+    margin: auto
+    .item-pic
+      border-radius: 0
+    .itme-body
+      display: flex
+    .item-footer
+      display: block
+      padding-bottom: 60rpx;
+      text-align: center;
+  .item-pic
+    height: 660rpx
+    width: 100%
+    border-radius: 26rpx
+  .itme-body
+    border-radius: 0 0 26rpx 26rpx 
+    background: #fff
+    min-height: 140rpx
+    padding: 0 25rpx
+    ss-display-flex(column, center)
+    display: none
+  .item-desc
+    font-size: 22rpx
+    color: #737373
+    margin-bottom: 5rpx
+  .item-title
+    color: #333
+    font-size: 32rpx
+    font-weight: bold
+  .item-footer
+    display: none
+  .item-footer-pic
+    width: 220rpx
+    height: @width
+    border-radius: @width
+    box-shadow: 0px 20rpx 30rpx 0px rgba(0,0,0,0.1)
+    margin: auto
+  .item-footer-title
+    font-weight: bold
+    font-size: 40rpx
+    color: #000
+    margin-bottom: 10rpx
+    margin-top: 50rpx
+  .item-footer-desc
+    font-size: 24rpx
+    color: #737373
+  .item-btn
+    border: 1rpx solid #D0D0D0
+    box-shadow: 0px 4rpx 15rpx 0px rgba(0, 0, 0, 0.2)
+    border-radius: 40rpx
+    background: #fff
+    width: 300rpx
+    height: 80rpx
+    font-size: 28rpx
+    ss-display-flex(row nowrap, center, center)
+    &:before
+      content: '\e630'
+      color: #2C8CDE
+      font-size: 36rpx
+      margin-right: 26rpx
+    &.share
+      &:before
+        content: '\e620'
+        color: #55A067
+
+.case-close
+  padding: 30rpx 26rpx
+  position: absolute
+  top: 30rpx
+  left: 0
+  color: #333
+  z-index 999999999999
+  opacity 0
+  &.active
+    opacity: 1
+    transition: all .6s
+  .icon-close
+    ss-display-flex(row, center, center)
+    width: 50rpx
+    height @width
+    border-radius: @width
+    background: #f5f5f5
+    font-size: 24rpx
+    &:before
+      content: '\e606'
+
+//分享
+.input-item-content
+  padding: 0

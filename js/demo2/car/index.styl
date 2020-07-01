@@ -1,0 +1,105 @@
+vendors = official
+@import '../../common/commonfunc'
+
+$font-size = 28rpx
+$color = #666
+$activeColor = #227ce1
+$height = 90rpx
+$bgHeight = calc(100vh - 92rpx)   //90rpx + 2rpx(下边线)== $height
+
+
+$arrowSize = 24rpx
+$arrowColor = #999
+$arrrowMl = 8rpx
+
+::-webkit-scrollbar
+  width: 0;
+  height: 0;
+  color: transparent;
+
+.boxer
+  background: #fff
+
+.touchbar-cat-tips
+  position: fixed;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 80rpx;
+  background-color: #2567FF;
+  color: #fff;
+  display: none;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 40rpx;
+  font-weight: bold;
+  &.active
+    ss-display-flex(row nowrap, center, center)
+
+.touchbar-cat-item
+  font-size: 20rpx
+
+.selection-body
+  ss-display-flex(row nowrap, flex-start)
+  height: calc(100% - 102rpx)
+  >ui-item
+    flex: 1
+
+
+//load动画
+@keyframes loading
+  0%
+    opacity .1
+  100%
+    opacity 1
+
+.touchbar-cat .hlist
+  position: fixed;
+  right: 0;
+  top: 0
+  height: 100vh;
+  ss-display-flex(column, center, center)
+  text-align: center
+  color: $color-primary
+  width: 44rpx
+  line-height: @width
+  margin: 40rpx 10rpx
+  .item
+    &.active
+      // animation: loading .3s 0s 1 linear;
+      background $color-primary
+      border-radius 100%
+      color: #fff
+      width: @width
+      height: @width
+
+.tab-choose
+  ss-display-flex(row nowrap, flex-start)
+  >ui-list
+    &:first-child
+      flex: 1
+
+
+.tab-boxer
+  >scroll-view
+    // height: calc(100vh - 252rpx)
+    height: 100vh
+
+.sortlist-item
+  box-sizing: border-box;
+  .ss-sticky
+    height: 60rpx
+    line-height: @height
+    padding-left: 25rpx
+    background: linear-gradient(90deg, #f5f5f5, #fff)
+  .sortlist-item
+    padding: 20rpx 25rpx
+
+//从顶部弹出
+@keyframes slideDown 
+  from 
+    transform: translate3d(0, -100%, 0)
+  to 
+    transform: translate3d(0, 0, 0)

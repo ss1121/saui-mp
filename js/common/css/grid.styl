@@ -1,0 +1,50 @@
+ss-grid-func($ncode = true, $num = 3, $mb = 10rpx, $isMar = false, $isBradio = false, $isBg = false, $isLRmar = false, $isCenter, $isHei = false, $isOnlyline = false)
+  if ($isOnlyline == false)
+    ss-display-flex(row wrap, flex-start)
+    margin-bottom: -10rpx
+    if ($isMar != false)
+      margin-left: - $isMar
+    if ($ncode == true)
+      >.item-grid
+        width: "calc(100% / %s)" % $num 
+        margin-bottom: $mb
+        if ($isMar != false)
+          margin-left: $isMar
+        if ($isBradio != false)
+          border-radius: $isBradio
+        if ($isBg != false)
+          background: $isBg
+        if ($isLRmar != false)
+          margin-left: $isLRmar
+          margin-right: $isLRmar
+    else 
+      >ui-item
+        width: "calc(100% / %s)" % $num 
+        margin-bottom: $mb
+        display: flex
+        .item-grid
+          width: 100%
+          box-sizing: border-box
+          if ($isMar != false)
+            margin-left: $isMar
+          if ($isBradio != false)
+            border-radius: $isBradio
+          if ($isBg != false)
+            background: $isBg
+          if ($isLRmar != false)
+            margin-left: $isLRmar
+            margin-right: $isLRmar
+          if ($isCenter != false)
+            ss-display-flex(column, center, center)
+          if ($isHei != false)
+            height: $isHei
+  else 
+    display: flex
+    // > * + *    //这种写法只能兼容一行的内容，如果多行，用上面的ml负数来解决比较方便。另外小程序> * + >不支持此写法，以下
+    >.item-grid + .item-grid
+      if ($isMar != false)
+        margin-left: $isMar
+
+
+.ss-grid-4
+  ss-grid-func(false, 4, 10rpx, 10rpx, 6rpx, #f5f5f5, $isCenter: true, $isHei: 100rpx)

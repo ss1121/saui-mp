@@ -1,0 +1,8 @@
+<view class="boxer">
+  <scroll-view class="hei-p100" scroll-y="{{true}}">
+    <view class="item-title"><text>您的赞赏，是对作者最大的鼓励与支持</text></view>
+    <image src="/images/pay.jpeg" class='item-pic' />
+    <ad unit-id="adunit-198627b93e19c46e" ad-type="video" ad-theme="white"></ad>
+  </scroll-view>
+</view>
+  

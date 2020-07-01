@@ -1,0 +1,29 @@
+<nav-bar navbar-data='{{nvabarData}}'></nav-bar>
+<view class="boxer" style='margin-top: {{height}}px; height: calc(100vh - {{height}}px); z-index: 100;'>
+  <scroll-view scroll-y="{{true}}" class="hei-p100">
+    <view class="message-form">
+      <form bindsubmit="onSub">
+        <text class="mf-title">有没有那么一款小程序是你想要，却没有的呢？</text>
+        <textarea value="{{gtextarea}}" placeholder="写下你想要的小程序" placeholder-style="color: #999" bindinput="inputEdit" />
+        <view class="mf-button">
+          <checkbox-group bindchange="checkboxChange">
+              <checkbox class="radio mr-10-r" checked="{{nimingStatus}}">
+                  <text>匿名</text>
+              </checkbox>
+            </checkbox-group>
+          <block wx:if="{{nimingStatus}}">
+            <button class="item-btn" form-type="submit" class="item-btn"> 提交 </button>
+          </block>
+          <block wx:else>
+            <button open-type="getUserInfo" form-type="submit" class="item-btn"> 提交 </button>
+          </block>
+        </view>
+      </form>
+    </view>
+    <ad unit-id="adunit-06dfc5feae3fcc4d" ad-type="video" ad-theme="white"></ad>
+    <ui-list list ="{{messagesList}}" />
+  </scroll-view>
+  <!-- <button class="" open-type="getUserInfo">获取用户信息</button> -->
+  
+</view>
+  

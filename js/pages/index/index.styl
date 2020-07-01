@@ -1,0 +1,197 @@
+@import "../../common/commonfunc"
+@import "../../common/css/grid"
+
+view
+  font-size: inherit
+
+$br = 27rpx
+$item-bg = #fff
+$item-bg2 = #e5e5e5
+$bs-lg = 0rpx 40rpx 70rpx 0rpx rgba(0, 0, 0, 0.12);
+$wid-item-lg = 91vw
+$title-fs-lg = 36rpx
+$title-fw = bold
+$title-cl = #000
+$pic-wid = 140rpx
+$pic-wid-2 = 80rpx
+$pdding = 40rpx
+$tabbar-height = 180rpx
+
+page
+  background: #f5f5f5     //系统默认是白色
+
+.boxer
+  background: #f5f5f5
+  box-sizing: border-box;
+  // padding: 0 30rpx
+  height calc(100vh - 180rpx)
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch;
+
+.index-head
+  ss-display-flex(row nowrap, space-between, center)
+  padding: 0 30rpx 
+  margin: 10rpx 0 20rpx
+  image
+    border-radius: 100%
+    box-shadow: drop-shadow(10rpx 10rpx 10rpx rgba(0, 0, 0, 0.12))
+  .index-head-left
+    font-size: 24rpx
+    text
+      display: block
+      &:last-child
+        font-size: 28rpx
+        color: #000
+  .item-logo
+    color: #2567FF;
+    text-shadow: 0rpx 0rpx 0 #1e5be9, 
+        1rpx -1rpx 0 #184ecc, 
+        2rpx -2rpx 0 #123fa9, 
+        3rpx -3rpx 0 #0f348b, 
+        4rpx -4rpx 0 #0b286a, 
+        5rpx -5rpx 0 #092259, 
+        6rpx -6rpx 0 #997f00, 
+        6rpx -6rpx 3rpx rgba(0, 0, 0, 0.55), 
+        6rpx -6rpx 1rpx rgba(0, 0, 0, 0.5)
+    letter-spacing: 1vw
+
+
+.swiper
+  height: calc(100vh - 440rpx)
+  padding: 0 10rpx
+  box-sizing: border-box
+.pages-list
+  padding: 0 10rpx
+  box-sizing: border-box
+  margin-bottom: ($tabbar-height + 20)
+  .recommend-item
+    margin-bottom: 30rpx
+
+.title-lg
+  font-size: $title-fs-lg
+  font-weight: $title-fw
+  color: $title-cl
+
+.recommend-item
+  width: $wid-item-lg
+  height: 60vh
+  border-radius: $br
+  background: $item-b
+  box-shadow: $bs-lg
+  position: relative
+  margin: auto
+  overflow: hidden
+  ss-display-flex(column)
+  .item-title
+    font-weight: bold
+    font-size: 30rpx
+    color: #fff
+    // position: absolute
+    // bottom: 120rpx
+    padding: $pdding
+    flex: 1
+    background-size: cover
+    background-position: center
+    background-repeat: no-repeat
+  .item-content
+    padding: $pdding
+    height: 160rpx
+    width: 100%
+    box-sizing: border-box
+    background: #fff
+    @extends .title-lg
+    ss-display-flex(row, flex-start, center)
+
+
+
+.index-list
+  ss-grid-func(true, 4, 35rpx, 0, 0, false, $isCenter: true, $isHei: 100rpx)
+  font-size: 24rpx
+  color: #000
+  .item-grid
+    ss-display-flex(column, center, center)
+    text-align: center
+  .item-pic
+    width: $pic-wid
+    height: @width
+    border-radius: 10rpx
+    background-color: #2567FF     //ios 9.0 版本是没有var()
+    background-color: var(--bg-color, #2567FF)
+    box-shadow:0rpx 10rpx 14rpx 0rpx rgba(0, 0, 0, 0.12);
+    color: #fff
+    ss-display-flex(row, center, center)
+
+.index-item
+  border-radius: $br
+  background: $item-bg
+  box-shadow: $bs-lg
+  box-sizing: border-box
+  width: $wid-item-lg
+  padding: ($pdding / 2) $pdding
+  margin: 0 auto 30rpx
+  overflow: hidden
+  .title-lg
+    margin-bottom: 20rpx
+  .item-pic
+    width: $pic-wid-2
+    height: @width
+    border-radius: 10rpx
+    background-color: #2567FF
+    background-color: var(--bg-color, #fff)
+    margin: 10rpx 20rpx 10rpx 0 
+  .ii-list
+    background: linear-gradient(to right, #fff ($pic-wid-2 + 20), $item-bg2 0)
+  .item-li
+    ss-display-flex(row nowrap, flex-start, center)
+    background: #fff
+    margin-top: 2rpx
+.fixed-bar
+  position: fixed;
+  bottom: 0;
+  width: 100%
+  height: $tabbar-height
+  background: #f5f5f5;
+  border-radius: 27rpx 27rpx 0 0 
+  border-top: 2rpx solid $item-bg2
+  z-index 2
+  ss-display-flex(row nowrap, center, center)
+  >.ss-item
+    font-size: 20rpx
+    color: #000
+    text-align: center
+    margin: 0 40rpx
+    &:before
+      content: var(--icon)
+      width: 80rpx
+      height: @width
+      border-radius: @width
+      color: #000
+      color: var(--color, #000)
+      border: 2rpx solid @color
+      // border: 2rpx solid fade-out( color: %s, amount: 50%) % @color
+      // border: 2rpx solid fade-out( @color, .8)
+      font-size: 44rpx
+      margin-bottom: 10rpx
+      ss-display-flex(row, center, center)
+    // width: 80rpx
+    // height: @width
+    // border-radius: 8rpx
+    // margin: 0 30rpx
+    // // ss-display-flex(row, center, center)
+    // &.active, &:active
+    //   background: #1356ef
+
+.btn-work
+  color: $color-primary
+
+.itemx-icon
+  background: var(--bg-color2)
+  border-radius: 10rpx
+  color: #fff
+  width: $pic-wid-2
+  height: @width
+  margin: 10rpx 20rpx 10rpx 0 
+  ss-display-flex(row, center, center)
+  &:before
+    content: var(--icon2)
+    font-size: 48rpx

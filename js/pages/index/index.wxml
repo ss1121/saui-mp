@@ -1,0 +1,27 @@
+<nav-bar navbar-data='{{nvabarData}}'></nav-bar>
+<view class="boxer" style='margin-top: {{height}}px; height: calc(100vh - {{height}}px); z-index: 100'>
+  <view class="index-head">
+    <view class="index-head-left">
+      <text class="color-grey">当前时间</text>
+      <text>{{nowDate}}</text>
+    </view>
+    <text class="fw-bold size30 item-logo">SAUI</text>
+  </view>
+  <ui-list list="{{indexSwiper}}" />
+  <ui-list list="{{indexBottom}}" />
+</view>
+
+
+
+
+<!-- <view class="boxer">
+  <scroll-view scroll-y="{{isScrollx}}" class="scroll-wrap-nav">
+    <ui-item item="{{headLogo}}" />
+    <ui-list list="{{menuData}}" />
+    <ad unit-id="adunit-198627b93e19c46e" ad-type="video" ad-theme="white"></ad>
+  </scroll-view>
+  <ui-item item="{{tipFixed}}" />
+  <ui-item item="{{case}}" />
+  <ui-item item="{{messages}}" />
+  <ui-ss-pop item="{{tipsX}}" />
+</view> -->
